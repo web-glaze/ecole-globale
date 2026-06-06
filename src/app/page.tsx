@@ -561,7 +561,7 @@ export default function Home() {
                               transition={{ duration: 0.6, ease: EASE }}
                             />
                           </div>
-                          <Card className="w-80 m-auto mt-[-20px] z-10 relative p-5 text-center gap-0 bg-white/95 backdrop-blur-sm shadow-xl">
+                          <Card className="w-70 m-auto mt-[-20px] z-10 relative p-5 text-center gap-0 bg-white/95 backdrop-blur-sm shadow-xl">
                             <p className="text-md mb-2 text-muted-foreground">
                               {slide.subtitle}
                             </p>
