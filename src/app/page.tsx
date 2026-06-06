@@ -375,9 +375,6 @@ export default function Home() {
       <Navbar />
 
       <main>
-        {/* ══════════════════════════════════════════════════════════════
-            HERO
-        ══════════════════════════════════════════════════════════════ */}
         <section
           ref={heroRef}
           className="relative min-h-[580px] md:min-h-[700px] bg-[#f2e9e6] overflow-hidden"
@@ -386,11 +383,10 @@ export default function Home() {
           <motion.div
             style={{
               y: heroBgY,
-              backgroundImage: "url('/ecole-hero-bg.png')",
-              backgroundSize: "cover",
+              backgroundImage: "url('/egg-shell.png')",
               backgroundPosition: "center",
             }}
-            className="absolute inset-0 opacity-10 scale-110"
+            className="absolute inset-0 opacity-70 scale-110"
           />
 
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-transparent h-32" />
