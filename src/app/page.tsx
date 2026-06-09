@@ -216,7 +216,7 @@ export default function Home() {
                         alt={slide.title}
                         className="w-full"
                       />
-                      <Card className="w-80 m-auto mt-[-20px] z-10 relative p-5 text-center gap-0">
+                      <Card className="w-70 m-auto mt-[-20px] z-10 relative p-5 text-center gap-0">
                         <p className="text-md mb-2">{slide.subtitle}</p>
                         <h3 className="text-2xl mb-5 font-heading font-bold uppercase">
                           {slide.title}
