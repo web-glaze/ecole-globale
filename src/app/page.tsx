@@ -208,7 +208,7 @@ export default function Home() {
                 {slides.map((slide, index) => (
                   <CarouselItem
                     key={index}
-                    className="basis-[90%] md:basis-[45%] lg:basis-[30%]"
+                    className="basis-[95%] md:basis-[45%] lg:basis-[30%] pl-3"
                   >
                     <div className="relative">
                       <img
@@ -216,7 +216,7 @@ export default function Home() {
                         alt={slide.title}
                         className="w-full"
                       />
-                      <Card className="w-70 m-auto mt-[-20px] z-10 relative p-5 text-center gap-0">
+                      <Card className="w-full m-auto mt-[-20px] z-10 relative p-5 text-center gap-0">
                         <p className="text-md mb-2">{slide.subtitle}</p>
                         <h3 className="text-2xl mb-5 font-heading font-bold uppercase">
                           {slide.title}
@@ -368,7 +368,7 @@ export default function Home() {
                   {testimonials.map((item, index) => (
                     <CarouselItem
                       key={index}
-                      className="basis-[95%] md:basis-[45%] lg:basis-[30%] p-2 pb-10 pl-3"
+                      className="basis-[95%] md:basis-[45%] lg:basis-[30%] p-2 pb-10 pl-2"
                     >
                       <Card className="h-full border-0 bg-white p-8 shadow-xl hover:-translate-y-2 transition-all duration-300">
                         <CardContent className="flex h-full flex-col items-center p-0">
@@ -432,7 +432,6 @@ export default function Home() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }
