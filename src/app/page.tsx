@@ -21,24 +21,66 @@ import Footer from "@/components/footer";
 const slides = [
   {
     title: "About Us",
-    subtitle: "Overview of School",
+    subtitle: "Overview",
     description:
-      "Ecole Globale International Girls' School is one of the premier Institutes for girls.",
-    image: "/carousel-2.jpg",
+      "In this era of progressive education, schools strive to provide holistic development for their students. Beyond delivering a curriculum that encompasses academics...",
+    image: "/home-slide-1.jpg",
+    link: "#",
+    link_text: "Know More",
   },
   {
-    title: "Academics",
-    subtitle: "Learning Excellence",
+    title: "Our Team",
+    subtitle: "Leadership",
     description:
-      "Providing world-class education with a modern and innovative curriculum.",
-    image: "/carousel-3.jpg",
+      "Meet the Team of the Ecole Globale International Girls School. This team makes sure none of the parents or student face any issue in the school...",
+    image: "/home-slide-2.jpg",
+    link: "#",
+    link_text: "View All",
   },
   {
-    title: "Campus Life",
-    subtitle: "Student Experience",
+    title: "Principal’s Message",
+    subtitle: "Ms. Kanchan Khandke",
     description:
-      "A vibrant campus environment that encourages creativity and leadership.",
-    image: "/carousel-1.jpg",
+      "In today’s world, torn by conflict, war, poverty, environmental degradation, and despair, we urgently need visionary leaders to guide us toward hope and renewal...",
+    image: "home-slide-3.jpg",
+    link: "#",
+    link_text: "Read Full Message",
+  },
+  {
+    title: "Your Daughter is Safe Here ",
+    subtitle: "Safety & Wellbeing",
+    description:
+      "Every parent who places their daughter in a boarding school extends us their deepest trust. We take that with absolute seriousness...",
+    image: "/home-slide-4.jpg",
+    link: "#",
+    link_text: "Learn More",
+  },
+  {
+    title: "Two World-Class Curricula. One Exceptional Campus.",
+    subtitle: "Academic Excellence",
+    description:
+      "Ecole Globale is the only girls-only residential school in Uttarakhand to offer both CBSE and Cambridge International Education on a single campus...",
+    image: "/home-slide-5.jpg",
+    link: "#",
+    link_text: "Explore Academics",
+  },
+  {
+    title: "Purpose Built For Excellence ",
+    subtitle: "Campus & Facilities",
+    description:
+      'Not "world-class facilities" - specific ones. Every facility at Ecole is named, operated, and maintained to the highest standard.',
+    image: "/home-slide-6.jpg",
+    link: "#",
+    link_text: "Take a Virtual Tour",
+  },
+  {
+    title: "Four Differentiators That Set Ecole Globale Apart ",
+    subtitle: "Why Families Choose Ecole",
+    description:
+      "Not the oldest name in Dehradun. The best-equipped, most transparent, and most outcomes-focused girls' residential school in the region...",
+    image: "/home-slide-7.jpg",
+    link: "#",
+    link_text: "View Differentiators",
   },
 ];
 
@@ -210,26 +252,26 @@ export default function Home() {
                     key={index}
                     className="basis-[95%] md:basis-[45%] lg:basis-[30%] pl-3"
                   >
-                    <div className="relative">
+                    <div className="relative h-full">
                       <img
                         src={slide.image}
                         alt={slide.title}
-                        className="w-full"
+                        className="w-full aspect-video"
                       />
-                      <Card className="w-full m-auto mt-[-20px] z-10 relative p-5 text-center gap-0">
+                      <Card className="w-full m-auto z-10 relative p-5 text-center gap-0 h-full">
                         <p className="text-md mb-2">{slide.subtitle}</p>
-                        <h3 className="text-2xl mb-5 font-heading font-bold uppercase">
+                        <h3 className="text-xl mb-3 font-heading font-bold uppercase">
                           {slide.title}
                         </h3>
-                        <h4 className="font-heading text-xl">
+                        <h4 className="font-heading text-lg">
                           {slide.description}
                         </h4>
                         <div className="mt-5">
                           <Link
-                            href="#"
+                            href={slide.link}
                             className="w-auto font-bold inline-block border-b-2 border-black pb-1 text-lg transition-all hover:border-primary"
                           >
-                            Explorer More
+                            {slide.link_text}
                           </Link>
                         </div>
                       </Card>
