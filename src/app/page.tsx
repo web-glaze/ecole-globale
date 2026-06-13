@@ -15,8 +15,16 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Star,
+  FileText,
+  ClipboardCheck,
+  School,
+} from "lucide-react";
 import Footer from "@/components/footer";
+import { Badge } from "@/components/ui/badge";
 
 const slides = [
   {
@@ -135,10 +143,38 @@ const clientLogos = [
   },
 ];
 
+const steps = [
+  {
+    id: "01",
+    title: "Registration & Documentation",
+    icon: FileText,
+    description:
+      "Submit the online registration form with a ₹25,000 registration fee. Provide previous academic records, birth certificate, and passport-size photographs. We acknowledge receipt within 48 hours.",
+  },
+  {
+    id: "02",
+    title: "Academic Assessment",
+    icon: ClipboardCheck,
+    description:
+      "A written assessment in English, Mathematics, and Science (relevant to the applying class). For Class XI admissions, we review Class X board examination results directly.",
+  },
+  {
+    id: "03",
+    title: "Campus Visit & Interview",
+    icon: School,
+    description:
+      "Your daughter meets with our academic team. You meet with our admissions advisor. You see everything — classrooms, boarding houses, infirmary, dining hall, sports facilities. We answer every question without reservation. Admission decisions are communicated within 7 working days.",
+  },
+];
+
 export default function Home() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(1);
   const [count, setCount] = useState(0);
+
+  const [admissionApi, setAdmissionApi] = useState<CarouselApi>();
+  const [admissionCurrent, setAdmissionCurrent] = useState(1);
+  const [admissionCount, setAdmissionCount] = useState(0);
 
   useEffect(() => {
     if (!api) return;
@@ -149,7 +185,15 @@ export default function Home() {
     api.on("select", () => {
       setCurrent(api.selectedScrollSnap() + 1);
     });
-  }, [api]);
+    if (!admissionApi) return;
+
+    setAdmissionCount(admissionApi.scrollSnapList().length);
+    setAdmissionCurrent(admissionApi.selectedScrollSnap() + 1);
+
+    admissionApi.on("select", () => {
+      setAdmissionCurrent(admissionApi.selectedScrollSnap() + 1);
+    });
+  }, [api, admissionApi]);
   return (
     <>
       <Navbar />
@@ -280,7 +324,6 @@ export default function Home() {
                 ))}
               </CarouselContent>
             </Carousel>
-            {/* Custom Navigation */}
 
             <div className="mt-10 flex justify-center items-center ">
               <button
@@ -325,8 +368,8 @@ export default function Home() {
                   className="h-[220px] w-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-xl text-shadow-lg uppercase font-heading text-white">
-                  Breaks
+                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">
+                  Life at Ecole
                 </h3>
               </div>
 
@@ -338,8 +381,8 @@ export default function Home() {
                   className="h-full w-full object-cover object-[55%]"
                 />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-xl text-shadow-lg uppercase font-heading text-white">
-                  Sports
+                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">
+                  Athletic Excellence
                 </h3>
               </div>
 
@@ -351,8 +394,8 @@ export default function Home() {
                   className="h-[220px] w-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-xl text-shadow-lg uppercase font-heading text-white">
-                  Activities
+                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">
+                  Creative Pursuits
                 </h3>
               </div>
               <div className="relative overflow-hidden">
@@ -363,8 +406,8 @@ export default function Home() {
                   className="h-[220px] w-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-xl text-shadow-lg uppercase font-heading text-white">
-                  Festivals
+                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">
+                  Culture & Traditions
                 </h3>
               </div>
               <div className="relative overflow-hidden">
@@ -375,8 +418,8 @@ export default function Home() {
                   className="h-[220px] w-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-xl text-shadow-lg uppercase font-heading text-white">
-                  Celebrations
+                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">
+                  The Women We’ve Shaped
                 </h3>
               </div>
               <div className="relative col-span-2 overflow-hidden">
@@ -387,8 +430,8 @@ export default function Home() {
                   className="h-[220px] w-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-xl text-shadow-lg uppercase font-heading text-white">
-                  Virtual Tour
+                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">
+                  Explore Our Campus
                 </h3>
               </div>
             </div>
@@ -397,7 +440,7 @@ export default function Home() {
         <section className="bg-white pb-8">
           <div className="container mx-auto px-4">
             <h3 className="mb-4 text-3xl font-bold font-heading text-center">
-              Testimonials
+              Words from Parents: Who Matter Most
             </h3>
             <div className="pt-2">
               <Carousel
@@ -452,7 +495,131 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-white pb-16">
+        <section className="bg-gray-200 py-12">
+          <div className="container mx-auto px-4">
+            <div className="mx-auto max-w-2xl">
+              <Badge
+                variant="outline"
+                className="mb-5 rounded-full text-sm border-yellow-500"
+              >
+                Admissions 2026–27
+              </Badge>
+
+              <h2 className="font-heading text-3xl md:text-5xl font-bold tracking-tight">
+                Three Steps to Joining
+                <span className="block">Ecole Globale</span>
+              </h2>
+
+              <p className="mt-3 text-md leading-relaxed">
+                We admit girls from Class IV to Class XII. Our admissions
+                process is transparent, rigorous, and respectful of your time.
+              </p>
+            </div>
+
+            <div className="mt-10 max-w-5xl mx-auto">
+              <Carousel
+                setApi={setAdmissionApi}
+                opts={{
+                  align: "start",
+                }}
+                className="w-full"
+              >
+                <CarouselContent>
+                  {/* Step Slides */}
+                  {steps.map((step) => {
+                    const Icon = step.icon;
+
+                    return (
+                      <CarouselItem key={step.id}>
+                        <Card className="border-0 overflow-hidden h-full">
+                          <CardContent className="p-4 md:p-12">
+                            <div className="flex items-center justify-between mb-2">
+                              <Icon className="size-8 text-primary" />
+
+                              <span className="text-4xl font-black text-primary/20">
+                                {step.id}
+                              </span>
+                            </div>
+
+                            <h3 className="font-heading text-2xl font-bold mb-4">
+                              {step.title}
+                            </h3>
+
+                            <p className="leading-relaxed text-muted-foreground">
+                              {step.description}
+                            </p>
+                          </CardContent>
+                        </Card>
+                      </CarouselItem>
+                    );
+                  })}
+
+                  <CarouselItem>
+                    <Card className="border-0 h-full">
+                      <CardContent className="p-4 md:p-12">
+                        <h3 className="mb-4 text-3xl font-bold font-heading text-gray-500 text-center">
+                          ENQUIRE NOW
+                        </h3>
+
+                        <form className="space-y-4">
+                          <Input
+                            className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
+                            placeholder="Your Name"
+                          />
+                          <Input
+                            className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
+                            type="tel"
+                            placeholder="Phone Number"
+                          />
+                          <Input
+                            className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
+                            type="email"
+                            placeholder="Email Address"
+                          />
+
+                          <Button className="w-full">Submit Enquiry</Button>
+                        </form>
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                </CarouselContent>
+
+                <div className="mt-5 flex justify-center items-center ">
+                  <button
+                    onClick={() => admissionApi?.scrollPrev()}
+                    className="transition hover:opacity-70"
+                  >
+                    <ChevronLeft className="size-8" />
+                  </button>
+
+                  <div className="w-48">
+                    <div className="h-[2px] bg-neutral-300">
+                      <div
+                        className="h-[2px] bg-black transition-all duration-300"
+                        style={{
+                          width: `${(admissionCurrent / admissionCount) * 100}%`,
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => admissionApi?.scrollNext()}
+                    className="transition hover:opacity-70"
+                  >
+                    <ChevronRight className="size-8" />
+                  </button>
+                </div>
+                <div className="mt-2 text-center text-sm tracking-[0.2em]">
+                  {String(admissionCurrent).padStart(2, "0")} /{" "}
+                  {String(admissionCount).padStart(2, "0")}
+                </div>
+              </Carousel>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-white py-8">
           <div className="container mx-auto px-4">
             <Carousel
               opts={{
