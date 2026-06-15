@@ -208,10 +208,10 @@ export default function Home() {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-transparent h-25" />
           <div className="absolute bottom-0 w-full bg-gradient-to-t from-white via-white/40 to-transparent h-25" />
-          <div className="container relative z-10 mx-auto flex h-full items-center px-4">
-            <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-2 h-full pt-32 pb-18">
+          <div className="container relative z-10 mx-auto flex items-center px-4">
+            <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-2 min-h-screen pt-32 pb-18">
               {/* Left Content */}
-              <div className="max-w-2x flex flex-col justify-between">
+              <div className="max-w-2x flex flex-col justify-between gap-5">
                 <div>
                   <img
                     src="/ecole-hero-img.png"
@@ -219,7 +219,7 @@ export default function Home() {
                     className="h-auto max-w-full"
                   />
                 </div>
-                <div className="block text-center text-sm max-w-[280px] mx-auto md:hidden">
+                <div className="block text-center text-base max-w-[280px] mx-auto md:hidden">
                   © 2026 ÉCOLE GLOBALE INTERNATIONAL GIRLS’ SCHOOL
                 </div>
               </div>
@@ -267,7 +267,7 @@ export default function Home() {
             <Button className="w-full">Submit Enquiry</Button>
           </form>
         </div>
-        <section className="bg-gray-200 py-24">
+        <section className="bg-gray-200 py-8">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               <div>
@@ -325,7 +325,7 @@ export default function Home() {
               </CarouselContent>
             </Carousel>
 
-            <div className="mt-10 flex justify-center items-center ">
+            <div className="mt-5 flex justify-center items-center ">
               <button
                 onClick={() => api?.scrollPrev()}
                 className="transition hover:opacity-70"
@@ -357,7 +357,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="bg-white py-16">
+        <section className="bg-white py-8">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 gap-3">
               <div className="relative overflow-hidden">
@@ -437,7 +437,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="bg-white pb-8">
+        <section className="bg-white py-8">
           <div className="container mx-auto px-4">
             <h3 className="mb-4 text-3xl font-bold font-heading text-center">
               Words from Parents: Who Matter Most
@@ -453,9 +453,9 @@ export default function Home() {
                   {testimonials.map((item, index) => (
                     <CarouselItem
                       key={index}
-                      className="basis-[95%] md:basis-[45%] lg:basis-[30%] p-2 pb-10 pl-2"
+                      className="basis-[95%] md:basis-[45%] lg:basis-[30%] p-2 pl-2"
                     >
-                      <Card className="h-full border-0 bg-white p-8 shadow-xl hover:-translate-y-2 transition-all duration-300">
+                      <Card className="h-full border-0 bg-white p-8 hover:-translate-y-2 transition-all duration-300">
                         <CardContent className="flex h-full flex-col items-center p-0">
                           <div className="mb-5">
                             <img
@@ -495,7 +495,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-gray-200 py-12">
+        <section className="bg-gray-200 py-8">
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-2xl">
               <Badge
