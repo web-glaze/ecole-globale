@@ -304,7 +304,7 @@ export default function Home() {
         </section>
 
         {/* Only Mobile View Form */}
-        <div className="md:hidden w-full max-w-md rounded-2xl bg-white p-8">
+        <div id="enquire-now" className="md:hidden w-full max-w-md rounded-2xl bg-white p-8">
           <h3 className="mb-4 text-3xl font-bold font-heading text-gray-500 text-center">ENQUIRE NOW</h3>
 
           <form className="space-y-4">
@@ -686,17 +686,17 @@ export default function Home() {
               className="fixed bottom-0 left-0 z-50 w-full bg-background/70 backdrop-blur-md shadow-lg md:hidden"
             >
               <div className="grid grid-cols-3 py-2 px-4 text-center">
-                <Link href="#" className="flex flex-col items-center gap-1">
+                <Link href="tel:+91-9557291888" className="flex flex-col items-center gap-1">
                   <Phone size={24} />
                   <span className="text-sm">Call Us</span>
                 </Link>
 
-                <Link href="#" className="flex flex-col items-center gap-1">
+                <Link href="mailto:ecoleglobale@gmail.com" className="flex flex-col items-center gap-1">
                   <Mail size={24} />
                   <span className="text-sm">Mail Us</span>
                 </Link>
 
-                <Link href="#" className="flex flex-col items-center gap-1">
+                <Link href="#enquire-now" className="flex flex-col items-center gap-1">
                   <CalendarPlus size={24} />
                   <span className="text-sm">Enquire Now</span>
                 </Link>
