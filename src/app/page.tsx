@@ -649,6 +649,7 @@ export default function Home() {
                               }
                             });
                           }}
+                          poster="poster.png"
                         />
                       </div>
                     </CarouselItem>
