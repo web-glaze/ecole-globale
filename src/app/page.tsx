@@ -250,7 +250,11 @@ export default function Home() {
             <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-2 pt-32 pb-18">
               {/* Left Content */}
               <div className="max-w-2x flex flex-col justify-between gap-5">
-                <div className="relative">
+                <div className="flex flex-col justify-between">
+                  <img src="/ecole-hero-img.png" alt="" className="h-auto max-w-full drop-shadow-2xl" />
+                  <div className="block text-center text-base max-w-[280px] mx-auto md:hidden">© 2026 ÉCOLE GLOBALE INTERNATIONAL GIRLS’ SCHOOL</div>
+                </div>
+                <div className="relative hidden">
                   <Carousel
                     setApi={heroSetApi}
                     opts={{
@@ -282,7 +286,6 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
-                <div className="block text-center text-base max-w-[280px] mx-auto md:hidden">© 2026 ÉCOLE GLOBALE INTERNATIONAL GIRLS’ SCHOOL</div>
               </div>
 
               {/* Right Form */}
