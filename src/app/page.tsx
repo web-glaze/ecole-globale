@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Star, FileText, ClipboardCheck, School, Icon, Phone, Mail, CalendarPlus } from "lucide-react";
 import Footer from "@/components/footer";
 import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 
 const slides = [
   {
@@ -694,10 +695,14 @@ export default function Home() {
                   <span className="font-medium">Call Us</span>
                 </Link>
 
+                <Separator orientation="vertical" />
+
                 <Link href="mailto:ecoleglobale@gmail.com" className="flex justify-center items-center gap-2">
                   <Mail size={20} />
                   <span className="font-medium">Mail Us</span>
                 </Link>
+
+                <Separator orientation="vertical" />
 
                 <Link href="#enquire-now" className="flex justify-center items-center gap-2">
                   <CalendarPlus size={20} />
