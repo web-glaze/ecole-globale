@@ -247,7 +247,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-transparent h-25" />
           <div className="absolute bottom-0 w-full bg-gradient-to-t from-white via-white/40 to-transparent h-25" />
           <div className="container relative z-10 mx-auto flex items-center px-4">
-            <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-2 pt-32 pb-18">
+            <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-2 pt-32 pb-18 min-h-screen">
               {/* Left Content */}
               <div className="max-w-2x flex flex-col justify-between gap-5">
                 <div className="flex flex-col justify-between">
@@ -686,22 +686,22 @@ export default function Home() {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 100, opacity: 0 }}
               transition={{ duration: 0.5 }}
-              className="fixed bottom-0 left-0 z-50 w-full bg-background/70 backdrop-blur-md shadow-lg md:hidden"
+              className="fixed bottom-0 left-0 z-50 w-full bg-red-900 backdrop-blur-md text-white shadow-lg md:hidden"
             >
-              <div className="grid grid-cols-3 py-2 px-4 text-center">
-                <Link href="tel:+91-9557291888" className="flex flex-col items-center gap-1">
-                  <Phone size={24} />
-                  <span className="text-sm">Call Us</span>
+              <div className="flex justify-around py-3 px-4 text-center">
+                <Link href="tel:+91-9557291888" className="flex justify-center items-center gap-2">
+                  <Phone size={20} />
+                  <span className="font-medium">Call Us</span>
                 </Link>
 
-                <Link href="mailto:ecoleglobale@gmail.com" className="flex flex-col items-center gap-1">
-                  <Mail size={24} />
-                  <span className="text-sm">Mail Us</span>
+                <Link href="mailto:ecoleglobale@gmail.com" className="flex justify-center items-center gap-2">
+                  <Mail size={20} />
+                  <span className="font-medium">Mail Us</span>
                 </Link>
 
-                <Link href="#enquire-now" className="flex flex-col items-center gap-1">
-                  <CalendarPlus size={24} />
-                  <span className="text-sm">Enquire Now</span>
+                <Link href="#enquire-now" className="flex justify-center items-center gap-2">
+                  <CalendarPlus size={20} />
+                  <span className="font-medium">Enquire Now</span>
                 </Link>
               </div>
             </motion.div>

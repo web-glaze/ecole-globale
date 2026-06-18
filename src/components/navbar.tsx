@@ -4,13 +4,7 @@ import Link from "next/link";
 import { Menu, Phone } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useEffect, useState } from "react";
 
 const navLinks = [
@@ -35,9 +29,10 @@ export default function Navbar() {
   }, []);
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-background/40 backdrop-blur-md" : "bg-transparent"
-      }`}
+      className={`absolute inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/40 backdrop-blur-md" : "bg-transparent"}`}
+      // className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+      //   scrolled ? "bg-background/40 backdrop-blur-md" : "bg-transparent"
+      // }`}
     >
       <div className="container mx-auto h-20 px-4">
         {/* Desktop */}
@@ -73,13 +68,7 @@ export default function Navbar() {
         <div className="flex h-full items-center justify-between md:hidden text-white">
           {/* Hamburger */}
           <Sheet>
-            <SheetTrigger asChild>
-              {scrolled ? (
-                <Menu className="size-6 text-black" />
-              ) : (
-                <Menu className="size-6 text-white" />
-              )}
-            </SheetTrigger>
+            <SheetTrigger asChild>{scrolled ? <Menu className="size-6 text-black" /> : <Menu className="size-6 text-white" />}</SheetTrigger>
 
             <SheetContent side="left" className="w-[300px]">
               <SheetHeader>
@@ -88,11 +77,7 @@ export default function Navbar() {
 
               <nav className="mt-8 flex flex-col gap-4 px-6 ">
                 {navLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="text-lg font-medium text-light"
-                  >
+                  <Link key={link.href} href={link.href} className="text-lg font-medium text-light">
                     {link.label}
                   </Link>
                 ))}
