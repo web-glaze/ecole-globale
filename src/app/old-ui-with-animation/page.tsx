@@ -713,7 +713,7 @@ export default function Anim() {
         </div>
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
