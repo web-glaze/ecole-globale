@@ -680,38 +680,28 @@ export default function Home() {
         </section>
 
         {/* Bottom Navigation */}
-        <AnimatePresence>
-          {showBar && (
-            <motion.div
-              initial={{ y: 200, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 100, opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="fixed bottom-0 left-0 z-50 w-full bg-red-900 backdrop-blur-md text-white shadow-lg md:hidden"
-            >
-              <div className="flex justify-around py-3 px-4 text-center">
-                <Link href="tel:+91-9557291888" className="flex justify-center items-center gap-2">
-                  <Phone size={20} />
-                  <span className="font-medium">Call Us</span>
-                </Link>
+        <div className="fixed bottom-0 left-0 z-50 w-full bg-red-900 backdrop-blur-md text-white shadow-lg md:hidden">
+          <div className="flex justify-around py-3 px-4 text-center">
+            <Link href="tel:+91-9557291888" className="flex justify-center items-center gap-2">
+              <Phone size={20} />
+              <span className="font-medium">Call Us</span>
+            </Link>
 
-                <Separator orientation="vertical" />
+            <Separator orientation="vertical" />
 
-                <Link href="mailto:ecoleglobale@gmail.com" className="flex justify-center items-center gap-2">
-                  <Mail size={20} />
-                  <span className="font-medium">Mail Us</span>
-                </Link>
+            <Link href="mailto:ecoleglobale@gmail.com" className="flex justify-center items-center gap-2">
+              <Mail size={20} />
+              <span className="font-medium">Mail Us</span>
+            </Link>
 
-                <Separator orientation="vertical" />
+            <Separator orientation="vertical" />
 
-                <Link href="#enquire-now" className="flex justify-center items-center gap-2">
-                  <CalendarPlus size={20} />
-                  <span className="font-medium">Enquire Now</span>
-                </Link>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            <Link href="#enquire-now" className="flex justify-center items-center gap-2">
+              <CalendarPlus size={20} />
+              <span className="font-medium">Enquire Now</span>
+            </Link>
+          </div>
+        </div>
       </main>
     </>
   );

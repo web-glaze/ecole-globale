@@ -3,26 +3,14 @@
 import Navbar from "@/components/navbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useSpring,
-  useMotionValue,
-  useInView,
-  Variants,
-} from "framer-motion";
-import {
-  Carousel,
-  CarouselApi,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
+import { motion, useScroll, useTransform, useSpring, useMotionValue, useInView, Variants } from "framer-motion";
+import { Carousel, CarouselApi, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { useEffect, useRef, useState, useCallback } from "react";
-import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { CalendarPlus, ChevronLeft, ChevronRight, Mail, Phone, Star } from "lucide-react";
 import Footer from "@/components/footer";
+import { Separator } from "@/components/ui/separator";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Easing & Variants
@@ -64,25 +52,14 @@ const scaleIn: Variants = {
 // SplitText — word-by-word slide-up reveal
 // ─────────────────────────────────────────────────────────────────────────────
 
-function SplitText({
-  text,
-  className = "",
-  delay = 0,
-}: {
-  text: string;
-  className?: string;
-  delay?: number;
-}) {
+function SplitText({ text, className = "", delay = 0 }: { text: string; className?: string; delay?: number }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-5% 0px" });
 
   return (
     <span ref={ref} className={`inline ${className}`}>
       {text.split(" ").map((word, i) => (
-        <span
-          key={i}
-          className="inline-block overflow-hidden mr-[0.3em] last:mr-0"
-        >
+        <span key={i} className="inline-block overflow-hidden mr-[0.3em] last:mr-0">
           <motion.span
             className="inline-block"
             initial={{ y: "110%" }}
@@ -101,13 +78,7 @@ function SplitText({
 // TiltCard — 3-D perspective on hover
 // ─────────────────────────────────────────────────────────────────────────────
 
-function TiltCard({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
+function TiltCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -124,7 +95,7 @@ function TiltCard({
       mx.set((e.clientX - r.left) / r.width - 0.5);
       my.set((e.clientY - r.top) / r.height - 0.5);
     },
-    [mx, my],
+    [mx, my]
   );
 
   const onLeave = useCallback(() => {
@@ -149,13 +120,7 @@ function TiltCard({
 // MagneticButton — button follows cursor slightly
 // ─────────────────────────────────────────────────────────────────────────────
 
-function MagneticButton({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
+function MagneticButton({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const btnRef = useRef<HTMLDivElement>(null);
   const bx = useMotionValue(0);
   const by = useMotionValue(0);
@@ -175,12 +140,7 @@ function MagneticButton({
   };
 
   return (
-    <div
-      ref={btnRef}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-      className={className}
-    >
+    <div ref={btnRef} onMouseMove={onMove} onMouseLeave={onLeave} className={className}>
       <motion.div style={{ x: sx, y: sy }}>{children}</motion.div>
     </div>
   );
@@ -190,13 +150,7 @@ function MagneticButton({
 // AnimatedCounter — counts up when in view
 // ─────────────────────────────────────────────────────────────────────────────
 
-function AnimatedCounter({
-  target,
-  suffix = "",
-}: {
-  target: number;
-  suffix?: string;
-}) {
+function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-15% 0px" });
   const [val, setVal] = useState(0);
@@ -260,23 +214,20 @@ const slides = [
   {
     title: "About Us",
     subtitle: "Overview of School",
-    description:
-      "Ecole Globale International Girls' School is one of the premier Institutes for girls.",
-    image: "/carousel-2.jpg",
+    description: "Ecole Globale International Girls' School is one of the premier Institutes for girls.",
+    image: "/home-slide-1.jpg",
   },
   {
     title: "Academics",
     subtitle: "Learning Excellence",
-    description:
-      "Providing world-class education with a modern and innovative curriculum.",
+    description: "Providing world-class education with a modern and innovative curriculum.",
     image: "/carousel-3.jpg",
   },
   {
     title: "Campus Life",
     subtitle: "Student Experience",
-    description:
-      "A vibrant campus environment that encourages creativity and leadership.",
-    image: "/carousel-1.jpg",
+    description: "A vibrant campus environment that encourages creativity and leadership.",
+    image: "home-slide-2.jpg",
   },
 ];
 
@@ -284,22 +235,19 @@ const testimonials = [
   {
     name: "Sophia Williams",
     title: "Parent",
-    review:
-      "The school has provided an exceptional learning environment for my daughter. We are delighted with her growth and confidence.",
+    review: "The school has provided an exceptional learning environment for my daughter. We are delighted with her growth and confidence.",
     rating: 5,
   },
   {
     name: "Emily Johnson",
     title: "Alumni",
-    review:
-      "The academic support and extracurricular opportunities helped me become the person I am today.",
+    review: "The academic support and extracurricular opportunities helped me become the person I am today.",
     rating: 5,
   },
   {
     name: "Sarah Brown",
     title: "Parent",
-    review:
-      "An outstanding institution with dedicated teachers and a nurturing atmosphere.",
+    review: "An outstanding institution with dedicated teachers and a nurturing atmosphere.",
     rating: 5,
   },
 ];
@@ -375,10 +323,7 @@ export default function Anim() {
       <Navbar />
 
       <main>
-        <section
-          ref={heroRef}
-          className="relative min-h-[580px] md:min-h-[700px] bg-[#f2e9e6] overflow-hidden"
-        >
+        <section ref={heroRef} className="relative min-h-[580px] md:min-h-[700px] bg-[#f2e9e6] overflow-hidden">
           {/* Parallax background texture */}
           <motion.div
             style={{
@@ -392,11 +337,8 @@ export default function Anim() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-transparent h-32" />
           <div className="absolute bottom-0 w-full bg-gradient-to-t from-white via-white/50 to-transparent h-28" />
 
-          <motion.div
-            style={{ y: heroContentY, opacity: heroOpacity }}
-            className="container relative z-10 mx-auto flex h-full items-center px-4"
-          >
-            <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-2 h-full pt-32 pb-18">
+          <motion.div style={{ y: heroContentY, opacity: heroOpacity }} className="container relative z-10 mx-auto flex h-full items-center px-4">
+            <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-2 h-full pt-32 pb-18 min-h-screen">
               {/* Left — hero image */}
               <div className="flex flex-col justify-between">
                 <motion.img
@@ -427,9 +369,7 @@ export default function Anim() {
                     style={{ transformPerspective: 1200 }}
                     className="w-full max-w-md rounded-2xl bg-white/90 backdrop-blur-md p-8 shadow-2xl border border-white/60"
                   >
-                    <h3 className="mb-6 text-3xl font-bold font-heading text-gray-600 text-center">
-                      ENQUIRE NOW
-                    </h3>
+                    <h3 className="mb-6 text-3xl font-bold font-heading text-gray-600 text-center">ENQUIRE NOW</h3>
                     <form className="space-y-4">
                       {[
                         { ph: "Your Name", type: "text" },
@@ -471,9 +411,7 @@ export default function Anim() {
           transition={{ duration: 1, delay: 0.35, ease: EASE }}
           className="md:hidden w-full max-w-md rounded-2xl bg-white p-8 shadow-xl mx-auto"
         >
-          <h3 className="mb-4 text-3xl font-bold font-heading text-gray-500 text-center">
-            ENQUIRE NOW
-          </h3>
+          <h3 className="mb-4 text-3xl font-bold font-heading text-gray-500 text-center">ENQUIRE NOW</h3>
           <form className="space-y-4">
             {[
               { ph: "Your Name", type: "text" },
@@ -517,9 +455,8 @@ export default function Anim() {
                   transition={{ duration: 0.8, delay: 0.55, ease: EASE }}
                   className="text-muted-foreground leading-relaxed"
                 >
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Obcaecati ab hic iste ullam, similique alias eaque quas
-                  temporibus expedita architecto.
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati ab hic iste ullam, similique alias eaque quas temporibus
+                  expedita architecto.
                 </motion.p>
               </div>
             </div>
@@ -531,23 +468,12 @@ export default function Anim() {
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 1, ease: EASE }}
             >
-              <Carousel
-                setApi={setApi}
-                opts={{ align: "start", loop: true }}
-                className="w-full"
-              >
+              <Carousel setApi={setApi} opts={{ align: "start", loop: true }} className="w-full">
                 <CarouselContent>
                   {slides.map((slide, index) => (
-                    <CarouselItem
-                      key={index}
-                      className="basis-[90%] md:basis-[45%] lg:basis-[30%]"
-                    >
+                    <CarouselItem key={index} className="basis-[90%] md:basis-[45%] lg:basis-[30%]">
                       <TiltCard>
-                        <motion.div
-                          whileHover={{ y: -10 }}
-                          transition={{ duration: 0.4, ease: EASE }}
-                          className="relative"
-                        >
+                        <motion.div whileHover={{ y: -10 }} transition={{ duration: 0.4, ease: EASE }} className="relative">
                           <div className="overflow-hidden">
                             <motion.img
                               src={slide.image}
@@ -558,15 +484,9 @@ export default function Anim() {
                             />
                           </div>
                           <Card className="w-70 m-auto mt-[-20px] z-10 relative p-5 text-center gap-0 bg-white/95 backdrop-blur-sm shadow-xl">
-                            <p className="text-md mb-2 text-muted-foreground">
-                              {slide.subtitle}
-                            </p>
-                            <h3 className="text-2xl mb-5 font-heading font-bold uppercase">
-                              {slide.title}
-                            </h3>
-                            <h4 className="font-heading text-base text-muted-foreground">
-                              {slide.description}
-                            </h4>
+                            <p className="text-md mb-2 text-muted-foreground">{slide.subtitle}</p>
+                            <h3 className="text-2xl mb-5 font-heading font-bold uppercase">{slide.title}</h3>
+                            <h4 className="font-heading text-base text-muted-foreground">{slide.description}</h4>
                             <div className="mt-5">
                               <Link
                                 href="#"
@@ -592,12 +512,7 @@ export default function Anim() {
               transition={{ duration: 0.7, delay: 0.3 }}
               className="mt-10 flex justify-center items-center gap-4"
             >
-              <motion.button
-                onClick={() => api?.scrollPrev()}
-                whileHover={{ scale: 1.15 }}
-                whileTap={{ scale: 0.92 }}
-                className="transition"
-              >
+              <motion.button onClick={() => api?.scrollPrev()} whileHover={{ scale: 1.15 }} whileTap={{ scale: 0.92 }} className="transition">
                 <ChevronLeft className="size-8" />
               </motion.button>
               <div className="w-48">
@@ -608,18 +523,12 @@ export default function Anim() {
                   />
                 </div>
               </div>
-              <motion.button
-                onClick={() => api?.scrollNext()}
-                whileHover={{ scale: 1.15 }}
-                whileTap={{ scale: 0.92 }}
-                className="transition"
-              >
+              <motion.button onClick={() => api?.scrollNext()} whileHover={{ scale: 1.15 }} whileTap={{ scale: 0.92 }} className="transition">
                 <ChevronRight className="size-8" />
               </motion.button>
             </motion.div>
             <div className="mt-2 text-center text-sm tracking-[0.25em] text-muted-foreground">
-              {String(current).padStart(2, "0")} /{" "}
-              {String(count).padStart(2, "0")}
+              {String(current).padStart(2, "0")} / {String(count).padStart(2, "0")}
             </div>
           </div>
         </section>
@@ -634,16 +543,10 @@ export default function Anim() {
               viewport={{ once: true, amount: 0.3 }}
               className="mb-10 text-center"
             >
-              <motion.p
-                variants={fadeUp}
-                className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3"
-              >
+              <motion.p variants={fadeUp} className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">
                 Life at Ecole
               </motion.p>
-              <motion.h3
-                variants={fadeUp}
-                className="text-3xl md:text-4xl font-bold font-heading"
-              >
+              <motion.h3 variants={fadeUp} className="text-3xl md:text-4xl font-bold font-heading">
                 Campus Highlights
               </motion.h3>
             </motion.div>
@@ -657,11 +560,7 @@ export default function Anim() {
               className="grid grid-cols-2 gap-3"
             >
               {featuredItems.map((item, i) => (
-                <motion.div
-                  key={i}
-                  variants={clipReveal}
-                  className={`relative overflow-hidden cursor-pointer group ${item.span}`}
-                >
+                <motion.div key={i} variants={clipReveal} className={`relative overflow-hidden cursor-pointer group ${item.span}`}>
                   {/* gradient overlay */}
                   <div className="absolute bottom-0 w-full bg-gradient-to-t from-black/80 via-black/30 to-transparent h-40 z-10 pointer-events-none" />
 
@@ -670,9 +569,7 @@ export default function Anim() {
                     src={item.src}
                     alt={item.label}
                     className={`w-full object-cover transition-transform will-change-transform ${
-                      item.span === "row-span-2"
-                        ? "h-full object-[55%]"
-                        : "h-[180px]"
+                      item.span === "row-span-2" ? "h-full object-[55%]" : "h-[180px]"
                     }`}
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.65, ease: EASE }}
@@ -710,16 +607,10 @@ export default function Anim() {
               viewport={{ once: true, amount: 0.3 }}
               className="text-center mb-10"
             >
-              <motion.p
-                variants={fadeUp}
-                className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3"
-              >
+              <motion.p variants={fadeUp} className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">
                 What they say
               </motion.p>
-              <motion.h3
-                variants={fadeUp}
-                className="text-3xl font-bold font-heading"
-              >
+              <motion.h3 variants={fadeUp} className="text-3xl font-bold font-heading">
                 Testimonials
               </motion.h3>
             </motion.div>
@@ -733,15 +624,9 @@ export default function Anim() {
               <Carousel opts={{ align: "start", loop: true }}>
                 <CarouselContent className="-ml-0">
                   {testimonials.map((item, index) => (
-                    <CarouselItem
-                      key={index}
-                      className="basis-[95%] md:basis-[45%] lg:basis-[30%] p-2 pb-10 pl-3"
-                    >
+                    <CarouselItem key={index} className="basis-[95%] md:basis-[45%] lg:basis-[30%] p-2 pb-10 pl-3">
                       <TiltCard>
-                        <motion.div
-                          whileHover={{ y: -12 }}
-                          transition={{ duration: 0.4, ease: EASE }}
-                        >
+                        <motion.div whileHover={{ y: -12 }} transition={{ duration: 0.4, ease: EASE }}>
                           <Card className="h-full border-0 bg-white p-8 shadow-xl">
                             <CardContent className="flex h-full flex-col items-center p-0">
                               {/* Avatar with ring pulse */}
@@ -764,15 +649,9 @@ export default function Anim() {
                                 />
                               </div>
 
-                              <h3 className="font-heading text-xl font-bold">
-                                {item.name}
-                              </h3>
-                              <p className="mb-5 text-sm text-muted-foreground">
-                                {item.title}
-                              </p>
-                              <p className="mb-6 text-center flex-1 leading-relaxed text-muted-foreground text-sm">
-                                &ldquo;{item.review}&rdquo;
-                              </p>
+                              <h3 className="font-heading text-xl font-bold">{item.name}</h3>
+                              <p className="mb-5 text-sm text-muted-foreground">{item.title}</p>
+                              <p className="mb-6 text-center flex-1 leading-relaxed text-muted-foreground text-sm">&ldquo;{item.review}&rdquo;</p>
 
                               {/* Stars pop in with spring */}
                               <div className="flex items-center gap-1">
@@ -809,6 +688,30 @@ export default function Anim() {
           <LogoMarquee logos={clientLogos} />
         </section>
       </main>
+
+      {/* Bottom Navigation */}
+      <div className="fixed bottom-0 left-0 z-50 w-full bg-red-900 backdrop-blur-md text-white shadow-lg md:hidden">
+        <div className="flex justify-around py-3 px-4 text-center">
+          <Link href="tel:+91-9557291888" className="flex justify-center items-center gap-2">
+            <Phone size={20} />
+            <span className="font-medium">Call Us</span>
+          </Link>
+
+          <Separator orientation="vertical" />
+
+          <Link href="mailto:ecoleglobale@gmail.com" className="flex justify-center items-center gap-2">
+            <Mail size={20} />
+            <span className="font-medium">Mail Us</span>
+          </Link>
+
+          <Separator orientation="vertical" />
+
+          <Link href="#enquire-now" className="flex justify-center items-center gap-2">
+            <CalendarPlus size={20} />
+            <span className="font-medium">Enquire Now</span>
+          </Link>
+        </div>
+      </div>
 
       <Footer />
     </>
