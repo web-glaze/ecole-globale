@@ -808,17 +808,17 @@ export default function Home() {
 
         {/* Bottom Navigation */}
         <motion.div
-          className="fixed bottom-0 z-50 w-full md:hidden bg-black/5 backdrop-blur-sm"
+          className="fixed bottom-0 z-50 w-full md:hidden bg-black/60 text-white backdrop-blur-md"
           animate={{
             y: 0,
           }}
         >
           <motion.div
-            className="mx-auto my-3 flex justify-around rounded-full bg-black/50 text-white backdrop-blur-md"
+            className="mx-auto my-3 flex justify-around "
             animate={{
-              maxWidth: compact ? "85%" : "95%",
-              paddingTop: compact ? 10 : 12,
-              paddingBottom: compact ? 10 : 12,
+              maxWidth: compact ? "85%" : "100%",
+              paddingTop: compact ? 4 : 7,
+              paddingBottom: compact ? 4 : 7,
             }}
             transition={{
               duration: 0.5,
@@ -828,7 +828,7 @@ export default function Home() {
               <Phone size={20} />
 
               {/* <AnimatePresence>{!compact && */}
-              <motion.span className="overflow-hidden whitespace-nowrap text-[12px] font-medium">Call Us</motion.span>
+              <motion.span className="overflow-hidden whitespace-nowrap text-[13px] font-medium">Call Us</motion.span>
               {/* } </AnimatePresence> */}
             </Link>
 
@@ -836,7 +836,7 @@ export default function Home() {
               <FaInstagram size={20} />
 
               {/* <AnimatePresence>{!compact && */}
-              <motion.span className="overflow-hidden whitespace-nowrap text-[12px] font-medium">Instagram</motion.span>
+              <motion.span className="overflow-hidden whitespace-nowrap text-[13px] font-medium">Instagram</motion.span>
               {/* } </AnimatePresence> */}
             </Link>
 
@@ -844,7 +844,7 @@ export default function Home() {
               <CalendarPlus size={20} />
 
               {/* <AnimatePresence>{!compact &&  */}
-              <motion.span className="overflow-hidden whitespace-nowrap text-[12px] font-medium">Enquire Now</motion.span>
+              <motion.span className="overflow-hidden whitespace-nowrap text-[13px] font-medium">Enquire Now</motion.span>
               {/* } </AnimatePresence> */}
             </Link>
           </motion.div>
