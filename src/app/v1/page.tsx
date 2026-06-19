@@ -469,7 +469,7 @@ export default function Home() {
                 <CarouselItem key={index} className="basis-[90%] md:basis-[45%] lg:basis-[30%] pl-4">
                   <div className="relative h-full">
                     <img src={slide.image} alt={slide.title} className="w-full aspect-video" />
-                    <Card className="w-[85%] m-auto -mt-6 z-10 relative p-5 text-center gap-0 h-full">
+                    <Card className="w-[85%] m-auto -mt-6 z-10 relative p-5 text-center gap-0 h-full rounded-none">
                       <p className="text-md mb-2">{slide.subtitle}</p>
                       <h3 className="text-xl mb-3 font-heading font-bold uppercase">{slide.title}</h3>
                       <h4 className="font-heading text-lg">{slide.description}</h4>
@@ -576,7 +576,7 @@ export default function Home() {
                 <CarouselContent className="-ml-0">
                   {testimonials.map((item, index) => (
                     <CarouselItem key={index} className="basis-[95%] md:basis-[45%] lg:basis-[30%] p-2 pl-2">
-                      <Card className="h-full border-0 bg-white p-4 hover:-translate-y-2 transition-all duration-300">
+                      <Card className="h-full border-0 bg-white p-4 hover:-translate-y-2 transition-all duration-300 rounded-none">
                         <CardContent className="flex h-full flex-col items-center p-0">
                           <div className="mb-5">
                             <img src="sara1.jpg" alt={item.name} className="h-24 w-24 rounded-full object-cover" />
@@ -637,7 +637,7 @@ export default function Home() {
 
                   return (
                     <CarouselItem key={step.id}>
-                      <Card className="border-0 overflow-hidden h-full p-0">
+                      <Card className="border-0 overflow-hidden h-full p-0 rounded-none">
                         <CardContent className="p-3">
                           <div className="flex items-center justify-between mb-2">
                             <Icon className="size-8 text-primary" />
@@ -655,7 +655,7 @@ export default function Home() {
                 })}
 
                 <CarouselItem>
-                  <Card className="border-0 h-full p-0">
+                  <Card className="border-0 h-full p-0 rounded-none">
                     <CardContent className="p-3">
                       <h3 className="mb-4 text-3xl font-bold font-heading text-gray-500 text-center">ENQUIRE NOW</h3>
 
