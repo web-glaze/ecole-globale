@@ -504,7 +504,7 @@ export default function Home() {
             <div className="w-48">
               <div className="h-[2px] bg-neutral-300">
                 <div
-                  className="h-[2px] bg-black transition-all duration-300"
+                  className="h-[2px] bg-[#916e27] transition-all duration-300"
                   style={{
                     width: `${(current / count) * 100}%`,
                   }}
@@ -517,7 +517,7 @@ export default function Home() {
             </button>
           </div>
           <div className="mt-2 text-center text-sm tracking-[0.2em]">
-            {String(current).padStart(2, "0")} / {String(count).padStart(2, "0")}
+            {String(current).padStart(2, "")} / {String(count).padStart(2, "")}
           </div>
         </section>
 
