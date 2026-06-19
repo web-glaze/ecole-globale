@@ -187,7 +187,7 @@ const steps = [
   },
 ];
 
-const heroSlides = ["/v1-hero-slider-2.jpg", "/v1-hero-slider-1.jpg", "/v1-hero-slider-3.jpg", "/v1-hero-slider-4.jpg"];
+const heroSlides = ["/v1-hero-slider-5.jpg", "/v1-hero-slider-6.jpg"];
 
 const videos = ["/ecole-instagram-slider.mp4", "/ecole-instagram-slider.mp4", "/ecole-instagram-slider.mp4"];
 
@@ -337,10 +337,10 @@ export default function Home() {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-transparent h-25" />
           <div className="absolute bottom-0 w-full bg-gradient-to-t from-white via-white/40 to-transparent h-25" />
-          <div className="container relative z-10 mx-auto flex items-center px-4">
-            <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-2 pt-32 pb-18 min-h-[calc(100dvh-68px)]">
+          <div className="container relative z-10 mx-auto flex items-center">
+            <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-2">
               {/* Left Content */}
-              <div className="max-w-2x flex flex-col justify-between gap-5">
+              <div className="max-w-2x flex-col justify-between gap-5 hidden">
                 <div className="flex flex-col justify-between hidden">
                   <img src="/ecole-hero-img.png" alt="" className="h-auto max-w-full drop-shadow-2xl" />
                   <div className="block text-center text-base max-w-[280px] mx-auto md:hidden">© 2026 ÉCOLE GLOBALE INTERNATIONAL GIRLS’ SCHOOL</div>
@@ -378,6 +378,40 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="block text-center text-base max-w-[280px] mx-auto md:hidden">© 2026 ÉCOLE GLOBALE INTERNATIONAL GIRLS’ SCHOOL</div>
+              </div>
+              <div className="max-w-2x flex flex-col justify-between gap-5">
+                <div className="relative">
+                  <Carousel
+                    setApi={heroSetApi}
+                    opts={{
+                      align: "start",
+                      loop: true,
+                    }}
+                  >
+                    <CarouselContent>
+                      {heroSlides.map((slide, index) => (
+                        <CarouselItem key={index} className="p-0">
+                          <div className="relative">
+                            <img src={slide} alt={`Slide ${index + 1}`} className="w-full object-cover min-h-screen" />
+
+                            {/* Optional Gradient Overlay */}
+                            <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/60 to-transparent" />
+                          </div>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                  </Carousel>
+
+                  <div className="absolute bottom-[80px] left-1/2 z-10 flex -translate-x-1/2 gap-2">
+                    {heroSlides.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => heroApi?.scrollTo(index)}
+                        className={`rounded-full transition-all duration-300 ${heroCurrent === index ? "h-2 w-8 bg-white" : "h-2 w-2 bg-white/50"}`}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
 
               {/* Right Form */}
