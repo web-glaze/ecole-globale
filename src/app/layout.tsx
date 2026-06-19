@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter, Manrope } from "next/font/google";
+import { Libre_Caslon_Text, Inter, Manrope } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
@@ -8,15 +8,17 @@ const manropeHeading = Manrope({
   variable: "--font-sans",
 });
 
-const cormorant = Cormorant_Garamond({
+const cormorant = Libre_Caslon_Text({
   subsets: ["latin"],
   variable: "--font-heading",
+  weight: "400",
+  style: "normal",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "No. 1 Girls Boarding school in Dehradun | Admissions 2026-27",
-  description:
-    "Exceptional academics, world-class faculty, and a nurturing environment. Admissions for 2026-27 are open at the best girls boarding school in Dehradun.",
+  description: "Exceptional academics, world-class faculty, and a nurturing environment. Admissions for 2026-27 are open at the best girls boarding school in Dehradun.",
   icons: {
     icon: "/favicon.png",
   },

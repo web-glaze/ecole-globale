@@ -16,57 +16,57 @@ import { FaInstagram, FaPhone } from "react-icons/fa6";
 
 const slides = [
   {
-    title: "About Us",
+    title: "Heading",
     subtitle: "Overview",
-    description: "In this era of progressive education, schools strive to provide holistic development for their students. Beyond delivering a curriculum...",
+    description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus dicta iure fuga!",
     image: "/main-home-slide-1.jpg",
     link: "#",
     link_text: "Know More",
   },
   {
-    title: "Our Team",
+    title: "Heading",
     subtitle: "Leadership",
-    description: "Meet the Team of the Ecole Globale International Girls School. This team makes sure none of the parents or student face any issue in the school...",
+    description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus dicta iure fuga!",
     image: "/home-slide-2.jpg",
     link: "#",
     link_text: "View All",
   },
   {
-    title: "Principal’s Message",
+    title: "Heading",
     subtitle: "Ms. Kanchan Khandke",
-    description: "In today’s world, torn by conflict, war, poverty, environmental degradation, and despair, we urgently need visionary leaders...",
+    description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus dicta iure fuga!",
     image: "home-slide-3.jpg",
     link: "#",
     link_text: "Read Full Message",
   },
   {
-    title: "Your Daughter is Safe Here ",
+    title: "Heading",
     subtitle: "Safety & Wellbeing",
-    description: "Every parent who places their daughter in a boarding school extends us their deepest trust...",
-    image: "/home-slide-4.jpg",
+    description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus dicta iure fuga!",
+    image: "home-slide-4.jpg",
     link: "#",
     link_text: "Learn More",
   },
   {
-    title: "Two World-Class Curricula. One Exceptional Campus.",
+    title: "Heading",
     subtitle: "Academic Excellence",
-    description: "Ecole Globale is the only girls-only residential school in Uttarakhand to offer both CBSE and Cambridge International Education...",
+    description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus dicta iure fuga!",
     image: "/home-slide-5.jpg",
     link: "#",
     link_text: "Explore Academics",
   },
   {
-    title: "Purpose Built For Excellence ",
+    title: "Heading",
     subtitle: "Campus & Facilities",
-    description: 'Not "world-class facilities" - specific ones. Every facility at Ecole is named, operated, and maintained to the highest standard.',
+    description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus dicta iure fuga!",
     image: "/home-slide-6.jpg",
     link: "#",
     link_text: "Take a Virtual Tour",
   },
   {
-    title: "Four Differentiators That Set Ecole Globale Apart ",
+    title: "Heading",
     subtitle: "Why Families Choose Ecole",
-    description: "Not the oldest name in Dehradun. The best-equipped, most transparent, and most outcomes-focused girls' residential school in the region...",
+    description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus dicta iure fuga!",
     image: "/home-slide-7.jpg",
     link: "#",
     link_text: "View Differentiators",
@@ -450,9 +450,11 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               <div>
-                <h5 className="text-2xl mb-2">Welcome to</h5>
-                <h3 className="text-3xl font-bold font-heading mb-3">Ecole Globale International Girls' School in Dehradun</h3>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati ab hic iste ullam, similique alias eaque quas temporibus expedita architecto.</p>
+                <h5 className="text-2xl mb-2 font-heading italic">Welcome to</h5>
+                <h3 className="text-3xl font-bold font-heading mb-3 uppercase">Ecole Globale</h3>
+                <p className="font-heading">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati ab hic iste ullam, similique alias eaque quas temporibus expedita.
+                </p>
               </div>
             </div>
           </div>
@@ -480,7 +482,7 @@ export default function Home() {
                     <Card className="w-full max-w-[300px] mx-auto relative z-10 p-5 text-center gap-0 rounded-none -mt-6">
                       <p className="text-md mb-2">{slide.subtitle}</p>
                       <h3 className="text-xl mb-3 font-heading font-bold uppercase">{slide.title}</h3>
-                      <h4 className="font-heading text-lg">{slide.description}</h4>
+                      <h4 className="font-heading text-base">{slide.description}</h4>
 
                       <div className="mt-5">
                         <Link href={slide.link} className="inline-block border-b-2 border-black pb-1 text-lg font-bold transition-all hover:border-primary">
@@ -817,7 +819,7 @@ export default function Home() {
 
         {/* Bottom Navigation */}
         <motion.div
-          className="fixed bottom-0 z-50 w-full md:hidden bg-black/60 text-white backdrop-blur-md"
+          className="fixed bottom-0 z-50 w-full md:hidden bg-gray-700 text-white backdrop-blur-md"
           animate={{
             y: 0,
           }}
