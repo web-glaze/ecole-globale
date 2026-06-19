@@ -8,7 +8,22 @@ import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, Car
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, Star, FileText, ClipboardCheck, School, Icon, Phone, Mail, CalendarPlus, Play, Pause } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Star,
+  FileText,
+  ClipboardCheck,
+  School,
+  Icon,
+  Phone,
+  Mail,
+  CalendarPlus,
+  Play,
+  Pause,
+  ArrowLeft,
+  ArrowRight,
+} from "lucide-react";
 import Footer from "@/components/footer";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -254,6 +269,14 @@ export default function Home() {
       video.pause();
       setPlayingIndex(null);
     }
+  };
+
+  const handlePrevVideo = () => {
+    videoApi?.scrollPrev();
+  };
+
+  const handleNextVideo = () => {
+    videoApi?.scrollNext();
   };
 
   const [compact, setCompact] = useState(false);
@@ -715,6 +738,15 @@ export default function Home() {
                   ))}
                 </CarouselContent>
               </Carousel>
+              <div className="-mt-3 flex justify-end gap-4 pr-4">
+                <button onClick={handlePrevVideo} className=" transition hover:scale-105">
+                  <ArrowLeft className="h-6 w-6" />
+                </button>
+
+                <button onClick={handleNextVideo} className=" transition hover:scale-105">
+                  <ArrowRight className="h-6 w-6" />
+                </button>
+              </div>
             </div>
           </div>
         </section>
