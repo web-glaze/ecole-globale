@@ -338,7 +338,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-transparent h-25" />
           <div className="absolute bottom-0 w-full bg-gradient-to-t from-white via-white/40 to-transparent h-25" />
           <div className="container relative z-10 mx-auto flex items-center px-4">
-            <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-2 pt-32 pb-18 min-h-screen">
+            <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-2 pt-32 pb-18 min-h-[calc(100dvh-68px)]">
               {/* Left Content */}
               <div className="max-w-2x flex flex-col justify-between gap-5">
                 <div className="flex flex-col justify-between hidden">
