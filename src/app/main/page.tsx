@@ -27,6 +27,7 @@ import {
 import Footer from "@/components/footer";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { FaInstagram, FaPhone } from "react-icons/fa6";
 
 const slides = [
   {
@@ -115,6 +116,48 @@ const testimonials = [
 ];
 
 const clientLogos = [
+  {
+    image: "/forbes-logo.png",
+  },
+  {
+    image: "/ttoi-logo.png",
+  },
+  {
+    image: "/brainfeed-logo.png",
+  },
+  {
+    image: "/harvard-logo.png",
+  },
+  {
+    image: "/gpts-logo.png",
+  },
+  {
+    image: "/nraoi-logo.png",
+  },
+  {
+    image: "/education-world-logo.png",
+  },
+  {
+    image: "/forbes-logo.png",
+  },
+  {
+    image: "/ttoi-logo.png",
+  },
+  {
+    image: "/brainfeed-logo.png",
+  },
+  {
+    image: "/harvard-logo.png",
+  },
+  {
+    image: "/gpts-logo.png",
+  },
+  {
+    image: "/nraoi-logo.png",
+  },
+  {
+    image: "/education-world-logo.png",
+  },
   {
     image: "/forbes-logo.png",
   },
@@ -751,22 +794,28 @@ export default function Home() {
         </section>
 
         {/* Brand Carousel */}
-        <section className="bg-white py-8 pb-24">
-          <div className="container mx-auto px-4">
-            <Carousel
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-            >
-              <CarouselContent>
-                {clientLogos.map((item, index) => (
-                  <CarouselItem key={index} className="basis-[36%] md:basis-[45%] lg:basis-[17%]">
-                    <img src={item.image} />
-                  </CarouselItem>
+        <section className="bg-white py-8 pb-24 overflow-hidden">
+          <div className="container mx-auto">
+            <div className="relative overflow-hidden">
+              <div className="absolute left-0 top-0 z-10 h-full w-24 bg-gradient-to-r from-white to-transparent" />
+              <div className="absolute right-0 top-0 z-10 h-full w-24 bg-gradient-to-l from-white to-transparent" />
+
+              <motion.div
+                className="flex gap-12"
+                animate={{ x: ["0%", "-3150px"] }}
+                transition={{
+                  duration: 30,
+                  ease: "linear",
+                  repeat: Infinity,
+                }}
+              >
+                {[...clientLogos, ...clientLogos].map((item, index) => (
+                  <div key={index} className="shrink-0">
+                    <img src={item.image} className="h-16 md:h-20 w-auto object-contain" alt="" />
+                  </div>
                 ))}
-              </CarouselContent>
-            </Carousel>
+              </motion.div>
+            </div>
           </div>
         </section>
 
@@ -806,8 +855,8 @@ export default function Home() {
               </AnimatePresence>
             </Link>
 
-            <Link href="mailto:ecoleglobale@gmail.com" className="flex items-center justify-center gap-2 px-3">
-              <Mail size={20} />
+            <Link href="https://www.instagram.com/ecole_girls_school" className="flex items-center justify-center gap-2 px-3" target="_blank">
+              <FaInstagram size={20} />
 
               <AnimatePresence>
                 {!compact && (
@@ -818,7 +867,7 @@ export default function Home() {
                     transition={{ duration: 0.1 }}
                     className="overflow-hidden whitespace-nowrap text-[13px] font-medium"
                   >
-                    Mail Us
+                    Instagram
                   </motion.span>
                 )}
               </AnimatePresence>
