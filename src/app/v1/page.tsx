@@ -187,7 +187,7 @@ const steps = [
   },
 ];
 
-const heroSlides = ["/v1-hero-slider-6.jpg", "/v1-hero-slider-5.jpg"];
+const heroSlides = ["/v1-hero-slider-5.jpg"];
 
 const videos = ["/ecole-instagram-slider.mp4", "/ecole-instagram-slider.mp4", "/ecole-instagram-slider.mp4"];
 
@@ -464,17 +464,26 @@ export default function Home() {
             }}
             className="w-full mt-10"
           >
-            <CarouselContent>
+            <CarouselContent className="">
               {slides.map((slide, index) => (
-                <CarouselItem key={index} className="basis-[90%] md:basis-[45%] lg:basis-[30%] pl-4">
-                  <div className="relative h-full">
-                    <img src={slide.image} alt={slide.title} className="w-full aspect-video" />
-                    <Card className="w-[85%] m-auto -mt-6 z-10 relative p-5 text-center gap-0 h-full rounded-none">
+                <CarouselItem key={index} className="basis-full md:basis-[45%] lg:basis-[30%] pr-4">
+                  <div className="relative h-full flex flex-col">
+                    {/* Animated Image */}
+                    <div className={`absolute top-0 left-0 w-full transition-all duration-500 aspect-video z-0 ${current === index ? "translate-y-14" : "translate-y-0"}`}>
+                      <img src={slide.image} alt={slide.title} className="w-full aspect-video -ml-10" />
+                    </div>
+
+                    {/* Spacer for image height */}
+                    <div className="aspect-video " />
+
+                    {/* Fixed Card */}
+                    <Card className="w-full max-w-[300px] mx-auto relative z-10 p-5 text-center gap-0 rounded-none -mt-6">
                       <p className="text-md mb-2">{slide.subtitle}</p>
                       <h3 className="text-xl mb-3 font-heading font-bold uppercase">{slide.title}</h3>
                       <h4 className="font-heading text-lg">{slide.description}</h4>
+
                       <div className="mt-5">
-                        <Link href={slide.link} className="w-auto font-bold inline-block border-b-2 border-black pb-1 text-lg transition-all hover:border-primary">
+                        <Link href={slide.link} className="inline-block border-b-2 border-black pb-1 text-lg font-bold transition-all hover:border-primary">
                           {slide.link_text}
                         </Link>
                       </div>
@@ -487,7 +496,7 @@ export default function Home() {
 
           <div className="mt-5 flex justify-center items-center ">
             <button onClick={() => api?.scrollPrev()} className="transition hover:opacity-70">
-              <ChevronLeft className="size-8" />
+              <ChevronLeft className="size-6" />
             </button>
 
             <div className="w-48">
@@ -502,7 +511,7 @@ export default function Home() {
             </div>
 
             <button onClick={() => api?.scrollNext()} className="transition hover:opacity-70">
-              <ChevronRight className="size-8" />
+              <ChevronRight className="size-6" />
             </button>
           </div>
           <div className="mt-2 text-center text-sm tracking-[0.2em]">
