@@ -187,7 +187,7 @@ const steps = [
   },
 ];
 
-const heroSlides = ["/v1-hero-slider-5.jpg", "/v1-hero-slider-6.jpg"];
+const heroSlides = ["/v1-hero-slider-6.jpg", "/v1-hero-slider-5.jpg"];
 
 const videos = ["/ecole-instagram-slider.mp4", "/ecole-instagram-slider.mp4", "/ecole-instagram-slider.mp4"];
 
