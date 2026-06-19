@@ -699,7 +699,6 @@ export default function Home() {
                             videoRefs.current[index] = el;
                           }}
                           src={video}
-                          muted
                           loop
                           playsInline
                           preload="metadata"
