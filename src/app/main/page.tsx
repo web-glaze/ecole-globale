@@ -8,7 +8,7 @@ import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, Car
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, Star, FileText, ClipboardCheck, School, Icon, Phone, Mail, CalendarPlus } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star, FileText, ClipboardCheck, School, Icon, Phone, Mail, CalendarPlus, Play, Pause } from "lucide-react";
 import Footer from "@/components/footer";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -18,7 +18,7 @@ const slides = [
     title: "About Us",
     subtitle: "Overview",
     description:
-      "In this era of progressive education, schools strive to provide holistic development for their students. Beyond delivering a curriculum that encompasses academics...",
+      "In this era of progressive education, schools strive to provide holistic development for their students. Beyond delivering a curriculum...",
     image: "/main-home-slide-1.jpg",
     link: "#",
     link_text: "Know More",
@@ -35,8 +35,7 @@ const slides = [
   {
     title: "Principal’s Message",
     subtitle: "Ms. Kanchan Khandke",
-    description:
-      "In today’s world, torn by conflict, war, poverty, environmental degradation, and despair, we urgently need visionary leaders to guide us toward hope and renewal...",
+    description: "In today’s world, torn by conflict, war, poverty, environmental degradation, and despair, we urgently need visionary leaders...",
     image: "home-slide-3.jpg",
     link: "#",
     link_text: "Read Full Message",
@@ -44,8 +43,7 @@ const slides = [
   {
     title: "Your Daughter is Safe Here ",
     subtitle: "Safety & Wellbeing",
-    description:
-      "Every parent who places their daughter in a boarding school extends us their deepest trust. We take that with absolute seriousness...",
+    description: "Every parent who places their daughter in a boarding school extends us their deepest trust...",
     image: "/home-slide-4.jpg",
     link: "#",
     link_text: "Learn More",
@@ -53,8 +51,7 @@ const slides = [
   {
     title: "Two World-Class Curricula. One Exceptional Campus.",
     subtitle: "Academic Excellence",
-    description:
-      "Ecole Globale is the only girls-only residential school in Uttarakhand to offer both CBSE and Cambridge International Education on a single campus...",
+    description: "Ecole Globale is the only girls-only residential school in Uttarakhand to offer both CBSE and Cambridge International Education...",
     image: "/home-slide-5.jpg",
     link: "#",
     link_text: "Explore Academics",
@@ -209,28 +206,55 @@ export default function Home() {
 
   const [videoApi, setVideoApi] = useState<CarouselApi>();
   const [currentVideo, setCurrentVideo] = useState(0);
+  const [playingIndex, setPlayingIndex] = useState<number | null>(null);
+
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   useEffect(() => {
     if (!videoApi) return;
 
-    setCurrentVideo(videoApi.selectedScrollSnap());
+    const handleSelect = () => {
+      const selected = videoApi.selectedScrollSnap();
 
-    videoApi.on("select", () => {
-      setCurrentVideo(videoApi.selectedScrollSnap());
-    });
+      videoRefs.current.forEach((video) => {
+        if (video) {
+          video.pause();
+        }
+      });
+
+      setPlayingIndex(null);
+      setCurrentVideo(selected);
+    };
+
+    handleSelect();
+
+    videoApi.on("select", handleSelect);
+
+    return () => {
+      videoApi.off("select", handleSelect);
+    };
   }, [videoApi]);
 
-  useEffect(() => {
-    videoRefs.current.forEach((video, index) => {
-      if (!video) return;
+  const toggleVideo = (index: number) => {
+    if (index !== currentVideo) return;
 
-      if (index !== currentVideo) {
-        video.pause();
-        video.currentTime = 0;
-      }
-    });
-  }, [currentVideo]);
+    const video = videoRefs.current[index];
+    if (!video) return;
+
+    if (video.paused) {
+      videoRefs.current.forEach((v, i) => {
+        if (i !== index && v) {
+          v.pause();
+        }
+      });
+
+      video.play();
+      setPlayingIndex(index);
+    } else {
+      video.pause();
+      setPlayingIndex(null);
+    }
+  };
 
   const [compact, setCompact] = useState(false);
   const { scrollY } = useScroll();
@@ -362,61 +386,61 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <Carousel
-              setApi={setApi}
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              className="w-full mt-10"
-            >
-              <CarouselContent>
-                {slides.map((slide, index) => (
-                  <CarouselItem key={index} className="basis-[95%] md:basis-[45%] lg:basis-[30%] pl-3">
-                    <div className="relative h-full">
-                      <img src={slide.image} alt={slide.title} className="w-full aspect-video" />
-                      <Card className="w-full m-auto z-10 relative p-5 text-center gap-0 h-full">
-                        <p className="text-md mb-2">{slide.subtitle}</p>
-                        <h3 className="text-xl mb-3 font-heading font-bold uppercase">{slide.title}</h3>
-                        <h4 className="font-heading text-lg">{slide.description}</h4>
-                        <div className="mt-5">
-                          <Link
-                            href={slide.link}
-                            className="w-auto font-bold inline-block border-b-2 border-black pb-1 text-lg transition-all hover:border-primary"
-                          >
-                            {slide.link_text}
-                          </Link>
-                        </div>
-                      </Card>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </Carousel>
+          </div>
+          <Carousel
+            setApi={setApi}
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full mt-10"
+          >
+            <CarouselContent>
+              {slides.map((slide, index) => (
+                <CarouselItem key={index} className="basis-[90%] md:basis-[45%] lg:basis-[30%] pl-4">
+                  <div className="relative h-full">
+                    <img src={slide.image} alt={slide.title} className="w-full aspect-video" />
+                    <Card className="w-[85%] m-auto -mt-6 z-10 relative p-5 text-center gap-0 h-full">
+                      <p className="text-md mb-2">{slide.subtitle}</p>
+                      <h3 className="text-xl mb-3 font-heading font-bold uppercase">{slide.title}</h3>
+                      <h4 className="font-heading text-lg">{slide.description}</h4>
+                      <div className="mt-5">
+                        <Link
+                          href={slide.link}
+                          className="w-auto font-bold inline-block border-b-2 border-black pb-1 text-lg transition-all hover:border-primary"
+                        >
+                          {slide.link_text}
+                        </Link>
+                      </div>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
 
-            <div className="mt-5 flex justify-center items-center ">
-              <button onClick={() => api?.scrollPrev()} className="transition hover:opacity-70">
-                <ChevronLeft className="size-8" />
-              </button>
+          <div className="mt-5 flex justify-center items-center ">
+            <button onClick={() => api?.scrollPrev()} className="transition hover:opacity-70">
+              <ChevronLeft className="size-8" />
+            </button>
 
-              <div className="w-48">
-                <div className="h-[2px] bg-neutral-300">
-                  <div
-                    className="h-[2px] bg-black transition-all duration-300"
-                    style={{
-                      width: `${(current / count) * 100}%`,
-                    }}
-                  />
-                </div>
+            <div className="w-48">
+              <div className="h-[2px] bg-neutral-300">
+                <div
+                  className="h-[2px] bg-black transition-all duration-300"
+                  style={{
+                    width: `${(current / count) * 100}%`,
+                  }}
+                />
               </div>
+            </div>
 
-              <button onClick={() => api?.scrollNext()} className="transition hover:opacity-70">
-                <ChevronRight className="size-8" />
-              </button>
-            </div>
-            <div className="mt-2 text-center text-sm tracking-[0.2em]">
-              {String(current).padStart(2, "0")} / {String(count).padStart(2, "0")}
-            </div>
+            <button onClick={() => api?.scrollNext()} className="transition hover:opacity-70">
+              <ChevronRight className="size-8" />
+            </button>
+          </div>
+          <div className="mt-2 text-center text-sm tracking-[0.2em]">
+            {String(current).padStart(2, "0")} / {String(count).padStart(2, "0")}
           </div>
         </section>
 
@@ -643,32 +667,49 @@ export default function Home() {
               >
                 <CarouselContent className="py-20">
                   {videos.map((video, index) => (
-                    <CarouselItem key={index} className={`basis-[60%] pl-0 md:basis-[55%] ${currentVideo === index ? "z-20" : "z-0"}`}>
+                    <CarouselItem key={index} className={`basis-[50%] pl-0 md:basis-[55%] ${currentVideo === index ? "z-20" : "z-0"}`}>
                       <div
-                        className={`relative transition-all duration-500 border-8 border-white shadow-[0_0px_10px_rgba(0,0,0,0.25)]  ${currentVideo === index ? "scale-120" : "scale-100"}`}
+                        className={`relative transition-all duration-500 border-6 border-white shadow-[0_0px_10px_rgba(0,0,0,0.25)]  ${currentVideo === index ? "scale-[1.2]" : "scale-[.8]"}`}
                       >
                         <video
                           ref={(el) => {
                             videoRefs.current[index] = el;
                           }}
                           src={video}
-                          controls={currentVideo === index}
                           muted
                           loop
                           playsInline
-                          className={`w-full ${currentVideo !== index ? "pointer-events-none" : ""}`}
-                          onPlay={() => {
-                            if (currentVideo !== index) return;
-
-                            videoRefs.current.forEach((video, i) => {
-                              if (i !== index && video) {
-                                video.pause();
-                                video.currentTime = 0;
-                              }
-                            });
-                          }}
-                          poster="poster.png"
+                          preload="metadata"
+                          poster="/poster.png"
+                          controls={false}
+                          className="w-full cursor-pointer"
+                          onClick={() => toggleVideo(index)}
+                          onPlay={() => setPlayingIndex(index)}
+                          onPause={() => setPlayingIndex(null)}
                         />
+
+                        {/* Full Overlay Click Area */}
+                        <div className="absolute inset-0 cursor-pointer" onClick={() => toggleVideo(index)} />
+
+                        {/* Center Play Button */}
+                        {playingIndex !== index && currentVideo === index && (
+                          <button
+                            onClick={() => toggleVideo(index)}
+                            className="absolute left-1/2 top-1/2 z-20 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 backdrop-blur-sm"
+                          >
+                            <Play className="h-5 w-5 text-white fill-white" />
+                          </button>
+                        )}
+
+                        {/* Bottom Right Pause Button */}
+                        {playingIndex === index && (
+                          <button
+                            onClick={() => toggleVideo(index)}
+                            className="absolute bottom-4 right-4 z-20 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 backdrop-blur-sm"
+                          >
+                            <Pause className="h-3 w-3 text-white fill-white" />
+                          </button>
+                        )}
                       </div>
                     </CarouselItem>
                   ))}
@@ -713,8 +754,7 @@ export default function Home() {
               paddingBottom: compact ? 10 : 12,
             }}
             transition={{
-              duration: 0.35,
-              ease: [0.4, 0, 0.2, 1],
+              duration: 0.5,
             }}
           >
             <Link href="tel:+91-9557291888" className="flex items-center justify-center gap-2 px-3">
