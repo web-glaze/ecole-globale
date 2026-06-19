@@ -708,7 +708,7 @@ export default function Home() {
           <motion.div
             className="mx-auto my-3 flex justify-around rounded-full bg-black/50 text-white backdrop-blur-md"
             animate={{
-              maxWidth: compact ? "180px" : "80%",
+              maxWidth: compact ? "180px" : "90%",
               paddingTop: compact ? 10 : 12,
               paddingBottom: compact ? 10 : 12,
             }}
