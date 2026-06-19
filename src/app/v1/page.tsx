@@ -782,7 +782,7 @@ export default function Home() {
           <motion.div
             className="mx-auto my-3 flex justify-around rounded-full bg-black/50 text-white backdrop-blur-md"
             animate={{
-              maxWidth: compact ? "80%" : "95%",
+              maxWidth: compact ? "85%" : "95%",
               paddingTop: compact ? 10 : 12,
               paddingBottom: compact ? 10 : 12,
             }}
@@ -793,19 +793,25 @@ export default function Home() {
             <Link href="tel:+91-9557291888" className="flex items-center justify-center gap-2 px-3">
               <Phone size={20} />
 
-              <AnimatePresence>{!compact && <motion.span className="overflow-hidden whitespace-nowrap text-[13px] font-medium">Call Us</motion.span>}</AnimatePresence>
+              {/* <AnimatePresence>{!compact && */}
+              <motion.span className="overflow-hidden whitespace-nowrap text-[12px] font-medium">Call Us</motion.span>
+              {/* } </AnimatePresence> */}
             </Link>
 
             <Link href="https://www.instagram.com/ecole_girls_school" className="flex items-center justify-center gap-2 px-3" target="_blank">
               <FaInstagram size={20} />
 
-              <AnimatePresence>{!compact && <motion.span className="overflow-hidden whitespace-nowrap text-[13px] font-medium">Instagram</motion.span>}</AnimatePresence>
+              {/* <AnimatePresence>{!compact && */}
+              <motion.span className="overflow-hidden whitespace-nowrap text-[12px] font-medium">Instagram</motion.span>
+              {/* } </AnimatePresence> */}
             </Link>
 
             <Link href="#enquire-now" className="flex items-center justify-center gap-2 px-3">
               <CalendarPlus size={20} />
 
-              <AnimatePresence>{!compact && <motion.span className="overflow-hidden whitespace-nowrap text-[13px] font-medium">Enquire Now</motion.span>}</AnimatePresence>
+              {/* <AnimatePresence>{!compact &&  */}
+              <motion.span className="overflow-hidden whitespace-nowrap text-[12px] font-medium">Enquire Now</motion.span>
+              {/* } </AnimatePresence> */}
             </Link>
           </motion.div>
         </motion.div>
