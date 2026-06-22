@@ -8,7 +8,7 @@ const manropeHeading = Manrope({
   variable: "--font-sans",
 });
 
-const cormorant = Libre_Caslon_Text({
+const libreCaslonText = Libre_Caslon_Text({
   subsets: ["latin"],
   variable: "--font-heading",
   weight: "400",
@@ -30,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("h-full", "antialiased", "font-sans", cormorant.variable, manropeHeading.variable)}>
+    <html lang="en" className={cn("h-full", "antialiased", "font-sans", libreCaslonText.variable, manropeHeading.variable)}>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

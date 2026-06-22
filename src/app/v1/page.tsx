@@ -434,9 +434,9 @@ export default function Home() {
 
         {/* Only Mobile View Form */}
         <div id="enquire-now" className="md:hidden w-full max-w-md rounded-2xl bg-white p-8">
-          <h3 className="mb-4 text-3xl font-bold font-heading text-gray-500 text-center">ENQUIRE NOW</h3>
+          <h3 className="mb-4 text-2xl font-bold font-heading text-gray-500 text-center">ENQUIRE NOW</h3>
 
-          <form className="space-y-4">
+          <form className="space-y-4 font-heading">
             <Input className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" placeholder="Your Name" />
             <Input className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" type="tel" placeholder="Phone Number" />
             <Input className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" type="email" placeholder="Email Address" />
@@ -452,7 +452,7 @@ export default function Home() {
               <div>
                 <h5 className="text-2xl mb-2 font-heading italic">Welcome to</h5>
                 <h3 className="text-3xl font-bold font-heading mb-3 uppercase">Ecole Globale</h3>
-                <p className="font-heading">
+                <p className="font-heading  text-sm">
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati ab hic iste ullam, similique alias eaque quas temporibus expedita.
                 </p>
               </div>
@@ -468,24 +468,25 @@ export default function Home() {
           >
             <CarouselContent className="">
               {slides.map((slide, index) => (
-                <CarouselItem key={index} className="basis-full md:basis-[45%] lg:basis-[30%] pr-4">
+                <CarouselItem key={index} className="basis-full md:basis-[45%] lg:basis-[30%] pr-3">
                   <div className="relative h-full flex flex-col">
                     {/* Animated Image */}
-                    <div className={`absolute top-0 left-0 w-full transition-all duration-500 aspect-video z-0 ${current === index ? "translate-y-14" : "translate-y-0"}`}>
-                      <img src={slide.image} alt={slide.title} className="w-full aspect-video -ml-10" />
+                    <div className={`absolute top-0 left-0 w-full transition-all duration-1000 aspect-3/2 z-0 ${current === index ? "translate-y-14" : "translate-y-0"}`}>
+                      <img src={slide.image} alt={slide.title} className="w-full aspect-3/2 -ml-8 object-cover" />
                     </div>
 
                     {/* Spacer for image height */}
-                    <div className="aspect-video " />
+                    <div className="aspect-3/2 " />
 
                     {/* Fixed Card */}
-                    <Card className="w-full max-w-[300px] mx-auto relative z-10 p-5 text-center gap-0 rounded-none -mt-6">
+                    <Card className="w-full max-w-[270px] mx-auto relative z-10 py-8 px-5 text-center gap-0 rounded-none -mt-6 overflow-visible mb-2">
+                      <div className="absolute -top-1 -left-1 w-[calc(100%+8px)] h-[calc(100%+8px)] border border-[#916e27] pointer-events-none" />
                       <p className="text-md mb-2">{slide.subtitle}</p>
                       <h3 className="text-xl mb-3 font-heading font-bold uppercase">{slide.title}</h3>
                       <h4 className="font-heading text-base">{slide.description}</h4>
 
-                      <div className="mt-5">
-                        <Link href={slide.link} className="inline-block border-b-2 border-black pb-1 text-lg font-bold transition-all hover:border-primary">
+                      <div className="mt-3">
+                        <Link href={slide.link} className="inline-block border-b-2 border-black pb-1 text-base font-bold transition-all hover:border-primary">
                           {slide.link_text}
                         </Link>
                       </div>
@@ -501,15 +502,18 @@ export default function Home() {
               <ChevronLeft className="size-6" />
             </button>
 
-            <div className="w-48">
-              <div className="h-[2px] bg-neutral-300">
-                <div
-                  className="h-[2px] bg-[#916e27] transition-all duration-300"
-                  style={{
-                    width: `${(current / count) * 100}%`,
-                  }}
-                />
-              </div>
+            <div className="relative w-48 h-[6px] flex items-center">
+              {/* Base line */}
+              <div className="absolute inset-x-0 h-px bg-neutral-300" />
+
+              {/* Active indicator */}
+              <div
+                className="absolute h-[5px] bg-[#916e27] transition-all duration-300"
+                style={{
+                  width: `${100 / count}%`,
+                  left: `${((current - 1) * 100) / count}%`,
+                }}
+              />
             </div>
 
             <button onClick={() => api?.scrollNext()} className="transition hover:opacity-70">
@@ -529,33 +533,33 @@ export default function Home() {
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
                 <img src="/featured-5.png" alt="" className="h-[220px] w-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">Life at Ecole</h3>
+                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">Life at Ecole</h3>
               </div>
 
               <div className="relative row-span-2 overflow-hidden">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
                 <img src="/featured-2.jpg" alt="" className="h-full w-full object-cover object-[55%]" />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">Athletic Excellence</h3>
+                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">Athletic Excellence</h3>
               </div>
 
               <div className="relative overflow-hidden">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
                 <img src="/featured-1.png" alt="" className="h-[220px] w-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">Creative Pursuits</h3>
+                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">Creative Pursuits</h3>
               </div>
               <div className="relative overflow-hidden">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
                 <img src="/featured-4.png" alt="" className="h-[220px] w-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">Culture & Traditions</h3>
+                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">Culture & Traditions</h3>
               </div>
               <div className="relative overflow-hidden">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
                 <img src="/featured-6.jpg" alt="" className="h-[220px] w-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">The Women We’ve Shaped</h3>
+                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">The Women We’ve Shaped</h3>
               </div>
               <div className="relative col-span-2 overflow-hidden h-[220px]">
                 <iframe
@@ -567,7 +571,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-black/20" />
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
 
-                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">Explore Our Campus</h3>
+                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">Explore Our Campus</h3>
               </div>
             </div>
           </div>
@@ -576,7 +580,7 @@ export default function Home() {
         {/* Testimonial or Review Section */}
         <section className="bg-white py-8">
           <div className="container mx-auto px-4">
-            <h3 className="mb-4 text-3xl font-bold font-heading text-center">Words from Parents: Who Matter Most</h3>
+            <h3 className="mb-4 text-2xl font-bold font-heading text-center">Words from Parents: Who Matter Most</h3>
             <div className="pt-2">
               <Carousel
                 opts={{
@@ -597,7 +601,7 @@ export default function Home() {
 
                           <p className="mb-5 text-muted-foreground">{item.title}</p>
 
-                          <p className="mb-6 text-center flex-1 leading-relaxed text-muted-foreground">"{item.review}"</p>
+                          <p className="mb-6 text-center flex-1 leading-relaxed font-heading">"{item.review}"</p>
 
                           <div className="flex items-center gap-1">
                             {[...Array(item.rating)].map((_, i) => (
@@ -616,7 +620,7 @@ export default function Home() {
 
         {/* Three Step Section */}
         <section className="bg-gray-200 py-8">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 font-heading">
             <Carousel
               setApi={setAdmissionApi}
               opts={{
@@ -631,12 +635,12 @@ export default function Home() {
                       Admissions 2026–27
                     </Badge>
 
-                    <h2 className="font-heading text-3xl md:text-5xl font-bold tracking-tight">
+                    <h2 className="font-heading text-2xl md:text-5xl font-bold tracking-tight">
                       Three Steps to Joining
                       <span className="block">Ecole Globale</span>
                     </h2>
 
-                    <p className="mt-3 text-md leading-relaxed">
+                    <p className="mt-3 text-sm leading-relaxed font-heading">
                       We admit girls from Class IV to Class XII. Our admissions process is transparent, rigorous, and respectful of your time. Applications for NRI and
                       international students are welcome throughout the year.
                     </p>
@@ -658,7 +662,7 @@ export default function Home() {
 
                           <h3 className="font-heading text-2xl font-bold mb-4">{step.title}</h3>
 
-                          <p className="leading-relaxed text-muted-foreground">{step.description}</p>
+                          <p className="leading-relaxed">{step.description}</p>
                         </CardContent>
                       </Card>
                     </CarouselItem>
@@ -668,7 +672,7 @@ export default function Home() {
                 <CarouselItem>
                   <Card className="border-0 h-full p-0 rounded-none">
                     <CardContent className="p-3">
-                      <h3 className="mb-4 text-3xl font-bold font-heading text-gray-500 text-center">ENQUIRE NOW</h3>
+                      <h3 className="mb-4 text-2xl font-bold font-heading text-gray-500 text-center">ENQUIRE NOW</h3>
 
                       <form className="space-y-4">
                         <Input className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" placeholder="Your Name" />
