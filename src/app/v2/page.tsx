@@ -433,7 +433,7 @@ export default function Home() {
           <div className="bg-gray-200 py-8 px-4 rounded">
             {/* Only Mobile View Form */}
             <div id="enquire-now" className="md:hidden w-full max-w-md mb-12">
-              <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-red-700 via-red-900 to-rose-800 bg-clip-text text-transparent">ENQUIRE NOW</h3>
+              <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-red-600 via-red-900 to-rose-900 bg-clip-text text-transparent">ENQUIRE NOW</h3>
               <div ref={ref} className="mb-12">
                 {lines.map((line, index) => {
                   const start = index * 0.3;
