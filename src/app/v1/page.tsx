@@ -196,10 +196,6 @@ export default function Home() {
   const [current, setCurrent] = useState(1);
   const [count, setCount] = useState(0);
 
-  const [heroApi, heroSetApi] = useState<CarouselApi>();
-  const [heroCurrent, heroSetCurrent] = useState(1);
-  const [heroCount, heroSetCount] = useState(0);
-
   const [admissionApi, setAdmissionApi] = useState<CarouselApi>();
   const [admissionCurrent, setAdmissionCurrent] = useState(1);
   const [admissionCount, setAdmissionCount] = useState(0);
@@ -219,6 +215,10 @@ export default function Home() {
       setAdmissionCurrent(admissionApi.selectedScrollSnap() + 1);
     });
   }, [api, admissionApi]);
+
+  const [heroApi, heroSetApi] = useState<CarouselApi>();
+  const [heroCurrent, heroSetCurrent] = useState(1);
+  const [heroCount, heroSetCount] = useState(0);
 
   useEffect(() => {
     if (!heroApi) return;
@@ -471,7 +471,7 @@ export default function Home() {
                 <CarouselItem key={index} className="basis-full md:basis-[45%] lg:basis-[30%] pr-3">
                   <div className="relative h-full flex flex-col">
                     {/* Animated Image */}
-                    <div className={`absolute top-0 left-0 w-full transition-all duration-1000 aspect-3/2 z-0 ${current === index ? "translate-y-14" : "translate-y-0"}`}>
+                    <div className={`absolute top-0 left-0 w-full aspect-3/2 z-0 transition-all duration-1000 ${current - 1 === index ? "translate-y-0" : "translate-y-14"}`}>
                       <img src={slide.image} alt={slide.title} className="w-full aspect-3/2 -ml-8 object-cover" />
                     </div>
 
