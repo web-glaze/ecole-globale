@@ -433,6 +433,7 @@ export default function Home() {
           <div className="bg-gray-200 py-8 px-4 rounded">
             {/* Only Mobile View Form */}
             <div id="enquire-now" className="md:hidden w-full max-w-md mb-12">
+              <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-red-700 via-red-900 to-rose-800 bg-clip-text text-transparent">ENQUIRE NOW</h3>
               <div ref={ref} className="mb-12">
                 {lines.map((line, index) => {
                   const start = index * 0.3;
@@ -443,7 +444,7 @@ export default function Home() {
                   return (
                     <motion.h2
                       key={index}
-                      className="text-3xl font-semibold text-center text-transparent bg-clip-text"
+                      className="text-2xl font-semibold text-center text-transparent bg-clip-text"
                       style={{
                         backgroundImage: "linear-gradient(to right, #000 0%, #000 50%, #9CA3AF 50%, #9CA3AF 100%)",
                         backgroundSize: "200% 100%",
@@ -455,7 +456,7 @@ export default function Home() {
                   );
                 })}
               </div>
-              <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-red-700 via-red-900 to-rose-800 bg-clip-text text-transparent">ENQUIRE NOW</h3>
+
               <form className="space-y-4 font-heading text-center">
                 <Input className="bg-white rounded-md border-black text-black placeholder:text-black h-12" placeholder="Your Name" />
                 <Input className="bg-white rounded-md border-black text-black placeholder:text-black h-12" type="tel" placeholder="Phone Number" />
