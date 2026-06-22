@@ -461,7 +461,7 @@ export default function Home() {
                 <Input className="bg-white rounded-md border-black text-black placeholder:text-black h-12" type="tel" placeholder="Phone Number" />
                 <Input className="bg-white rounded-md border-black text-black placeholder:text-black h-12" type="email" placeholder="Email Address" />
 
-                <Button className="bg-black text-white rounded-md text-lg px-5 py-5 text-center">Submit Enquiry</Button>
+                <Button className="bg-black text-white rounded-none text-lg px-5 py-5 text-center">Submit Enquiry</Button>
               </form>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
