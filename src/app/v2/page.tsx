@@ -317,7 +317,7 @@ export default function Home() {
 
   const backgroundSize = useTransform(scrollYProgress, [0, 1], ["0% 100%", "100% 100%"]);
 
-  const lines = ["Lorem ipsum dolor sit amet", "consectetur adipisicing elit"];
+  const lines = ["Lorem ipsum dolor sit", "amet consectetur elit"];
   return (
     <>
       <Navbar />
@@ -442,9 +442,9 @@ export default function Home() {
                 return (
                   <motion.h2
                     key={index}
-                    className="text-2xl font-semibold text-center text-transparent bg-clip-text"
+                    className="text-3xl font-semibold text-center text-transparent bg-clip-text"
                     style={{
-                      backgroundImage: "linear-gradient(to right, #171a20 0%, #3e6ae1 50%, #9CA3AF 50%, #9CA3AF 100%)",
+                      backgroundImage: "linear-gradient(to right, #171a20 0%, #e13e3e 50%, #9CA3AF 50%, #9CA3AF 100%)",
                       backgroundSize: "200% 100%",
                       backgroundPositionX,
                     }}
