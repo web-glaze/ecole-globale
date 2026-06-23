@@ -432,7 +432,6 @@ export default function Home() {
         <section className="bg-gray-200 py-8">
           {/* Only Mobile View Form */}
           <div id="enquire-now" className="md:hidden w-full max-w-md mb-12 container mx-auto px-4">
-            <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-[linear-gradient(to_right,#171a20,#3e6ae1,#171a20)] bg-clip-text text-transparent">ENQUIRE NOW</h3>
             <div ref={ref} className="mb-10">
               {lines.map((line, index) => {
                 const start = index * 0.3;
@@ -445,7 +444,7 @@ export default function Home() {
                     key={index}
                     className="text-2xl font-semibold text-center text-transparent bg-clip-text"
                     style={{
-                      backgroundImage: "linear-gradient(to right, #000 0%, #000 50%, #9CA3AF 50%, #9CA3AF 100%)",
+                      backgroundImage: "linear-gradient(to right, #171a20 0%, #3e6ae1 50%, #9CA3AF 50%, #9CA3AF 100%)",
                       backgroundSize: "200% 100%",
                       backgroundPositionX,
                     }}
