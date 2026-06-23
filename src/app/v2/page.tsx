@@ -317,7 +317,7 @@ export default function Home() {
 
   const backgroundSize = useTransform(scrollYProgress, [0, 1], ["0% 100%", "100% 100%"]);
 
-  const lines = ["Lorem ipsum dolor sit amet consectetur.", "Delectus velit ab unde sit ex in numquam", "consequatur eius. Facilis, fugiat."];
+  const lines = ["Lorem ipsum dolor sit amet", "consectetur adipisicing elit"];
   return (
     <>
       <Navbar />
@@ -429,117 +429,115 @@ export default function Home() {
         </section>
 
         {/* Welcom About Section */}
-        <section className="bg-white p-3">
-          <div className="bg-gray-200 py-8 px-4 rounded">
-            {/* Only Mobile View Form */}
-            <div id="enquire-now" className="md:hidden w-full max-w-md mb-12">
-              <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-red-600 via-red-900 to-rose-900 bg-clip-text text-transparent">ENQUIRE NOW</h3>
-              <div ref={ref} className="mb-12">
-                {lines.map((line, index) => {
-                  const start = index * 0.3;
-                  const end = start + 0.3;
+        <section className="bg-gray-200 py-8">
+          {/* Only Mobile View Form */}
+          <div id="enquire-now" className="md:hidden w-full max-w-md mb-12 container mx-auto px-4">
+            <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-[linear-gradient(to_right,#171a20,#3e6ae1,#171a20)] bg-clip-text text-transparent">ENQUIRE NOW</h3>
+            <div ref={ref} className="mb-10">
+              {lines.map((line, index) => {
+                const start = index * 0.3;
+                const end = start + 0.3;
 
-                  const backgroundPositionX = useTransform(scrollYProgress, [start, end], ["100%", "0%"]);
+                const backgroundPositionX = useTransform(scrollYProgress, [start, end], ["100%", "0%"]);
 
-                  return (
-                    <motion.h2
-                      key={index}
-                      className="text-2xl font-semibold text-center text-transparent bg-clip-text"
-                      style={{
-                        backgroundImage: "linear-gradient(to right, #000 0%, #000 50%, #9CA3AF 50%, #9CA3AF 100%)",
-                        backgroundSize: "200% 100%",
-                        backgroundPositionX,
-                      }}
-                    >
-                      {line}
-                    </motion.h2>
-                  );
-                })}
-              </div>
-
-              <form className="space-y-4 font-heading text-center">
-                <Input className="bg-white rounded-md border-black text-black placeholder:text-black h-12" placeholder="Your Name" />
-                <Input className="bg-white rounded-md border-black text-black placeholder:text-black h-12" type="tel" placeholder="Phone Number" />
-                <Input className="bg-white rounded-md border-black text-black placeholder:text-black h-12" type="email" placeholder="Email Address" />
-
-                <Button className="bg-black text-white rounded-none text-lg px-5 py-5 text-center">Submit Enquiry</Button>
-              </form>
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              <div>
-                <h5 className="text-2xl mb-2 font-heading italic">Welcome to</h5>
-                <h3 className="text-3xl font-bold font-heading mb-3 uppercase">Ecole Globale</h3>
-                <p className="font-heading  text-sm">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati ab hic iste ullam, similique alias eaque quas temporibus expedita.
-                </p>
-              </div>
+                return (
+                  <motion.h2
+                    key={index}
+                    className="text-2xl font-semibold text-center text-transparent bg-clip-text"
+                    style={{
+                      backgroundImage: "linear-gradient(to right, #000 0%, #000 50%, #9CA3AF 50%, #9CA3AF 100%)",
+                      backgroundSize: "200% 100%",
+                      backgroundPositionX,
+                    }}
+                  >
+                    {line}
+                  </motion.h2>
+                );
+              })}
             </div>
 
-            <Carousel
-              setApi={setApi}
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              className="w-full mt-10"
-            >
-              <CarouselContent className="">
-                {slides.map((slide, index) => (
-                  <CarouselItem key={index} className="basis-full md:basis-[45%] lg:basis-[30%] pr-3">
-                    <div className="relative h-full flex flex-col">
-                      {/* Animated Image */}
-                      <div className={`absolute top-0 left-0 w-full aspect-3/2 z-0 transition-all duration-1000 ${current - 1 === index ? "translate-y-0" : "translate-y-14"}`}>
-                        <img src={slide.image} alt={slide.title} className="w-full aspect-3/2 -ml-8 object-cover" />
-                      </div>
+            <form className="space-y-4 font-heading text-center">
+              <Input className="bg-white rounded-md border-black text-black placeholder:text-black h-12" placeholder="Your Name" />
+              <Input className="bg-white rounded-md border-black text-black placeholder:text-black h-12" type="tel" placeholder="Phone Number" />
+              <Input className="bg-white rounded-md border-black text-black placeholder:text-black h-12" type="email" placeholder="Email Address" />
 
-                      {/* Spacer for image height */}
-                      <div className="aspect-3/2 " />
+              <Button className="bg-black text-white rounded-none text-lg px-5 py-5 text-center">Submit Enquiry</Button>
+            </form>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 container mx-auto px-4">
+            <div>
+              <h5 className="text-2xl mb-2 font-heading italic">Welcome to</h5>
+              <h3 className="text-3xl font-bold font-heading mb-3 uppercase">Ecole Globale</h3>
+              <p className="font-heading  text-sm">
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati ab hic iste ullam, similique alias eaque quas temporibus expedita.
+              </p>
+            </div>
+          </div>
 
-                      {/* Fixed Card */}
-                      <Card className="w-full max-w-[270px] mx-auto relative z-10 py-8 px-5 text-center gap-0 rounded-none -mt-6 overflow-visible mb-2">
-                        <div className="absolute -top-1 -left-1 w-[calc(100%+8px)] h-[calc(100%+8px)] border border-[#916e27] pointer-events-none" />
-                        <p className="text-md mb-2">{slide.subtitle}</p>
-                        <h3 className="text-xl mb-3 font-heading font-bold uppercase">{slide.title}</h3>
-                        <h4 className="font-heading text-base">{slide.description}</h4>
-
-                        <div className="mt-3">
-                          <Link href={slide.link} className="inline-block border-b-2 border-black pb-1 text-base font-bold transition-all hover:border-primary">
-                            {slide.link_text}
-                          </Link>
-                        </div>
-                      </Card>
+          <Carousel
+            setApi={setApi}
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full mt-10"
+          >
+            <CarouselContent className="">
+              {slides.map((slide, index) => (
+                <CarouselItem key={index} className="basis-full md:basis-[45%] lg:basis-[30%] pr-3">
+                  <div className="relative h-full flex flex-col">
+                    {/* Animated Image */}
+                    <div className={`absolute top-0 left-0 w-full aspect-3/2 z-0 transition-all duration-1000 ${current - 1 === index ? "translate-y-0" : "translate-y-14"}`}>
+                      <img src={slide.image} alt={slide.title} className="w-full aspect-3/2 -ml-8 object-cover" />
                     </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </Carousel>
 
-            <div className="mt-5 flex justify-center items-center ">
-              <button onClick={() => api?.scrollPrev()} className="transition hover:opacity-70">
-                <ChevronLeft className="size-6" />
-              </button>
+                    {/* Spacer for image height */}
+                    <div className="aspect-3/2 " />
 
-              <div className="relative w-48 h-[6px] flex items-center">
-                {/* Base line */}
-                <div className="absolute inset-x-0 h-px bg-neutral-300" />
+                    {/* Fixed Card */}
+                    <Card className="w-full max-w-[270px] mx-auto relative z-10 py-8 px-5 text-center gap-0 rounded-none -mt-6 overflow-visible mb-2">
+                      <div className="absolute -top-1 -left-1 w-[calc(100%+8px)] h-[calc(100%+8px)] border border-[#916e27] pointer-events-none" />
+                      <p className="text-md mb-2">{slide.subtitle}</p>
+                      <h3 className="text-xl mb-3 font-heading font-bold uppercase">{slide.title}</h3>
+                      <h4 className="font-heading text-base">{slide.description}</h4>
 
-                {/* Active indicator */}
-                <div
-                  className="absolute h-[5px] bg-[#916e27] transition-all duration-300"
-                  style={{
-                    width: `${100 / count}%`,
-                    left: `${((current - 1) * 100) / count}%`,
-                  }}
-                />
-              </div>
+                      <div className="mt-3">
+                        <Link href={slide.link} className="inline-block border-b-2 border-black pb-1 text-base font-bold transition-all hover:border-primary">
+                          {slide.link_text}
+                        </Link>
+                      </div>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
 
-              <button onClick={() => api?.scrollNext()} className="transition hover:opacity-70">
-                <ChevronRight className="size-6" />
-              </button>
+          <div className="mt-5 flex justify-center items-center ">
+            <button onClick={() => api?.scrollPrev()} className="transition hover:opacity-70">
+              <ChevronLeft className="size-6" />
+            </button>
+
+            <div className="relative w-48 h-[6px] flex items-center">
+              {/* Base line */}
+              <div className="absolute inset-x-0 h-px bg-neutral-300" />
+
+              {/* Active indicator */}
+              <div
+                className="absolute h-[5px] bg-[#916e27] transition-all duration-300"
+                style={{
+                  width: `${100 / count}%`,
+                  left: `${((current - 1) * 100) / count}%`,
+                }}
+              />
             </div>
-            <div className="mt-2 text-center text-sm tracking-[0.2em]">
-              {String(current).padStart(2, "")} / {String(count).padStart(2, "")}
-            </div>
+
+            <button onClick={() => api?.scrollNext()} className="transition hover:opacity-70">
+              <ChevronRight className="size-6" />
+            </button>
+          </div>
+          <div className="mt-2 text-center text-sm tracking-[0.2em]">
+            {String(current).padStart(2, "")} / {String(count).padStart(2, "")}
           </div>
         </section>
 
