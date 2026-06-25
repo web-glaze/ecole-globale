@@ -21,7 +21,8 @@ type NavbarProps = {
 
 export default function Navbar({ settings }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
-  const logo = settings?.logo?.url || "/logo.png";
+  // const logo = settings?.logo?.url || "/logo.png";
+  const logo = "/logo.png";
 
   useEffect(() => {
     const handleScroll = () => {
