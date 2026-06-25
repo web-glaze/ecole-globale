@@ -64,7 +64,7 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-700 text-white">
+    <footer className="bg-gray-600 text-white">
       <div className="container mx-auto px-4 py-10">
         <div className="flex flex-wrap items-center gap-6 mb-4 md:justify-start">
           <Link href="/">
@@ -73,8 +73,8 @@ export default function Footer() {
         </div>
 
         <div className="md:hidden">
-          <Accordion type="multiple" className="border-[#475265] rounded-sm overflow-hidden">
-            <AccordionItem value="quick-links" className="border-[#475265] data-open:bg-transparent">
+          <Accordion type="multiple" className="border-[#5c6674] rounded-sm overflow-hidden">
+            <AccordionItem value="quick-links" className="border-[#5c6674] data-open:bg-transparent">
               <AccordionTrigger className="text-white font-semibold text-sm px-4 py-3 hover:no-underline">Quick Links</AccordionTrigger>
               <AccordionContent className="h-auto">
                 <ul className="flex flex-col gap-2 mt-1">
@@ -89,7 +89,7 @@ export default function Footer() {
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="contact" className="border-[#475265] data-open:bg-transparent">
+            <AccordionItem value="contact" className="border-[#5c6674] data-open:bg-transparent">
               <AccordionTrigger className="text-white font-semibold text-sm px-4 py-3 hover:no-underline">Contact Details</AccordionTrigger>
               <AccordionContent className="h-auto">
                 <ul className="flex flex-col gap-3 mt-1">
@@ -184,7 +184,7 @@ export default function Footer() {
       <Separator className="bg-white/10" />
       <div className="container mx-auto px-4 py-4 pb-20 flex flex-col items-center gap-2 text-center text-sm text-white sm:flex-row sm:justify-between sm:text-left">
         <p className="max-w-[320px] mx-auto">
-          © <span className="pr-1">{new Date().getFullYear()}</span> Ecole Globale International Girls&apos; School. All rights reserved.
+          © <span className="pr-1">{new Date().getFullYear()}</span> Ecole Globale School.
         </p>
         <div className="flex gap-4">
           <Link href="/privacy-policy" className="hover:text-white transition-colors">
