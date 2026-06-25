@@ -1,6 +1,5 @@
 "use client";
 
-import Navbar from "@/components/navbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -9,10 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Star, FileText, ClipboardCheck, School, Icon, Phone, Mail, CalendarPlus, Play, Pause, ArrowLeft, ArrowRight } from "lucide-react";
-import Footer from "@/components/footer";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { FaInstagram, FaPhone } from "react-icons/fa6";
 
 const slides = [
   {
@@ -303,8 +299,6 @@ export default function Home() {
   const handleNextVideo = () => {
     videoApi?.scrollNext();
   };
-
-  const [compact, setCompact] = useState(false);
   const { scrollY } = useScroll();
   const lastScrollY = useRef(0);
 
@@ -320,8 +314,6 @@ export default function Home() {
   const lines = ["Lorem ipsum dolor sit", "amet consectetur elit"];
   return (
     <>
-      <Navbar />
-
       <main>
         {/* Hero Section */}
         <section id="hero-section" className="relative min-h-[580px] md:min-h-[700px] bg-cover bg-center bg-[#f2e9e6]">
@@ -463,6 +455,7 @@ export default function Home() {
               <Button className="bg-black text-white rounded-none text-lg px-5 py-5 text-center">Submit Enquiry</Button>
             </form>
           </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 container mx-auto px-4">
             <div>
               <h5 className="text-2xl mb-2 font-heading italic">Welcome to</h5>
@@ -835,50 +828,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-        {/* Bottom Navigation */}
-        <motion.div
-          className="fixed bottom-0 z-50 w-full md:hidden bg-gray-700 text-white backdrop-blur-md"
-          animate={{
-            y: 0,
-          }}
-        >
-          <motion.div
-            className="mx-auto my-3 flex justify-around "
-            animate={{
-              maxWidth: compact ? "85%" : "100%",
-              paddingTop: compact ? 4 : 7,
-              paddingBottom: compact ? 4 : 7,
-            }}
-            transition={{
-              duration: 0.5,
-            }}
-          >
-            <Link href="tel:+91-9557291888" className="flex items-center justify-center gap-2 px-3">
-              <Phone size={20} />
-
-              {/* <AnimatePresence>{!compact && */}
-              <motion.span className="overflow-hidden whitespace-nowrap text-[13px] font-medium">Call Us</motion.span>
-              {/* } </AnimatePresence> */}
-            </Link>
-
-            <Link href="https://www.instagram.com/ecole_girls_school" className="flex items-center justify-center gap-2 px-3" target="_blank">
-              <FaInstagram size={20} />
-
-              {/* <AnimatePresence>{!compact && */}
-              <motion.span className="overflow-hidden whitespace-nowrap text-[13px] font-medium">Instagram</motion.span>
-              {/* } </AnimatePresence> */}
-            </Link>
-
-            <Link href="#enquire-now" className="flex items-center justify-center gap-2 px-3">
-              <CalendarPlus size={20} />
-
-              {/* <AnimatePresence>{!compact &&  */}
-              <motion.span className="overflow-hidden whitespace-nowrap text-[13px] font-medium">Enquire Now</motion.span>
-              {/* } </AnimatePresence> */}
-            </Link>
-          </motion.div>
-        </motion.div>
       </main>
     </>
   );

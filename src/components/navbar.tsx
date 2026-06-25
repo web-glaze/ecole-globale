@@ -15,7 +15,11 @@ const navLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
-export default function Navbar() {
+type NavbarProps = {
+  settings: any;
+};
+
+export default function Navbar({ settings }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -28,34 +32,25 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   return (
-    <header
-      className={`absolute inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/40 backdrop-blur-md" : "bg-transparent"}`}
-      // className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-      //   scrolled ? "bg-background/40 backdrop-blur-md" : "bg-transparent"
-      // }`}
-    >
+    <header className={`absolute inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/40 backdrop-blur-md" : "bg-transparent"}`}>
       <div className="container mx-auto h-20 px-4">
         {/* Desktop */}
         <div className="hidden h-full items-center justify-between md:flex">
           {/* Logo */}
           {scrolled ? (
             <Link href="/">
-              <img src="/logo-dark.png" alt="Logo" width="220" />
+              <img src={settings.logo?.url} alt="Logo" width="220" />
             </Link>
           ) : (
             <Link href="/">
-              <img src="/logo.png" alt="Logo" width="220" />
+              <img src={settings.logo?.url} alt="Logo" width="220" />
             </Link>
           )}
 
           {/* Menu */}
           <nav className="flex items-center gap-8">
             {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`text-md font-medium transition-colors hover:text-primary ${scrolled ? "" : "text-white"}`}
-              >
+              <Link key={link.href} href={link.href} className={`text-md font-medium transition-colors hover:text-primary ${scrolled ? "" : "text-white"}`}>
                 {link.label}
               </Link>
             ))}
@@ -88,22 +83,22 @@ export default function Navbar() {
           {/* Logo Center */}
           {scrolled ? (
             <Link href="/">
-              <img src="/logo-dark.png" alt="Logo" width="200" />
+              <img src={settings.logo?.url} alt="Logo" width="200" />
             </Link>
           ) : (
             <Link href="/">
-              <img src="/logo.png" alt="Logo" width="200" />
+              <img src={settings.logo?.url} alt="Logo" width="200" />
             </Link>
           )}
 
           {/* Phone Icon */}
 
           {scrolled ? (
-            <a href="tel:+911234567890">
+            <a href={`tel:${settings.phone}`}>
               <Phone className="size-6 text-black" />
             </a>
           ) : (
-            <a href="tel:+911234567890">
+            <a href={`tel:${settings.phone}`}>
               <Phone className="size-6 text-white" />
             </a>
           )}
