@@ -324,8 +324,6 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
-
       <main>
         {/* Hero Section */}
         <section id="hero-section" className="relative min-h-[580px] md:min-h-[700px] bg-cover bg-center bg-[#f2e9e6]">

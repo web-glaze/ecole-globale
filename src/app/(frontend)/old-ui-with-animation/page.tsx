@@ -104,13 +104,7 @@ function TiltCard({ children, className = "" }: { children: React.ReactNode; cla
   }, [mx, my]);
 
   return (
-    <motion.div
-      ref={cardRef}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-      style={{ rotateX: sRotX, rotateY: sRotY, transformPerspective: 900 }}
-      className={className}
-    >
+    <motion.div ref={cardRef} onMouseMove={onMove} onMouseLeave={onLeave} style={{ rotateX: sRotX, rotateY: sRotY, transformPerspective: 900 }} className={className}>
       {children}
     </motion.div>
   );
@@ -187,11 +181,7 @@ function LogoMarquee({ logos }: { logos: { image: string }[] }) {
   const doubled = [...logos, ...logos];
   return (
     <div className="overflow-hidden w-full">
-      <motion.div
-        className="flex items-center gap-16 w-max"
-        animate={{ x: ["0%", "-50%"] }}
-        transition={{ duration: 20, ease: "linear", repeat: Infinity }}
-      >
+      <motion.div className="flex items-center gap-16 w-max" animate={{ x: ["0%", "-50%"] }} transition={{ duration: 20, ease: "linear", repeat: Infinity }}>
         {doubled.map((l, i) => (
           <motion.img
             key={i}
@@ -315,12 +305,7 @@ export default function Anim() {
   return (
     <>
       {/* ── Scroll progress bar ───────────────────────────────────────── */}
-      <motion.div
-        style={{ scaleX }}
-        className="fixed top-0 left-0 right-0 h-[3px] bg-primary z-[9999] origin-left shadow-[0_0_12px_rgba(var(--primary),0.8)]"
-      />
-
-      <Navbar />
+      <motion.div style={{ scaleX }} className="fixed top-0 left-0 right-0 h-[3px] bg-primary z-[9999] origin-left shadow-[0_0_12px_rgba(var(--primary),0.8)]" />
 
       <main>
         <section ref={heroRef} className="relative min-h-[580px] md:min-h-[700px] bg-[#f2e9e6] overflow-hidden">
@@ -389,11 +374,7 @@ export default function Anim() {
                           <Input placeholder={ph} type={type} />
                         </motion.div>
                       ))}
-                      <motion.div
-                        initial={{ opacity: 0, y: 12 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1.15, duration: 0.55, ease: EASE }}
-                      >
+                      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.15, duration: 0.55, ease: EASE }}>
                         <Button className="w-full">Submit Enquiry</Button>
                       </motion.div>
                     </form>
@@ -418,12 +399,7 @@ export default function Anim() {
               { ph: "Phone Number", type: "tel" },
               { ph: "Email Address", type: "email" },
             ].map(({ ph, type }) => (
-              <Input
-                key={ph}
-                placeholder={ph}
-                type={type}
-                className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
-              />
+              <Input key={ph} placeholder={ph} type={type} className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" />
             ))}
             <Button className="w-full">Submit Enquiry</Button>
           </form>
@@ -455,19 +431,13 @@ export default function Anim() {
                   transition={{ duration: 0.8, delay: 0.55, ease: EASE }}
                   className="text-muted-foreground leading-relaxed"
                 >
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati ab hic iste ullam, similique alias eaque quas temporibus
-                  expedita architecto.
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati ab hic iste ullam, similique alias eaque quas temporibus expedita architecto.
                 </motion.p>
               </div>
             </div>
 
             {/* Carousel */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 1, ease: EASE }}
-            >
+            <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.1 }} transition={{ duration: 1, ease: EASE }}>
               <Carousel setApi={setApi} opts={{ align: "start", loop: true }} className="w-full">
                 <CarouselContent>
                   {slides.map((slide, index) => (
@@ -475,23 +445,14 @@ export default function Anim() {
                       <TiltCard>
                         <motion.div whileHover={{ y: -10 }} transition={{ duration: 0.4, ease: EASE }} className="relative">
                           <div className="overflow-hidden">
-                            <motion.img
-                              src={slide.image}
-                              alt={slide.title}
-                              className="w-full"
-                              whileHover={{ scale: 1.05 }}
-                              transition={{ duration: 0.6, ease: EASE }}
-                            />
+                            <motion.img src={slide.image} alt={slide.title} className="w-full" whileHover={{ scale: 1.05 }} transition={{ duration: 0.6, ease: EASE }} />
                           </div>
                           <Card className="w-70 m-auto mt-[-20px] z-10 relative p-5 text-center gap-0 bg-white/95 backdrop-blur-sm shadow-xl">
                             <p className="text-md mb-2 text-muted-foreground">{slide.subtitle}</p>
                             <h3 className="text-2xl mb-5 font-heading font-bold uppercase">{slide.title}</h3>
                             <h4 className="font-heading text-base text-muted-foreground">{slide.description}</h4>
                             <div className="mt-5">
-                              <Link
-                                href="#"
-                                className="w-auto font-bold inline-block border-b-2 border-black pb-1 text-lg transition-all hover:border-primary hover:text-primary"
-                              >
+                              <Link href="#" className="w-auto font-bold inline-block border-b-2 border-black pb-1 text-lg transition-all hover:border-primary hover:text-primary">
                                 Explore More
                               </Link>
                             </div>
@@ -517,10 +478,7 @@ export default function Anim() {
               </motion.button>
               <div className="w-48">
                 <div className="h-[2px] bg-neutral-300">
-                  <div
-                    className="h-[2px] bg-black transition-[width] duration-500 ease-out"
-                    style={{ width: `${count ? (current / count) * 100 : 0}%` }}
-                  />
+                  <div className="h-[2px] bg-black transition-[width] duration-500 ease-out" style={{ width: `${count ? (current / count) * 100 : 0}%` }} />
                 </div>
               </div>
               <motion.button onClick={() => api?.scrollNext()} whileHover={{ scale: 1.15 }} whileTap={{ scale: 0.92 }} className="transition">
@@ -536,13 +494,7 @@ export default function Anim() {
         <section className="bg-white py-16">
           <div className="container mx-auto px-4">
             {/* Heading */}
-            <motion.div
-              variants={stagger}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              className="mb-10 text-center"
-            >
+            <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="mb-10 text-center">
               <motion.p variants={fadeUp} className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">
                 Life at Ecole
               </motion.p>
@@ -552,13 +504,7 @@ export default function Anim() {
             </motion.div>
 
             {/* Grid */}
-            <motion.div
-              variants={stagger}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.05 }}
-              className="grid grid-cols-2 gap-3"
-            >
+            <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }} className="grid grid-cols-2 gap-3">
               {featuredItems.map((item, i) => (
                 <motion.div key={i} variants={clipReveal} className={`relative overflow-hidden cursor-pointer group ${item.span}`}>
                   {/* gradient overlay */}
@@ -568,19 +514,13 @@ export default function Anim() {
                   <motion.img
                     src={item.src}
                     alt={item.label}
-                    className={`w-full object-cover transition-transform will-change-transform ${
-                      item.span === "row-span-2" ? "h-full object-[55%]" : "h-[180px]"
-                    }`}
+                    className={`w-full object-cover transition-transform will-change-transform ${item.span === "row-span-2" ? "h-full object-[55%]" : "h-[180px]"}`}
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.65, ease: EASE }}
                   />
 
                   {/* dark overlay fade on hover */}
-                  <motion.div
-                    className="absolute inset-0 bg-black/25 pointer-events-none"
-                    whileHover={{ opacity: 0 }}
-                    transition={{ duration: 0.35 }}
-                  />
+                  <motion.div className="absolute inset-0 bg-black/25 pointer-events-none" whileHover={{ opacity: 0 }} transition={{ duration: 0.35 }} />
 
                   {/* label slide up */}
                   <motion.h3
@@ -600,13 +540,7 @@ export default function Anim() {
         <section className="bg-gray-50 py-16">
           <div className="container mx-auto px-4">
             {/* Heading */}
-            <motion.div
-              variants={stagger}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              className="text-center mb-10"
-            >
+            <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-10">
               <motion.p variants={fadeUp} className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">
                 What they say
               </motion.p>
@@ -615,12 +549,7 @@ export default function Anim() {
               </motion.h3>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.9, ease: EASE }}
-            >
+            <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.1 }} transition={{ duration: 0.9, ease: EASE }}>
               <Carousel opts={{ align: "start", loop: true }}>
                 <CarouselContent className="-ml-0">
                   {testimonials.map((item, index) => (

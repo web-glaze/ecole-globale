@@ -101,8 +101,6 @@ export default function Anim() {
 
   return (
     <>
-      <Navbar />
-
       <main>
         <section className="relative min-h-[580px] md:min-h-[700px] bg-[#f2e9e6] overflow-hidden">
           {/* Parallax background texture */}
@@ -122,9 +120,7 @@ export default function Anim() {
               {/* Left — hero image */}
               <div className="flex flex-col justify-between">
                 <img src="/ecole-hero-img.png" alt="" className="h-auto max-w-full drop-shadow-2xl" />
-                <div className="block text-center text-sm max-w-[280px] mx-auto md:hidden mt-4">
-                  © 2026 ÉCOLE GLOBALE INTERNATIONAL GIRLS&apos; SCHOOL
-                </div>
+                <div className="block text-center text-sm max-w-[280px] mx-auto md:hidden mt-4">© 2026 ÉCOLE GLOBALE INTERNATIONAL GIRLS&apos; SCHOOL</div>
               </div>
 
               {/* Right — enquiry form (desktop) */}
@@ -150,20 +146,9 @@ export default function Anim() {
           <h3 className="mb-4 text-3xl font-bold font-heading text-gray-500 text-center">ENQUIRE NOW</h3>
 
           <form className="space-y-4">
-            <Input
-              className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
-              placeholder="Your Name"
-            />
-            <Input
-              className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
-              type="tel"
-              placeholder="Phone Number"
-            />
-            <Input
-              className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
-              type="email"
-              placeholder="Email Address"
-            />
+            <Input className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" placeholder="Your Name" />
+            <Input className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" type="tel" placeholder="Phone Number" />
+            <Input className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" type="email" placeholder="Email Address" />
 
             <Button className="w-full">Submit Enquiry</Button>
           </form>
@@ -176,13 +161,10 @@ export default function Anim() {
               <div>
                 <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">Welcome to</p>
 
-                <h3 className="text-3xl md:text-4xl font-bold font-heading mb-2 leading-tight">
-                  Ecole Globale International Girls' School in Dehradun
-                </h3>
+                <h3 className="text-3xl md:text-4xl font-bold font-heading mb-2 leading-tight">Ecole Globale International Girls' School in Dehradun</h3>
 
                 <p className="text-muted-foreground leading-relaxed">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati ab hic iste ullam, similique alias eaque quas temporibus
-                  expedita architecto.
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati ab hic iste ullam, similique alias eaque quas temporibus expedita architecto.
                 </p>
               </div>
             </div>
@@ -202,10 +184,7 @@ export default function Anim() {
                           <h3 className="text-2xl mb-5 font-heading font-bold uppercase">{slide.title}</h3>
                           <h4 className="font-heading text-base text-muted-foreground">{slide.description}</h4>
                           <div className="mt-5">
-                            <Link
-                              href="#"
-                              className="w-auto font-bold inline-block border-b-2 border-black pb-1 text-lg transition-all hover:border-primary hover:text-primary"
-                            >
+                            <Link href="#" className="w-auto font-bold inline-block border-b-2 border-black pb-1 text-lg transition-all hover:border-primary hover:text-primary">
                               Explore More
                             </Link>
                           </div>
@@ -224,10 +203,7 @@ export default function Anim() {
               </button>
               <div className="w-48">
                 <div className="h-[2px] bg-neutral-300">
-                  <div
-                    className="h-[2px] bg-black transition-[width] duration-500 ease-out"
-                    style={{ width: `${count ? (current / count) * 100 : 0}%` }}
-                  />
+                  <div className="h-[2px] bg-black transition-[width] duration-500 ease-out" style={{ width: `${count ? (current / count) * 100 : 0}%` }} />
                 </div>
               </div>
               <button onClick={() => api?.scrollNext()} className="transition">
@@ -259,18 +235,14 @@ export default function Anim() {
                   <img
                     src={item.src}
                     alt={item.label}
-                    className={`w-full object-cover transition-transform will-change-transform ${
-                      item.span === "row-span-2" ? "h-full object-[55%]" : "h-[180px]"
-                    }`}
+                    className={`w-full object-cover transition-transform will-change-transform ${item.span === "row-span-2" ? "h-full object-[55%]" : "h-[180px]"}`}
                   />
 
                   {/* dark overlay fade on hover */}
                   <div className="absolute inset-0 bg-black/25 pointer-events-none" />
 
                   {/* label slide up */}
-                  <h3 className="absolute bottom-4 w-full text-center text-lg md:text-xl uppercase font-heading text-white z-20 tracking-wider">
-                    {item.label}
-                  </h3>
+                  <h3 className="absolute bottom-4 w-full text-center text-lg md:text-xl uppercase font-heading text-white z-20 tracking-wider">{item.label}</h3>
                 </div>
               ))}
             </div>
@@ -296,11 +268,7 @@ export default function Anim() {
                             {/* Avatar with ring pulse */}
                             <div className="mb-5 relative">
                               <div className="absolute inset-0 rounded-full bg-primary/20" />
-                              <img
-                                src="sara1.jpg"
-                                alt={item.name}
-                                className="h-24 w-24 rounded-full object-cover relative z-10 ring-4 ring-primary/20"
-                              />
+                              <img src="sara1.jpg" alt={item.name} className="h-24 w-24 rounded-full object-cover relative z-10 ring-4 ring-primary/20" />
                             </div>
 
                             <h3 className="font-heading text-xl font-bold">{item.name}</h3>

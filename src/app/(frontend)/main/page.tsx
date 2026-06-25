@@ -8,22 +8,7 @@ import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, Car
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Star,
-  FileText,
-  ClipboardCheck,
-  School,
-  Icon,
-  Phone,
-  Mail,
-  CalendarPlus,
-  Play,
-  Pause,
-  ArrowLeft,
-  ArrowRight,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Star, FileText, ClipboardCheck, School, Icon, Phone, Mail, CalendarPlus, Play, Pause, ArrowLeft, ArrowRight } from "lucide-react";
 import Footer from "@/components/footer";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -33,8 +18,7 @@ const slides = [
   {
     title: "About Us",
     subtitle: "Overview",
-    description:
-      "In this era of progressive education, schools strive to provide holistic development for their students. Beyond delivering a curriculum...",
+    description: "In this era of progressive education, schools strive to provide holistic development for their students. Beyond delivering a curriculum...",
     image: "/main-home-slide-1.jpg",
     link: "#",
     link_text: "Know More",
@@ -42,8 +26,7 @@ const slides = [
   {
     title: "Our Team",
     subtitle: "Leadership",
-    description:
-      "Meet the Team of the Ecole Globale International Girls School. This team makes sure none of the parents or student face any issue in the school...",
+    description: "Meet the Team of the Ecole Globale International Girls School. This team makes sure none of the parents or student face any issue in the school...",
     image: "/home-slide-2.jpg",
     link: "#",
     link_text: "View All",
@@ -83,8 +66,7 @@ const slides = [
   {
     title: "Four Differentiators That Set Ecole Globale Apart ",
     subtitle: "Why Families Choose Ecole",
-    description:
-      "Not the oldest name in Dehradun. The best-equipped, most transparent, and most outcomes-focused girls' residential school in the region...",
+    description: "Not the oldest name in Dehradun. The best-equipped, most transparent, and most outcomes-focused girls' residential school in the region...",
     image: "/home-slide-7.jpg",
     link: "#",
     link_text: "View Differentiators",
@@ -342,8 +324,6 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
-
       <main>
         {/* Hero Section */}
         <section id="hero-section" className="relative min-h-[580px] md:min-h-[700px] bg-cover bg-center bg-[#f2e9e6]">
@@ -420,20 +400,9 @@ export default function Home() {
           <h3 className="mb-4 text-3xl font-bold font-heading text-gray-500 text-center">ENQUIRE NOW</h3>
 
           <form className="space-y-4">
-            <Input
-              className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
-              placeholder="Your Name"
-            />
-            <Input
-              className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
-              type="tel"
-              placeholder="Phone Number"
-            />
-            <Input
-              className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
-              type="email"
-              placeholder="Email Address"
-            />
+            <Input className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" placeholder="Your Name" />
+            <Input className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" type="tel" placeholder="Phone Number" />
+            <Input className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" type="email" placeholder="Email Address" />
 
             <Button className="w-full">Submit Enquiry</Button>
           </form>
@@ -446,10 +415,7 @@ export default function Home() {
               <div>
                 <h5 className="text-2xl mb-2">Welcome to</h5>
                 <h3 className="text-3xl font-bold font-heading mb-3">Ecole Globale International Girls' School in Dehradun</h3>
-                <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati ab hic iste ullam, similique alias eaque quas temporibus
-                  expedita architecto.
-                </p>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati ab hic iste ullam, similique alias eaque quas temporibus expedita architecto.</p>
               </div>
             </div>
           </div>
@@ -471,10 +437,7 @@ export default function Home() {
                       <h3 className="text-xl mb-3 font-heading font-bold uppercase">{slide.title}</h3>
                       <h4 className="font-heading text-lg">{slide.description}</h4>
                       <div className="mt-5">
-                        <Link
-                          href={slide.link}
-                          className="w-auto font-bold inline-block border-b-2 border-black pb-1 text-lg transition-all hover:border-primary"
-                        >
+                        <Link href={slide.link} className="w-auto font-bold inline-block border-b-2 border-black pb-1 text-lg transition-all hover:border-primary">
                           {slide.link_text}
                         </Link>
                       </div>
@@ -525,34 +488,26 @@ export default function Home() {
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
                 <img src="/featured-2.jpg" alt="" className="h-full w-full object-cover object-[55%]" />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">
-                  Athletic Excellence
-                </h3>
+                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">Athletic Excellence</h3>
               </div>
 
               <div className="relative overflow-hidden">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
                 <img src="/featured-1.png" alt="" className="h-[220px] w-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">
-                  Creative Pursuits
-                </h3>
+                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">Creative Pursuits</h3>
               </div>
               <div className="relative overflow-hidden">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
                 <img src="/featured-4.png" alt="" className="h-[220px] w-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">
-                  Culture & Traditions
-                </h3>
+                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">Culture & Traditions</h3>
               </div>
               <div className="relative overflow-hidden">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
                 <img src="/featured-6.jpg" alt="" className="h-[220px] w-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">
-                  The Women We’ve Shaped
-                </h3>
+                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">The Women We’ve Shaped</h3>
               </div>
               <div className="relative col-span-2 overflow-hidden h-[220px]">
                 <iframe
@@ -564,9 +519,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-black/20" />
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
 
-                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">
-                  Explore Our Campus
-                </h3>
+                <h3 className="absolute bottom-4 w-full text-center text-xl px-2 text-shadow-lg uppercase font-heading text-white">Explore Our Campus</h3>
               </div>
             </div>
           </div>
@@ -636,8 +589,8 @@ export default function Home() {
                     </h2>
 
                     <p className="mt-3 text-md leading-relaxed">
-                      We admit girls from Class IV to Class XII. Our admissions process is transparent, rigorous, and respectful of your time.
-                      Applications for NRI and international students are welcome throughout the year.
+                      We admit girls from Class IV to Class XII. Our admissions process is transparent, rigorous, and respectful of your time. Applications for NRI and
+                      international students are welcome throughout the year.
                     </p>
                   </div>
                 </CarouselItem>
@@ -670,10 +623,7 @@ export default function Home() {
                       <h3 className="mb-4 text-3xl font-bold font-heading text-gray-500 text-center">ENQUIRE NOW</h3>
 
                       <form className="space-y-4">
-                        <Input
-                          className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
-                          placeholder="Your Name"
-                        />
+                        <Input className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" placeholder="Your Name" />
                         <Input
                           className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
                           type="tel"
