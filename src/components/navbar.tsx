@@ -21,6 +21,7 @@ type NavbarProps = {
 
 export default function Navbar({ settings }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
+  const logo = settings?.logo?.url || "/logo.png";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,11 +40,11 @@ export default function Navbar({ settings }: NavbarProps) {
           {/* Logo */}
           {scrolled ? (
             <Link href="/">
-              <img src={settings.logo?.url} alt="Logo" width="220" />
+              <img src={logo} alt="Logo" width="220" />
             </Link>
           ) : (
             <Link href="/">
-              <img src={settings.logo?.url} alt="Logo" width="220" />
+              <img src={logo} alt="Logo" width="220" />
             </Link>
           )}
 
@@ -83,11 +84,11 @@ export default function Navbar({ settings }: NavbarProps) {
           {/* Logo Center */}
           {scrolled ? (
             <Link href="/">
-              <img src={settings.logo?.url} alt="Logo" width="200" />
+              <img src={logo} alt="Logo" width="200" />
             </Link>
           ) : (
             <Link href="/">
-              <img src={settings.logo?.url} alt="Logo" width="200" />
+              <img src={logo} alt="Logo" width="200" />
             </Link>
           )}
 

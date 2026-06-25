@@ -11,7 +11,7 @@ import { ChevronLeft, ChevronRight, Star, FileText, ClipboardCheck, School, Icon
 import { Badge } from "@/components/ui/badge";
 import Footer from "@/components/footer";
 
-const heroSlides = ["/v1-hero-slider-5.jpg"];
+const heroSlides = ["/about-page-hero.jpg"];
 
 export default function AboutPage() {
   const [heroApi, heroSetApi] = useState<CarouselApi>();
@@ -145,9 +145,9 @@ export default function AboutPage() {
         </section>
 
         {/* Welcom About Section */}
-        <section className="bg-gray-200 py-8">
+        <section>
           {/* Only Mobile View Form */}
-          <div id="enquire-now" className="md:hidden w-full max-w-md mb-12 container mx-auto px-4">
+          <div id="enquire-now" className="py-8 bg-gray-200 md:hidden w-full max-w-md container mx-auto px-4">
             <div ref={ref} className="mb-10">
               {lines.map((line, index) => {
                 const start = index * 0.3;
@@ -180,7 +180,7 @@ export default function AboutPage() {
             </form>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 container mx-auto px-4">
+          <div className="py-8 grid grid-cols-1 lg:grid-cols-2 gap-12 container mx-auto px-4">
             <div>
               <h5 className="text-2xl mb-2 font-heading italic">About</h5>
               <h3 className="text-3xl font-bold font-heading mb-3 uppercase">Ecole Globale</h3>
