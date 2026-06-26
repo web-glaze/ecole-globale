@@ -3,12 +3,31 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { buildConfig } from "payload";
 import { SiteSettings } from "./globals/SiteSettings";
+import { Home } from "./globals/Home";
 import { Media } from "./collections/Media";
+import { cloudinaryStorage } from "payload-cloudinary";
+import { Testimonials } from "./collections/Testimonials";
+import { Pages } from "./collections/Pages";
+import { Navigation } from "./globals/Navigation";
 
 export default buildConfig({
   editor: lexicalEditor(),
-  collections: [Media],
-  globals: [SiteSettings],
+  collections: [Media, Testimonials, Pages],
+  globals: [SiteSettings, Home, Navigation],
+
+  plugins: [
+    cloudinaryStorage({
+      config: {
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
+        api_key: process.env.CLOUDINARY_API_KEY!,
+        api_secret: process.env.CLOUDINARY_API_SECRET!,
+      },
+
+      collections: {
+        media: true,
+      },
+    }),
+  ],
 
   secret: process.env.PAYLOAD_SECRET || "",
 

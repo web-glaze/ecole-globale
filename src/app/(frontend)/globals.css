@@ -129,4 +129,77 @@
   html {
     @apply font-heading;
   }
+
+  .richtext {
+    @apply text-sm md:text-lg leading-8 text-gray-700;
+  }
+
+  .richtext h1 {
+    @apply text-5xl font-heading font-bold mb-8 mt-10;
+  }
+
+  .richtext h2 {
+    @apply text-4xl font-heading font-bold mb-6 mt-10;
+  }
+
+  .richtext h3 {
+    @apply text-3xl font-heading font-bold mb-5 mt-8;
+  }
+
+  .richtext h4 {
+    @apply text-2xl font-heading font-semibold mb-4 mt-6;
+  }
+
+  .richtext h5 {
+    @apply text-xl font-heading font-semibold mb-3 mt-5;
+  }
+
+  .richtext h6 {
+    @apply text-lg font-heading font-semibold mb-3 mt-4;
+  }
+
+  .richtext p {
+    @apply mb-5 leading-6;
+  }
+
+  .richtext ul {
+    @apply list-disc pl-6 mb-5;
+  }
+
+  .richtext ol {
+    @apply list-decimal pl-6 mb-5;
+  }
+
+  .richtext li {
+    @apply mb-2;
+  }
+
+  .richtext a {
+    @apply text-primary underline;
+  }
+
+  .richtext strong {
+    @apply font-bold;
+  }
+
+  .richtext em {
+    @apply italic;
+  }
+
+  .richtext blockquote {
+    @apply border-l-4 border-primary pl-6 italic my-8;
+  }
+
+  .richtext img {
+    @apply rounded-lg my-8;
+  }
+
+  .richtext table {
+    @apply w-full border-collapse my-8;
+  }
+
+  .richtext th,
+  .richtext td {
+    @apply border p-3;
+  }
 }

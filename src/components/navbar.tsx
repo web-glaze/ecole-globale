@@ -6,23 +6,13 @@ import { Menu, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useEffect, useState } from "react";
+import { useSiteSettings } from "@/lib/site-settings-context";
 
-const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Services", href: "/services" },
-  { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/contact" },
-];
-
-type NavbarProps = {
-  settings: any;
-};
-
-export default function Navbar({ settings }: NavbarProps) {
+export default function Navbar() {
+  const { settings, navigation } = useSiteSettings();
+  const menu = navigation?.menu || [];
   const [scrolled, setScrolled] = useState(false);
-  // const logo = settings?.logo?.url || "/logo.png";
-  const logo = "/logo.png";
+  const logo = settings?.logo?.cloudinary.secure_url || "/logo.png";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,11 +41,22 @@ export default function Navbar({ settings }: NavbarProps) {
 
           {/* Menu */}
           <nav className="flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} className={`text-md font-medium transition-colors hover:text-primary ${scrolled ? "" : "text-white"}`}>
-                {link.label}
-              </Link>
-            ))}
+            {menu.map((item: any) => {
+              const label = item.label || item.page?.title;
+
+              const href = item.type === "page" ? `/${item.page?.slug === "home" ? "" : item.page?.slug}` : item.url;
+
+              return (
+                <Link
+                  key={label}
+                  href={href}
+                  target={item.newTab ? "_blank" : "_self"}
+                  className={`text-md font-medium transition-colors hover:text-primary ${scrolled ? "" : "text-white"}`}
+                >
+                  {label}
+                </Link>
+              );
+            })}
 
             <Button size="lg">Get Started</Button>
           </nav>
@@ -73,11 +74,17 @@ export default function Navbar({ settings }: NavbarProps) {
               </SheetHeader>
 
               <nav className="mt-8 flex flex-col gap-4 px-6 ">
-                {navLinks.map((link) => (
-                  <Link key={link.href} href={link.href} className="text-lg font-medium text-light">
-                    {link.label}
-                  </Link>
-                ))}
+                {menu.map((item: any) => {
+                  const label = item.label || item.page?.title;
+
+                  const href = item.type === "page" ? `/${item.page?.slug === "home" ? "" : item.page?.slug}` : item.url;
+
+                  return (
+                    <Link key={label} href={href} target={item.newTab ? "_blank" : "_self"} className="text-lg font-medium">
+                      {label}
+                    </Link>
+                  );
+                })}
               </nav>
             </SheetContent>
           </Sheet>
