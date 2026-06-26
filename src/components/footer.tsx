@@ -12,7 +12,7 @@ import { useSiteSettings } from "@/lib/site-settings-context";
 // ── component ─────────────────────────────────────────────────────────────────
 
 export default function Footer() {
-  const settings = useSiteSettings();
+  const { settings, navigation } = useSiteSettings();
 
   const quickLinks = [
     { label: "Home", href: "/" },
@@ -69,6 +69,7 @@ export default function Footer() {
       label: "LinkedIn",
     },
   ].filter((item) => item.href);
+
   return (
     <footer className="bg-gray-600 text-white">
       <div className="container mx-auto px-4 py-10">
