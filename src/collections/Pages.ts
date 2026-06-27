@@ -4,13 +4,13 @@ export const Pages: CollectionConfig = {
   slug: "pages",
 
   labels: {
-    singular: "Page",
-    plural: "Pages",
+    singular: "Dynamic Page",
+    plural: "Dynamic Pages",
   },
 
   admin: {
     useAsTitle: "title",
-    group: "Content",
+    group: "Pages",
     defaultColumns: ["title", "slug", "updatedAt"],
   },
 

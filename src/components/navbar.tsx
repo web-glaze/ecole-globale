@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, Phone } from "lucide-react";
+import { ChevronDown, Menu, Phone } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -11,6 +11,7 @@ import { useSiteSettings } from "@/lib/site-settings-context";
 export default function Navbar() {
   const { settings, navigation } = useSiteSettings();
   const menu = navigation?.menu || [];
+  const [openMenu, setOpenMenu] = useState<number | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const logo = settings?.logo?.cloudinary.secure_url || "/logo.png";
 
@@ -40,25 +41,48 @@ export default function Navbar() {
           )}
 
           {/* Menu */}
-          <nav className="flex items-center gap-8">
+          <nav className="flex items-center gap-6">
             {menu.map((item: any) => {
               const label = item.label || item.page?.title;
 
               const href = item.type === "page" ? `/${item.page?.slug === "home" ? "" : item.page?.slug}` : item.url;
 
               return (
-                <Link
-                  key={label}
-                  href={href}
-                  target={item.newTab ? "_blank" : "_self"}
-                  className={`text-md font-medium transition-colors hover:text-primary ${scrolled ? "" : "text-white"}`}
-                >
-                  {label}
-                </Link>
+                <div key={label} className="group relative">
+                  <Link
+                    href={href}
+                    target={item.newTab ? "_blank" : "_self"}
+                    className={`flex items-center gap-1 text-md font-medium transition-colors hover:text-primary ${scrolled ? "" : "text-white"}`}
+                  >
+                    {label}
+
+                    {item.children?.length > 0 && (
+                      <svg className="h-4 w-4 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    )}
+                  </Link>
+
+                  {item.children?.length > 0 && (
+                    <div className="invisible absolute left-0 top-full mt-2 min-w-[220px] bg-white opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
+                      {item.children.map((child: any) => {
+                        const childHref = child.type === "page" ? `/${child.page?.slug === "home" ? "" : child.page?.slug}` : child.url;
+
+                        return (
+                          <Link key={child.label} href={childHref} target={child.newTab ? "_blank" : "_self"} className="block px-5 py-2 hover:bg-gray-200">
+                            {child.label}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
               );
             })}
 
-            <Button size="lg">Get Started</Button>
+            <Button size="lg" className="text-lg">
+              <Link href={`tel:${settings.phone}`}>Call Now</Link>
+            </Button>
           </nav>
         </div>
 
@@ -73,16 +97,40 @@ export default function Navbar() {
                 <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
               </SheetHeader>
 
-              <nav className="mt-8 flex flex-col gap-4 px-6 ">
-                {menu.map((item: any) => {
-                  const label = item.label || item.page?.title;
-
+              <nav className="mt-8 flex flex-col px-6 ">
+                {menu.map((item: any, index: number) => {
                   const href = item.type === "page" ? `/${item.page?.slug === "home" ? "" : item.page?.slug}` : item.url;
 
+                  const hasChildren = item.children?.length > 0;
+
                   return (
-                    <Link key={label} href={href} target={item.newTab ? "_blank" : "_self"} className="text-lg font-medium">
-                      {label}
-                    </Link>
+                    <div key={index} className="border-b">
+                      <div className="flex items-center justify-between py-2 mb-1">
+                        <Link href={href} className="text-base font-medium">
+                          {item.label}
+                        </Link>
+
+                        {hasChildren && (
+                          <button onClick={() => setOpenMenu(openMenu === index ? null : index)}>
+                            <ChevronDown className={`transition ${openMenu === index ? "rotate-180" : ""}`} />
+                          </button>
+                        )}
+                      </div>
+
+                      {hasChildren && openMenu === index && (
+                        <div className="pb-3 pl-3">
+                          {item.children.map((child: any) => {
+                            const childHref = child.type === "page" ? `/${child.page?.slug === "home" ? "" : child.page?.slug}` : child.url;
+
+                            return (
+                              <Link key={child.label} href={childHref} className="block py-1 text-base">
+                                {child.label}
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
                   );
                 })}
               </nav>

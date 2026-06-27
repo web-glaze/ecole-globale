@@ -55,7 +55,6 @@ export const Home: GlobalConfig = {
                     {
                       name: "heading",
                       type: "text",
-                      required: true,
                     },
                     {
                       name: "description",
@@ -89,16 +88,17 @@ export const Home: GlobalConfig = {
                 {
                   name: "smallHeading",
                   type: "text",
+                  defaultValue: "Welcome to",
                 },
                 {
                   name: "heading",
                   type: "text",
+                  defaultValue: "Ecole Globale",
                 },
                 {
                   name: "description",
                   type: "richText",
                 },
-
                 {
                   name: "cards",
                   type: "array",
@@ -113,11 +113,11 @@ export const Home: GlobalConfig = {
                       relationTo: "media",
                     },
                     {
-                      name: "title",
+                      name: "subtitle",
                       type: "text",
                     },
                     {
-                      name: "subtitle",
+                      name: "title",
                       type: "text",
                     },
                     {
@@ -152,11 +152,35 @@ export const Home: GlobalConfig = {
                 {
                   name: "items",
                   type: "array",
+                  labels: {
+                    singular: "Featured Item",
+                    plural: "Featured Items",
+                  },
                   fields: [
+                    {
+                      name: "type",
+                      type: "select",
+                      defaultValue: "image",
+                      options: [
+                        { label: "Image", value: "image" },
+                        { label: "Video (Embed/URL)", value: "video" },
+                      ],
+                    },
                     {
                       name: "image",
                       type: "upload",
                       relationTo: "media",
+                      admin: {
+                        condition: (_, siblingData) => siblingData?.type !== "video",
+                      },
+                    },
+                    {
+                      name: "videoUrl",
+                      type: "text",
+                      label: "Video URL / Embed URL",
+                      admin: {
+                        condition: (_, siblingData) => siblingData?.type === "video",
+                      },
                     },
                     {
                       name: "title",
@@ -221,10 +245,12 @@ export const Home: GlobalConfig = {
                 {
                   name: "badge",
                   type: "text",
+                  defaultValue: "Admissions 2026–27",
                 },
                 {
                   name: "heading",
                   type: "text",
+                  defaultValue: "Three Steps to Joining Ecole Globale",
                 },
                 {
                   name: "description",
@@ -288,6 +314,17 @@ export const Home: GlobalConfig = {
                 {
                   name: "heading",
                   type: "text",
+                  defaultValue: "Join India’s Premier Boarding School For Girls in Dehradun",
+                },
+                {
+                  name: "phoneText",
+                  type: "text",
+                  defaultValue: "To book our campus tour, please call",
+                },
+                {
+                  name: "phoneNumber",
+                  type: "text",
+                  defaultValue: "+91-9557291888",
                 },
                 {
                   name: "videos",

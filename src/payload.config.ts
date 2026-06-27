@@ -12,7 +12,7 @@ import { Navigation } from "./globals/Navigation";
 
 export default buildConfig({
   editor: lexicalEditor(),
-  collections: [Media, Testimonials, Pages],
+  collections: [Media, Pages, Testimonials],
   globals: [SiteSettings, Home, Navigation],
 
   plugins: [
