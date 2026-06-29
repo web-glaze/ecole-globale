@@ -451,18 +451,12 @@ export default function HomeClient({ home }: any) {
                 <CarouselItem className="basis-full md:basis-[33%] pr-3">
                   <div className="mx-auto">
                     <Badge variant="outline" className="mb-5 rounded-full text-sm border-yellow-500">
-                      Admissions 2026–27
+                      {admissionSection.badge}
                     </Badge>
 
-                    <h2 className="font-heading text-2xl md:text-4xl font-bold tracking-tight">
-                      Three Steps to Joining
-                      <span className="block">Ecole Globale</span>
-                    </h2>
+                    <h2 className="font-heading text-2xl md:text-4xl font-bold tracking-tight">{admissionSection.heading}</h2>
 
-                    <p className="mt-3 text-sm md:text-lg leading-relaxed font-heading">
-                      We admit girls from Class IV to Class XII. Our admissions process is transparent, rigorous, and respectful of your time. Applications for NRI and
-                      international students are welcome throughout the year.
-                    </p>
+                    <p className="mt-3 text-sm md:text-lg leading-relaxed font-heading">{admissionSection.description}</p>
                   </div>
                 </CarouselItem>
                 {/* Step Slides */}
