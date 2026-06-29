@@ -9,10 +9,11 @@ import { cloudinaryStorage } from "payload-cloudinary";
 import { Testimonials } from "./collections/Testimonials";
 import { Pages } from "./collections/Pages";
 import { Navigation } from "./globals/Navigation";
+import { Leads } from "./collections/Leads";
 
 export default buildConfig({
   editor: lexicalEditor(),
-  collections: [Media, Pages, Testimonials],
+  collections: [Media, Pages, Testimonials, Leads],
   globals: [SiteSettings, Home, Navigation],
 
   plugins: [

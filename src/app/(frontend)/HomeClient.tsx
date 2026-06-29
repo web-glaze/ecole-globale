@@ -155,6 +155,59 @@ export default function HomeClient({ home }: any) {
     clipboard: ClipboardCheck,
     school: School,
   };
+
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    message: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await res.json();
+
+      if (result.success) {
+        alert("Enquiry submitted successfully!");
+
+        setFormData({
+          name: "",
+          phone: "",
+          email: "",
+          message: "",
+        });
+      } else {
+        alert(result.message);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong");
+    }
+
+    setLoading(false);
+  };
+
   return (
     <>
       <main>
@@ -256,12 +309,38 @@ export default function HomeClient({ home }: any) {
             })}
           </div>
           <h3 className="mb-4 text-2xl font-bold font-heading text-gray-500 text-center">ENQUIRE NOW</h3>
-          <form className="space-y-4 font-heading">
-            <Input className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" placeholder="Your Name" />
-            <Input className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" type="tel" placeholder="Phone Number" />
-            <Input className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" type="email" placeholder="Email Address" />
+          <form onSubmit={handleSubmit} className="space-y-4 font-heading">
+            <Input
+              name="name"
+              placeholder="Your Name"
+              value={formData.name}
+              onChange={handleChange}
+              className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
+              required
+            />
 
-            <Button className="w-full">Submit Enquiry</Button>
+            <Input
+              name="phone"
+              type="tel"
+              placeholder="Phone Number"
+              value={formData.phone}
+              onChange={handleChange}
+              className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
+            />
+
+            <Input
+              name="email"
+              type="email"
+              placeholder="Email Address"
+              value={formData.email}
+              onChange={handleChange}
+              className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
+              required
+            />
+
+            <Button className="w-full" disabled={loading}>
+              {loading ? "Submitting..." : "Submit Enquiry"}
+            </Button>
           </form>
         </div>
 
