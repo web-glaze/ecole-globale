@@ -13,39 +13,17 @@ import { RichText } from "@payloadcms/richtext-lexical/react";
 import Autoplay from "embla-carousel-autoplay";
 
 export default function HomeClient({ home }: any) {
-  const testimonials = home.testimonialsSection?.testimonials || [];
-  const welcome = home.welcome || [];
-  const welcomeSlides = home.welcome?.cards || [];
   const hero = home.hero;
   const heroSlides = home.hero?.slides || ["/v1-hero-slider-5.jpg"];
+  const welcome = home.welcome || [];
+  const welcomeSlides = home.welcome?.cards || [];
   const featured = home.featured?.items || [];
-  const logos = home?.logos ?? [];
+  const testimonials = home.testimonialsSection?.testimonials || [];
+  const admissionSection = home.admission || [];
+  const admissionSteps = home.admission?.steps || [];
   const videosSection = home.videosSection || [];
   const videos = home.videosSection?.videos || [];
-
-  const steps = [
-    {
-      id: "01",
-      title: "Registration & Documentation",
-      icon: FileText,
-      description:
-        "Submit the online registration form with a ₹25,000 registration fee. Provide previous academic records, birth certificate, and passport-size photographs. We acknowledge receipt within 48 hours.",
-    },
-    {
-      id: "02",
-      title: "Academic Assessment",
-      icon: ClipboardCheck,
-      description:
-        "A written assessment in English, Mathematics, and Science (relevant to the applying class). For Class XI admissions, we review Class X board examination results directly.",
-    },
-    {
-      id: "03",
-      title: "Campus Visit & Interview",
-      icon: School,
-      description:
-        "Your daughter meets with our academic team. You meet with our admissions advisor. You see everything — classrooms, boarding houses, infirmary, dining hall, sports facilities. We answer every question without reservation. Admission decisions are communicated within 7 working days.",
-    },
-  ];
+  const logos = home?.logos ?? [];
 
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(1);
@@ -171,6 +149,12 @@ export default function HomeClient({ home }: any) {
   const backgroundSize = useTransform(scrollYProgress, [0, 1], ["0% 100%", "100% 100%"]);
 
   const lines = ["Lorem ipsum dolor sit", "amet consectetur elit"];
+
+  const iconMap = {
+    file: FileText,
+    clipboard: ClipboardCheck,
+    school: School,
+  };
   return (
     <>
       <main>
@@ -482,16 +466,16 @@ export default function HomeClient({ home }: any) {
                   </div>
                 </CarouselItem>
                 {/* Step Slides */}
-                {steps.map((step) => {
-                  const Icon = step.icon;
+                {admissionSteps.map((step: any) => {
+                  const Icon = iconMap[step.icon as keyof typeof iconMap];
 
                   return (
-                    <CarouselItem key={step.id} className="basis-full md:basis-[33%] pr-3">
+                    <CarouselItem key={step.number} className="basis-full md:basis-[33%] pr-3">
                       <Card className="border-0 overflow-hidden h-full p-0 rounded-none">
                         <CardContent className="p-3 md:p-8">
                           <div className="flex items-center justify-between mb-2">
-                            <Icon className="size-8 text-primary" />
-                            <span className="text-4xl font-black text-primary/20">{step.id}</span>
+                            {Icon && <Icon className="size-8 text-primary" />}
+                            <span className="text-4xl font-black text-primary/20">{step.number}</span>
                           </div>
                           <h3 className="font-heading text-2xl font-bold mb-4">{step.title}</h3>
                           <p className="leading-relaxed md:text-lg">{step.description}</p>
