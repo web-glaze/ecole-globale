@@ -10,79 +10,18 @@ import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Star, FileText, ClipboardCheck, School, Icon, Phone, Mail, CalendarPlus, Play, Pause, ArrowLeft, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { RichText } from "@payloadcms/richtext-lexical/react";
+import Autoplay from "embla-carousel-autoplay";
 
 export default function HomeClient({ home }: any) {
   const testimonials = home.testimonialsSection?.testimonials || [];
   const welcome = home.welcome || [];
   const welcomeSlides = home.welcome?.cards || [];
-
-  const heroSlides = ["/v1-hero-slider-5.jpg"];
-
-  const clientLogos = [
-    {
-      image: "/forbes-logo.png",
-    },
-    {
-      image: "/ttoi-logo.png",
-    },
-    {
-      image: "/brainfeed-logo.png",
-    },
-    {
-      image: "/harvard-logo.png",
-    },
-    {
-      image: "/gpts-logo.png",
-    },
-    {
-      image: "/nraoi-logo.png",
-    },
-    {
-      image: "/education-world-logo.png",
-    },
-    {
-      image: "/forbes-logo.png",
-    },
-    {
-      image: "/ttoi-logo.png",
-    },
-    {
-      image: "/brainfeed-logo.png",
-    },
-    {
-      image: "/harvard-logo.png",
-    },
-    {
-      image: "/gpts-logo.png",
-    },
-    {
-      image: "/nraoi-logo.png",
-    },
-    {
-      image: "/education-world-logo.png",
-    },
-    {
-      image: "/forbes-logo.png",
-    },
-    {
-      image: "/ttoi-logo.png",
-    },
-    {
-      image: "/brainfeed-logo.png",
-    },
-    {
-      image: "/harvard-logo.png",
-    },
-    {
-      image: "/gpts-logo.png",
-    },
-    {
-      image: "/nraoi-logo.png",
-    },
-    {
-      image: "/education-world-logo.png",
-    },
-  ];
+  const hero = home.hero;
+  const heroSlides = home.hero?.slides || ["/v1-hero-slider-5.jpg"];
+  const featured = home.featured?.items || [];
+  const logos = home?.logos ?? [];
+  const videosSection = home.videosSection || [];
+  const videos = home.videosSection?.videos || [];
 
   const steps = [
     {
@@ -107,8 +46,6 @@ export default function HomeClient({ home }: any) {
         "Your daughter meets with our academic team. You meet with our admissions advisor. You see everything — classrooms, boarding houses, infirmary, dining hall, sports facilities. We answer every question without reservation. Admission decisions are communicated within 7 working days.",
     },
   ];
-
-  const videos = ["/ecole-instagram-slider.mp4", "/ecole-instagram-slider.mp4", "/ecole-instagram-slider.mp4"];
 
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(1);
@@ -252,19 +189,29 @@ export default function HomeClient({ home }: any) {
                 align: "start",
                 loop: true,
               }}
+              plugins={
+                hero?.autoPlay
+                  ? [
+                      Autoplay({
+                        delay: hero.autoPlayDelay ?? 5000,
+                        stopOnInteraction: false,
+                      }),
+                    ]
+                  : []
+              }
               className="h-full"
             >
               <CarouselContent className="h-full">
-                {heroSlides.map((slide, index) => (
+                {heroSlides.map((slide: any, index: number) => (
                   <CarouselItem key={index} className="h-full p-0">
-                    <img src={slide} alt={`Slide ${index + 1}`} className="h-screen w-full object-cover" />
+                    <img src={slide.image.cloudinary.secure_url} alt={`Slide ${index + 1}`} className="h-screen w-full object-cover" />
                   </CarouselItem>
                 ))}
               </CarouselContent>
             </Carousel>
 
             <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 gap-2">
-              {heroSlides.map((_, index) => (
+              {heroSlides.map((_: any, index: number) => (
                 <button
                   key={index}
                   onClick={() => heroApi?.scrollTo(index)}
@@ -273,57 +220,69 @@ export default function HomeClient({ home }: any) {
               ))}
             </div>
 
-            <div className="absolute inset-0 z-20 hidden lg:flex items-center pointer-events-none">
-              <div className="container mx-auto flex justify-end">
-                <div className="pointer-events-auto w-full max-w-md bg-white/95 p-8 shadow-2xl backdrop-blur">
-                  <h3 className="mb-6 text-center font-heading text-3xl font-bold text-gray-700">ENQUIRE NOW</h3>
-                  <form className="space-y-4 font-heading text-center">
-                    <Input className="bg-white rounded-md border-black text-black placeholder:text-black h-12" placeholder="Your Name" />
-                    <Input className="bg-white rounded-md border-black text-black placeholder:text-black h-12" type="tel" placeholder="Phone Number" />
-                    <Input className="bg-white rounded-md border-black text-black placeholder:text-black h-12" type="email" placeholder="Email Address" />
-                    <Button className="bg-black text-white rounded-none text-lg px-5 py-5 text-center hover:text-black">Submit Enquiry</Button>
-                  </form>
+            {hero?.showEnquiryForm && (
+              <div className="absolute inset-0 z-20 hidden lg:flex items-center pointer-events-none">
+                <div className="container mx-auto flex justify-end">
+                  <div className="pointer-events-auto w-full max-w-md bg-white p-8 shadow-2xl backdrop-blur">
+                    <h3 className="mb-6 text-center font-heading text-3xl font-bold text-gray-700">ENQUIRE NOW</h3>
+                    <form className="space-y-4 font-heading">
+                      <Input className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" placeholder="Your Name" />
+                      <Input
+                        className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
+                        type="tel"
+                        placeholder="Phone Number"
+                      />
+                      <Input
+                        className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
+                        type="email"
+                        placeholder="Email Address"
+                      />
+
+                      <Button className="w-full">Submit Enquiry</Button>
+                    </form>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </section>
 
+        {/* Only Mobile View Form */}
+        <div id="enquire-now" className="md:hidden w-full max-w-md container mx-auto px-4 bg-white py-8 md:py-16">
+          <div ref={ref} className="mb-10 hidden">
+            {lines.map((line, index) => {
+              const start = index * 0.3;
+              const end = start + 0.3;
+
+              const backgroundPositionX = useTransform(scrollYProgress, [start, end], ["100%", "0%"]);
+
+              return (
+                <motion.h2
+                  key={index}
+                  className="text-3xl font-semibold text-center text-transparent bg-clip-text"
+                  style={{
+                    backgroundImage: "linear-gradient(to right, #171a20 0%, #e13e3e 50%, #9CA3AF 50%, #9CA3AF 100%)",
+                    backgroundSize: "200% 100%",
+                    backgroundPositionX,
+                  }}
+                >
+                  {line}
+                </motion.h2>
+              );
+            })}
+          </div>
+          <h3 className="mb-4 text-2xl font-bold font-heading text-gray-500 text-center">ENQUIRE NOW</h3>
+          <form className="space-y-4 font-heading">
+            <Input className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" placeholder="Your Name" />
+            <Input className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" type="tel" placeholder="Phone Number" />
+            <Input className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" type="email" placeholder="Email Address" />
+
+            <Button className="w-full">Submit Enquiry</Button>
+          </form>
+        </div>
+
         {/* Welcom About Section */}
         <section className="bg-gray-200 py-8 md:py-16">
-          {/* Only Mobile View Form */}
-          <div id="enquire-now" className="md:hidden w-full max-w-md mb-12 container mx-auto px-4">
-            <div ref={ref} className="mb-10">
-              {lines.map((line, index) => {
-                const start = index * 0.3;
-                const end = start + 0.3;
-
-                const backgroundPositionX = useTransform(scrollYProgress, [start, end], ["100%", "0%"]);
-
-                return (
-                  <motion.h2
-                    key={index}
-                    className="text-3xl font-semibold text-center text-transparent bg-clip-text"
-                    style={{
-                      backgroundImage: "linear-gradient(to right, #171a20 0%, #e13e3e 50%, #9CA3AF 50%, #9CA3AF 100%)",
-                      backgroundSize: "200% 100%",
-                      backgroundPositionX,
-                    }}
-                  >
-                    {line}
-                  </motion.h2>
-                );
-              })}
-            </div>
-
-            <form className="space-y-4 font-heading text-center">
-              <Input className="bg-white rounded-md border-black text-black placeholder:text-black h-12" placeholder="Your Name" />
-              <Input className="bg-white rounded-md border-black text-black placeholder:text-black h-12" type="tel" placeholder="Phone Number" />
-              <Input className="bg-white rounded-md border-black text-black placeholder:text-black h-12" type="email" placeholder="Email Address" />
-              <Button className="bg-black text-white rounded-none text-lg px-5 py-5 text-center hover:text-black">Submit Enquiry</Button>
-            </form>
-          </div>
-
           <div className="flex flex-col gap-12 container mx-auto px-4">
             <div className="md:text-center">
               <h5 className="text-2xl md:text-3xl mb-2 font-heading italic"> {welcome.smallHeading}</h5>
@@ -409,47 +368,43 @@ export default function HomeClient({ home }: any) {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               <div className="relative overflow-hidden md:col-span-2">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
-                <img src="/featured-5.png" alt="" className="h-[220px] md:h-[320px] w-full object-cover" />
+                <img src={featured[0].image.cloudinary?.secure_url} alt="" className="h-[220px] md:h-[320px] w-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">Life at Ecole</h3>
+                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">{featured[0].title}</h3>
               </div>
 
               <div className="relative row-span-2 overflow-hidden">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
-                <img src="/featured-2.jpg" alt="" className="h-full w-full object-cover object-[55%]" />
+                <img src={featured[1].image.cloudinary?.secure_url} alt="" className="h-full w-full object-cover object-[55%]" />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">Athletic Excellence</h3>
+                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">{featured[1].title}</h3>
               </div>
 
               <div className="relative overflow-hidden">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
-                <img src="/featured-1.png" alt="" className="h-[220px] md:h-[320px] w-full object-cover" />
+                <img src={featured[2].image.cloudinary?.secure_url} alt="" className="h-[220px] md:h-[320px] w-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">Creative Pursuits</h3>
+                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">{featured[2].title}</h3>
               </div>
               <div className="relative overflow-hidden">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
-                <img src="/featured-4.png" alt="" className="h-[220px] md:h-[320px] w-full object-cover" />
+                <img src={featured[3].image.cloudinary?.secure_url} alt="" className="h-[220px] md:h-[320px] w-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">Culture & Traditions</h3>
+                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">{featured[3].title}</h3>
               </div>
               <div className="relative overflow-hidden">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
-                <img src="/featured-6.jpg" alt="" className="h-[220px] md:h-[320px] w-full object-cover" />
+                <img src={featured[4].image.cloudinary?.secure_url} alt="" className="h-[220px] md:h-[320px] w-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">The Women We’ve Shaped</h3>
+                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">{featured[4].title}</h3>
               </div>
               <div className="relative col-span-2 overflow-hidden h-[220px] md:h-[320px]">
-                <iframe
-                  className="absolute inset-0 h-full w-full"
-                  src="https://www.youtube.com/embed/tY5VujX-CX8?autoplay=1&mute=1&loop=1&playlist=tY5VujX-CX8&controls=0&showinfo=0&rel=0"
-                  allow="autoplay"
-                />
+                <iframe className="absolute inset-0 h-full w-full" src={featured[5].videoUrl} allow="autoplay" />
 
                 <div className="absolute inset-0 bg-black/20" />
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
 
-                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">Explore Our Campus</h3>
+                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">{featured[5].title}</h3>
               </div>
             </div>
           </div>
@@ -550,11 +505,20 @@ export default function HomeClient({ home }: any) {
                   <Card className="border-0 h-full p-0 rounded-none">
                     <CardContent className="p-3 md:p-8 ">
                       <h3 className="mb-4 text-2xl font-bold font-heading text-gray-500 text-center">ENQUIRE NOW</h3>
-                      <form className="space-y-4 font-heading text-center">
-                        <Input className="bg-white rounded-md border-black text-black placeholder:text-black h-12" placeholder="Your Name" />
-                        <Input className="bg-white rounded-md border-black text-black placeholder:text-black h-12" type="tel" placeholder="Phone Number" />
-                        <Input className="bg-white rounded-md border-black text-black placeholder:text-black h-12" type="email" placeholder="Email Address" />
-                        <Button className="bg-black text-white rounded-none text-lg px-5 py-5 text-center hover:text-black">Submit Enquiry</Button>
+                      <form className="space-y-4 font-heading">
+                        <Input className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" placeholder="Your Name" />
+                        <Input
+                          className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
+                          type="tel"
+                          placeholder="Phone Number"
+                        />
+                        <Input
+                          className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
+                          type="email"
+                          placeholder="Email Address"
+                        />
+
+                        <Button className="w-full">Submit Enquiry</Button>
                       </form>
                     </CardContent>
                   </Card>
@@ -592,10 +556,10 @@ export default function HomeClient({ home }: any) {
         <section className="bg-white">
           <div className="container max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center justify-between">
             <div className="hidden md:block">
-              <h3 className="font-heading text-2xl md:text-5xl leading-14 font-bold tracking-tight mb-5">Join India’s Premier Boarding School For Girls in Dehradun</h3>
-              <p className="text-xl font-bold mb-2"> To book our campus tour, please call </p>
-              <a className="text-3xl hover:underline cursor-pointer text-red-700" href="tel:+919557291888">
-                +91-9557291888
+              <h3 className="font-heading text-2xl md:text-5xl leading-14 font-bold tracking-tight mb-5">{videosSection?.heading}</h3>
+              <p className="text-xl font-bold mb-2"> {videosSection?.phoneText}</p>
+              <a className="text-3xl hover:underline cursor-pointer text-red-700" href={`tel:${videosSection?.phoneNumber}`}>
+                {videosSection?.phoneNumber}
               </a>
             </div>
             <div className="relative ">
@@ -608,7 +572,7 @@ export default function HomeClient({ home }: any) {
                 }}
               >
                 <CarouselContent className="py-20">
-                  {videos.map((video, index) => (
+                  {videos.map((video: any, index: number) => (
                     <CarouselItem key={index} className={`basis-[50%] pl-0 ${currentVideo === index ? "z-20" : "z-0"}`}>
                       <div
                         className={`relative transition-all duration-500 border-6 border-white shadow-[0_0px_10px_rgba(0,0,0,0.25)]  ${currentVideo === index ? "scale-[1.2]" : "scale-[.8]"}`}
@@ -617,7 +581,7 @@ export default function HomeClient({ home }: any) {
                           ref={(el) => {
                             videoRefs.current[index] = el;
                           }}
-                          src={video}
+                          src={video.video.cloudinary.secure_url}
                           loop
                           playsInline
                           preload="metadata"
@@ -678,16 +642,16 @@ export default function HomeClient({ home }: any) {
 
               <motion.div
                 className="flex gap-12"
-                animate={{ x: ["0%", "-3150px"] }}
+                animate={{ x: ["0%", "-50%"] }}
                 transition={{
-                  duration: 30,
+                  duration: 20,
                   ease: "linear",
                   repeat: Infinity,
                 }}
               >
-                {[...clientLogos, ...clientLogos].map((item, index) => (
-                  <div key={index} className="shrink-0">
-                    <img src={item.image} className="h-16 md:h-20 w-auto object-contain" alt="" />
+                {[...logos, ...logos].map((logo) => (
+                  <div key={`${logo.id}-${Math.random()}`} className="shrink-0">
+                    <img src={logo.cloudinary?.secure_url} alt={logo.alt || ""} className="h-16 md:h-20 w-auto object-contain" />
                   </div>
                 ))}
               </motion.div>

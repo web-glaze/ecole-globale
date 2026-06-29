@@ -34,7 +34,23 @@ export const Home: GlobalConfig = {
                   defaultValue: true,
                 },
                 {
+                  name: "autoPlay",
+                  label: "Auto Play",
+                  type: "checkbox",
+                  defaultValue: true,
+                },
+                {
+                  name: "autoPlayDelay",
+                  label: "Autoplay Delay (ms)",
+                  type: "number",
+                  defaultValue: 5000,
+                  admin: {
+                    condition: (_, siblingData) => siblingData.autoPlay,
+                  },
+                },
+                {
                   name: "slides",
+                  label: "Hero Slides",
                   type: "array",
                   minRows: 1,
                   labels: {
@@ -44,29 +60,10 @@ export const Home: GlobalConfig = {
                   fields: [
                     {
                       name: "image",
+                      label: "Image",
                       type: "upload",
                       relationTo: "media",
                       required: true,
-                    },
-                    {
-                      name: "smallHeading",
-                      type: "text",
-                    },
-                    {
-                      name: "heading",
-                      type: "text",
-                    },
-                    {
-                      name: "description",
-                      type: "textarea",
-                    },
-                    {
-                      name: "buttonText",
-                      type: "text",
-                    },
-                    {
-                      name: "buttonLink",
-                      type: "text",
                     },
                   ],
                 },
@@ -314,23 +311,34 @@ export const Home: GlobalConfig = {
                 {
                   name: "heading",
                   type: "text",
-                  defaultValue: "Join India’s Premier Boarding School For Girls in Dehradun",
                 },
                 {
                   name: "phoneText",
                   type: "text",
-                  defaultValue: "To book our campus tour, please call",
                 },
                 {
                   name: "phoneNumber",
                   type: "text",
-                  defaultValue: "+91-9557291888",
                 },
                 {
                   name: "videos",
-                  type: "relationship",
-                  relationTo: "media",
-                  hasMany: true,
+                  type: "array",
+                  labels: {
+                    singular: "Video",
+                    plural: "Videos",
+                  },
+                  fields: [
+                    {
+                      name: "video",
+                      type: "upload",
+                      relationTo: "media",
+                      filterOptions: {
+                        mimeType: {
+                          contains: "video",
+                        },
+                      },
+                    },
+                  ],
                 },
               ],
             },
@@ -344,20 +352,15 @@ export const Home: GlobalConfig = {
           label: "Logo Strip",
           fields: [
             {
-              name: "logoStrip",
-              type: "group",
-              fields: [
-                {
-                  name: "logos",
-                  type: "relationship",
-                  relationTo: "media",
-                  hasMany: true,
-                },
-              ],
+              name: "logos",
+              label: "Logos",
+              type: "upload",
+              relationTo: "media",
+              hasMany: true,
+              required: false,
             },
           ],
         },
-
         // ======================================================
         // SEO
         // ======================================================

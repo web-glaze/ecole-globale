@@ -10,33 +10,48 @@ export const Media: CollectionConfig = {
 
   upload: {
     staticDir: "media",
-    imageSizes: [
-      {
-        name: "thumbnail",
-        width: 300,
-      },
-      {
-        name: "card",
-        width: 600,
-      },
-      {
-        name: "hero",
-        width: 1600,
+
+    mimeTypes: ["image/*", "video/*"],
+
+    adminThumbnail: "thumbnail",
+  },
+
+  hooks: {
+    beforeChange: [
+      ({ data }) => {
+        if (!data) return data;
+
+        if (!data.alt && data.filename) {
+          data.alt = data.filename
+            .replace(/\.[^/.]+$/, "")
+            .replace(/[-_]/g, " ")
+            .replace(/\b\w/g, (char: string) => char.toUpperCase());
+        }
+
+        return data;
       },
     ],
-    mimeTypes: ["image/*"],
   },
 
   fields: [
     {
-      name: "alt",
-      label: "Alt Text",
-      type: "text",
-      required: true,
-    },
-    {
-      name: "caption",
-      type: "textarea",
+      type: "collapsible",
+      label: "SEO",
+      fields: [
+        {
+          name: "alt",
+          label: "Alt Text",
+          type: "text",
+          admin: {
+            description: "Automatically generated from the filename. You can edit it if needed.",
+          },
+        },
+        {
+          name: "caption",
+          label: "Caption",
+          type: "textarea",
+        },
+      ],
     },
   ],
 };
