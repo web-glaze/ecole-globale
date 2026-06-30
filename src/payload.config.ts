@@ -16,6 +16,15 @@ export default buildConfig({
   collections: [Media, Pages, Testimonials, Leads],
   globals: [SiteSettings, Home, Navigation],
 
+  admin: {
+    components: {
+      graphics: {
+        Logo: "@/components/admin/Logo",
+        Icon: "@/components/admin/Icon",
+      },
+    },
+  },
+
   plugins: [
     cloudinaryStorage({
       config: {
