@@ -12,6 +12,101 @@ import { Badge } from "@/components/ui/badge";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import Autoplay from "embla-carousel-autoplay";
 
+function EnquiryForm() {
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    message: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    setLoading(true);
+    setSuccessMessage("");
+    setErrorMessage("");
+
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await res.json();
+
+      if (res.ok) {
+        setSuccessMessage("Enquiry submitted successfully!");
+
+        setFormData({
+          name: "",
+          phone: "",
+          email: "",
+          message: "",
+        });
+      } else {
+        const errorMsg = result.message || result.errors?.[0]?.message || "Failed to submit enquiry.";
+        setErrorMessage(errorMsg);
+      }
+    } catch (err) {
+      console.error(err);
+      setErrorMessage("Something went wrong");
+    }
+    setLoading(false);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4 font-heading">
+      <Input
+        name="name"
+        placeholder="Your Name"
+        value={formData.name}
+        onChange={handleChange}
+        className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
+        required
+      />
+      <Input
+        name="phone"
+        type="tel"
+        placeholder="Phone Number"
+        value={formData.phone}
+        onChange={handleChange}
+        className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
+      />
+      <Input
+        name="email"
+        type="email"
+        placeholder="Email Address"
+        value={formData.email}
+        onChange={handleChange}
+        className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
+        required
+      />
+
+      <Button className="w-full" disabled={loading}>
+        {loading ? "Submitting..." : "Submit Enquiry"}
+      </Button>
+
+      {successMessage && <p className="text-green-600 text-sm font-medium text-center mt-2">{successMessage}</p>}
+      {errorMessage && <p className="text-red-600 text-sm font-medium text-center mt-2">{errorMessage}</p>}
+    </form>
+  );
+}
+
 export default function HomeClient({ home }: any) {
   const hero = home.hero;
   const heroSlides = home.hero?.slides || ["/v1-hero-slider-5.jpg"];
@@ -156,58 +251,6 @@ export default function HomeClient({ home }: any) {
     school: School,
   };
 
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    message: "",
-  });
-
-  const [loading, setLoading] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    setLoading(true);
-
-    try {
-      const res = await fetch("/api/leads", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const result = await res.json();
-
-      if (result.success) {
-        alert("Enquiry submitted successfully!");
-
-        setFormData({
-          name: "",
-          phone: "",
-          email: "",
-          message: "",
-        });
-      } else {
-        alert(result.message);
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Something went wrong");
-    }
-
-    setLoading(false);
-  };
-
   return (
     <>
       <main>
@@ -262,21 +305,7 @@ export default function HomeClient({ home }: any) {
                 <div className="container mx-auto flex justify-end">
                   <div className="pointer-events-auto w-full max-w-md bg-white p-8 shadow-2xl backdrop-blur">
                     <h3 className="mb-6 text-center font-heading text-3xl font-bold text-gray-700">ENQUIRE NOW</h3>
-                    <form className="space-y-4 font-heading">
-                      <Input className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" placeholder="Your Name" />
-                      <Input
-                        className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
-                        type="tel"
-                        placeholder="Phone Number"
-                      />
-                      <Input
-                        className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
-                        type="email"
-                        placeholder="Email Address"
-                      />
-
-                      <Button className="w-full">Submit Enquiry</Button>
-                    </form>
+                    <EnquiryForm />
                   </div>
                 </div>
               </div>
@@ -309,39 +338,7 @@ export default function HomeClient({ home }: any) {
             })}
           </div>
           <h3 className="mb-4 text-2xl font-bold font-heading text-gray-500 text-center">ENQUIRE NOW</h3>
-          <form onSubmit={handleSubmit} className="space-y-4 font-heading">
-            <Input
-              name="name"
-              placeholder="Your Name"
-              value={formData.name}
-              onChange={handleChange}
-              className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
-              required
-            />
-
-            <Input
-              name="phone"
-              type="tel"
-              placeholder="Phone Number"
-              value={formData.phone}
-              onChange={handleChange}
-              className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
-            />
-
-            <Input
-              name="email"
-              type="email"
-              placeholder="Email Address"
-              value={formData.email}
-              onChange={handleChange}
-              className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
-              required
-            />
-
-            <Button className="w-full" disabled={loading}>
-              {loading ? "Submitting..." : "Submit Enquiry"}
-            </Button>
-          </form>
+          <EnquiryForm />
         </div>
 
         {/* Welcom About Section */}
@@ -562,21 +559,7 @@ export default function HomeClient({ home }: any) {
                   <Card className="border-0 h-full p-0 rounded-none">
                     <CardContent className="p-3 md:p-8 ">
                       <h3 className="mb-4 text-2xl font-bold font-heading text-gray-500 text-center">ENQUIRE NOW</h3>
-                      <form className="space-y-4 font-heading">
-                        <Input className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary" placeholder="Your Name" />
-                        <Input
-                          className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
-                          type="tel"
-                          placeholder="Phone Number"
-                        />
-                        <Input
-                          className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
-                          type="email"
-                          placeholder="Email Address"
-                        />
-
-                        <Button className="w-full">Submit Enquiry</Button>
-                      </form>
+                      <EnquiryForm />
                     </CardContent>
                   </Card>
                 </CarouselItem>
