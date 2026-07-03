@@ -5,7 +5,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Footer from "@/components/footer";
-import { RichText } from "@payloadcms/richtext-lexical/react";
+import { RichText, defaultJSXConverters } from "@payloadcms/richtext-lexical/react";
+import BlockRenderer from "@/components/blocks/BlockRenderer";
 
 export default function PageContent({ page }: { page: any }) {
   const ref = useRef(null);
@@ -152,18 +153,12 @@ export default function PageContent({ page }: { page: any }) {
             <EnquiryForm />
           </div>
         </div>
-        <div className="py-8 mx-auto px-4 container col-span-1 md:col-span-9">
-          <div>
-            <h1 className="text-4xl mb-2 font-heading">{page.title}</h1>
-            {/* <h3 className="text-3xl font-bold font-heading mb-3 uppercase">Ecole Globale</h3> */}
-            <RichText className="richtext" data={page.content} />
-          </div>
+        <div className="py-8 lg:py-0 mx-auto px-4 container col-span-1 md:col-span-9">
+          <h1 className="text-4xl font-heading mb-10">{page.title}</h1>
+          <BlockRenderer layout={page.layout} />
         </div>
       </section>
       <Footer />
-
-      {/* Render RichText here */}
-      {/* <pre>{JSON.stringify(page.content, null, 2)}</pre> */}
     </main>
   );
 }

@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { LayoutBlocks } from "@/blocks";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -42,9 +43,9 @@ export const Pages: CollectionConfig = {
     },
 
     {
-      name: "content",
-      type: "richText",
-      required: true,
+      name: "layout",
+      type: "blocks",
+      blocks: LayoutBlocks,
     },
 
     {
