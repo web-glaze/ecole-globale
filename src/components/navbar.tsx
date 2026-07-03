@@ -13,6 +13,7 @@ export default function Navbar() {
   const menu = navigation?.menu || [];
   const [openMenu, setOpenMenu] = useState<number | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const logo = settings?.logo?.cloudinary.secure_url || "/logo.png";
 
   useEffect(() => {
@@ -89,50 +90,78 @@ export default function Navbar() {
         {/* Mobile */}
         <div className="flex h-full items-center justify-between md:hidden text-white">
           {/* Hamburger */}
-          <Sheet>
+          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>{scrolled ? <Menu className="size-6 text-black" /> : <Menu className="size-6 text-white" />}</SheetTrigger>
 
-            <SheetContent side="left" className="w-[300px]">
+            <SheetContent side="left" className="w-[320px] p-0">
               <SheetHeader>
                 <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
               </SheetHeader>
 
-              <nav className="mt-8 flex flex-col px-6 ">
-                {menu.map((item: any, index: number) => {
-                  const href = item.type === "page" ? `/${item.page?.slug === "home" ? "" : item.page?.slug}` : item.url;
+              <nav className="flex h-full flex-col">
+                <div className="flex-1 overflow-y-auto px-5 py-4">
+                  {menu.map((item: any, index: number) => {
+                    const href = item.type === "page" ? `/${item.page?.slug === "home" ? "" : item.page?.slug}` : item.url;
 
-                  const hasChildren = item.children?.length > 0;
+                    const hasChildren = item.children?.length > 0;
 
-                  return (
-                    <div key={index} className="border-b">
-                      <div className="flex items-center justify-between py-2 mb-1">
-                        <Link href={href} className="text-base font-medium">
-                          {item.label}
-                        </Link>
+                    return (
+                      <div key={index} className="border-b py-1">
+                        <div className="flex items-center">
+                          <Link
+                            href={href}
+                            onClick={() => {
+                              setMobileOpen(false);
+                              setOpenMenu(null);
+                            }}
+                            className="flex-1 rounded-lg px-3 py-3 text-[15px] font-medium transition hover:bg-muted hover:text-primary"
+                          >
+                            {item.label}
+                          </Link>
 
-                        {hasChildren && (
-                          <button onClick={() => setOpenMenu(openMenu === index ? null : index)}>
-                            <ChevronDown className={`transition ${openMenu === index ? "rotate-180" : ""}`} />
-                          </button>
-                        )}
-                      </div>
-
-                      {hasChildren && openMenu === index && (
-                        <div className="pb-3 pl-3">
-                          {item.children.map((child: any) => {
-                            const childHref = child.type === "page" ? `/${child.page?.slug === "home" ? "" : child.page?.slug}` : child.url;
-
-                            return (
-                              <Link key={child.label} href={childHref} className="block py-1 text-base">
-                                {child.label}
-                              </Link>
-                            );
-                          })}
+                          {hasChildren && (
+                            <button onClick={() => setOpenMenu(openMenu === index ? null : index)} className="rounded-lg p-3 hover:bg-muted">
+                              <ChevronDown className={`h-5 w-5 transition-transform duration-300 ${openMenu === index ? "rotate-180" : ""}`} />
+                            </button>
+                          )}
                         </div>
-                      )}
-                    </div>
-                  );
-                })}
+
+                        <div className={`grid transition-all duration-300 ${openMenu === index ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
+                          <div className="overflow-hidden">
+                            <div className="ml-3 my-3 border-l pl-3">
+                              {item.children?.map((child: any) => {
+                                const childHref = child.type === "page" ? `/${child.page?.slug === "home" ? "" : child.page?.slug}` : child.url;
+
+                                return (
+                                  <Link
+                                    key={child.label}
+                                    href={childHref}
+                                    onClick={() => {
+                                      setMobileOpen(false);
+                                      setOpenMenu(null);
+                                    }}
+                                    className="block rounded-md px-3 py-2 text-sm text-muted-foreground transition hover:bg-muted hover:text-primary"
+                                  >
+                                    {child.label}
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="border-t p-5">
+                  <Button className="w-full" size="lg" asChild>
+                    <a href={`tel:${settings.phone}`} onClick={() => setMobileOpen(false)}>
+                      <Phone className="mr-2 h-4 w-4" />
+                      Call Now
+                    </a>
+                  </Button>
+                </div>
               </nav>
             </SheetContent>
           </Sheet>
