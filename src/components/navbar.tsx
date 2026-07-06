@@ -53,7 +53,7 @@ export default function Navbar() {
                   <Link
                     href={href}
                     target={item.newTab ? "_blank" : "_self"}
-                    className={`flex items-center gap-1 text-md font-medium transition-colors hover:text-primary ${scrolled ? "" : "text-white"}`}
+                    className={`flex items-center gap-1 font-medium transition-colors hover:text-primary ${scrolled ? "" : "text-white"}`}
                   >
                     {label}
 
@@ -65,12 +65,12 @@ export default function Navbar() {
                   </Link>
 
                   {item.children?.length > 0 && (
-                    <div className="invisible absolute left-0 top-full mt-2 min-w-[220px] bg-white opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
+                    <div className="invisible absolute left-0 top-full mt-2 min-w-[220px] bg-white opacity-0 shadow-xl transition-all text-sm duration-200 group-hover:visible group-hover:opacity-100">
                       {item.children.map((child: any) => {
                         const childHref = child.type === "page" ? `/${child.page?.slug === "home" ? "" : child.page?.slug}` : child.url;
 
                         return (
-                          <Link key={child.label} href={childHref} target={child.newTab ? "_blank" : "_self"} className="block px-5 py-2 hover:bg-gray-200">
+                          <Link key={child.label} href={childHref} target={child.newTab ? "_blank" : "_self"} className="block px-2 py-2 hover:bg-gray-200">
                             {child.label}
                           </Link>
                         );

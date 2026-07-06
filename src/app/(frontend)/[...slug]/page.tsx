@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import PageContent from "./PageContent";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import AdmissionPage from "./AdmissionPage";
 
 type Props = {
   params: Promise<{
@@ -40,6 +41,12 @@ export default async function Page({ params }: Props) {
 
   if (!page) {
     redirect("/");
+  }
+
+  const isAdmissionPage = page.slug === "admission/online-application-process";
+
+  if (isAdmissionPage) {
+    return <AdmissionPage page={page} />;
   }
 
   return <PageContent page={page} />;
