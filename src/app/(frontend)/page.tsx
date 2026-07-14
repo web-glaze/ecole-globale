@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import HomeClient from "@/app/(frontend)/HomeClient";
 import { getPayload } from "payload";
 import config from "@payload-config";

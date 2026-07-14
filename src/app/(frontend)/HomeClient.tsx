@@ -426,46 +426,46 @@ export default function HomeClient({ home }: any) {
         <section className="bg-white py-8 md:py-16">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              <div className="relative overflow-hidden md:col-span-2">
+              <Link href={`${featured[0]?.link}`} className="relative overflow-hidden md:col-span-2">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
-                <img src={featured[0].image.cloudinary?.secure_url} alt="" className="h-[220px] md:h-[320px] w-full object-cover" />
+                <img src={featured[0]?.image?.cloudinary?.secure_url} alt="" className="h-[220px] md:h-[320px] w-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">{featured[0].title}</h3>
-              </div>
+                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">{featured[0]?.title}</h3>
+              </Link>
 
-              <div className="relative row-span-2 overflow-hidden">
+              <Link href={`${featured[1]?.link}`} className="relative row-span-2 overflow-hidden">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
                 <img src={featured[1].image.cloudinary?.secure_url} alt="" className="h-full w-full object-cover object-[55%]" />
                 <div className="absolute inset-0 bg-black/20" />
                 <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">{featured[1].title}</h3>
-              </div>
+              </Link>
 
-              <div className="relative overflow-hidden">
+              <Link href={`${featured[2]?.link}`} className="relative overflow-hidden">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
                 <img src={featured[2].image.cloudinary?.secure_url} alt="" className="h-[220px] md:h-[320px] w-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
                 <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">{featured[2].title}</h3>
-              </div>
-              <div className="relative overflow-hidden">
+              </Link>
+              <Link href={`${featured[3]?.link}`} className="relative overflow-hidden">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
                 <img src={featured[3].image.cloudinary?.secure_url} alt="" className="h-[220px] md:h-[320px] w-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
                 <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">{featured[3].title}</h3>
-              </div>
-              <div className="relative overflow-hidden">
+              </Link>
+              <Link href={`${featured[4]?.link}`} className="relative overflow-hidden">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
                 <img src={featured[4].image.cloudinary?.secure_url} alt="" className="h-[220px] md:h-[320px] w-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
                 <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">{featured[4].title}</h3>
-              </div>
-              <div className="relative col-span-2 overflow-hidden h-[220px] md:h-[320px]">
+              </Link>
+              <Link href={`${featured[5]?.link}`} className="relative col-span-2 overflow-hidden h-[220px] md:h-[320px]">
                 <iframe className="absolute inset-0 h-full w-full" src={featured[5].videoUrl} allow="autoplay" />
 
                 <div className="absolute inset-0 bg-black/20" />
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
 
                 <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">{featured[5].title}</h3>
-              </div>
+              </Link>
             </div>
           </div>
         </section>
