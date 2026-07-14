@@ -1,9 +1,10 @@
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
-import { notFound } from "next/navigation";
-import PageContent from "./PageContent";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import Script from "next/script";
+
+import PageContent from "./PageContent";
 import AdmissionPage from "./AdmissionPage";
 
 type Props = {
@@ -17,7 +18,6 @@ async function getPage(slugArray: string[]) {
     config: configPromise,
   });
 
-  // Convert ["about-us", "about-school"] -> "about-us/about-school"
   const slug = slugArray.join("/");
 
   const result = await payload.find({
@@ -38,18 +38,40 @@ export default async function Page({ params }: Props) {
   const { slug } = await params;
 
   const page = await getPage(slug);
+  const customCSS = page.customCSS?.replace(/\r\n/g, "\n").trim();
+  const customJS = page.customJS?.replace(/\r\n/g, "\n").trim();
 
   if (!page) {
     redirect("/");
   }
 
-  const isAdmissionPage = page.slug === "admission/online-application-process";
-
-  if (isAdmissionPage) {
+  if (page.slug === "admission/online-application-process") {
     return <AdmissionPage page={page} />;
   }
 
-  return <PageContent page={page} />;
+  return (
+    <>
+      {customCSS && (
+        <style
+          dangerouslySetInnerHTML={{
+            __html: customCSS,
+          }}
+        />
+      )}
+
+      <PageContent page={page} />
+
+      {customJS && (
+        <Script
+          id={`page-js-${page.id}`}
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: customJS,
+          }}
+        />
+      )}
+    </>
+  );
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
