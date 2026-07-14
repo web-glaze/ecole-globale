@@ -5,5 +5,6 @@ import { VideoBlock } from "./Video";
 import { AccordionBlock } from "./Accordion";
 import { ButtonBlock } from "./Button";
 import { HTMLBlock } from "./HTML";
+import { TeamBlock } from "./Team";
 
-export const LayoutBlocks = [RichTextBlock, ImageBlock, GalleryBlock, VideoBlock, AccordionBlock, ButtonBlock, HTMLBlock];
+export const LayoutBlocks = [RichTextBlock, ImageBlock, GalleryBlock, VideoBlock, AccordionBlock, ButtonBlock, HTMLBlock, TeamBlock];

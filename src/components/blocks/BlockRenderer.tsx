@@ -5,6 +5,7 @@ import VideoBlock from "./VideoBlock";
 import AccordionBlock from "./AccordionBlock";
 import ButtonBlock from "./ButtonBlock";
 import HTMLBlock from "./HTMLBlock";
+import TeamBlock from "./TeamBlock";
 
 export default function BlockRenderer({ layout }: { layout: any[] }) {
   if (!layout?.length) return null;
@@ -33,6 +34,9 @@ export default function BlockRenderer({ layout }: { layout: any[] }) {
 
           case "html":
             return <HTMLBlock key={index} block={block} />;
+
+          case "team":
+            return <TeamBlock key={index} block={block} />;
 
           default:
             return null;
