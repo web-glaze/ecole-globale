@@ -16,10 +16,11 @@ export default function Footer() {
 
   const quickLinks = [
     { label: "Home", href: "/" },
-    { label: "About Us", href: "/about" },
-    { label: "Services", href: "/services" },
-    { label: "Blog", href: "/blog" },
-    { label: "Admissions", href: "/admissions" },
+    { label: "About School", href: "/about-us/vision-mission" },
+    { label: "Mandatory Public Disclosure", href: "/mandatory-public-disclosure" },
+    { label: "Latest Updates", href: "/latest-updates" },
+    { label: "Download TC", href: "https://vedantaerpserver.com/pages/oSLCView.aspx?SchoolID=4mw04XHZAGldPNJfevIPAw%3d%3d", external: true },
+
     { label: "Contact", href: "/contact" },
   ];
 
@@ -143,9 +144,15 @@ export default function Footer() {
             <ul className="flex flex-col gap-2">
               {quickLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className=" text-lg hover:text-white transition-colors">
-                    {link.label}
-                  </Link>
+                  {link.external ? (
+                    <a href={link.href} target="_blank" rel="noopener noreferrer" className="text-lg hover:text-white transition-colors">
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link href={link.href} className="text-lg hover:text-white transition-colors">
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>

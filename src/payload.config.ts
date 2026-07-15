@@ -11,10 +11,11 @@ import { Pages } from "./collections/Pages";
 import { Navigation } from "./globals/Navigation";
 import { Leads } from "./collections/Leads";
 import { Admissions } from "./collections/Admissions";
+import { LatestUpdates } from "./collections/LatestUpdates";
 
 export default buildConfig({
   editor: lexicalEditor(),
-  collections: [Media, Pages, Testimonials, Leads, Admissions],
+  collections: [Media, Pages, Testimonials, Leads, Admissions, LatestUpdates],
   globals: [SiteSettings, Home, Navigation],
 
   admin: {

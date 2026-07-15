@@ -31,19 +31,20 @@ async function getPage(slugArray: string[]) {
     depth: 2,
   });
 
-  return result.docs[0];
+  return result.docs.length > 0 ? result.docs[0] : null;
 }
 
 export default async function Page({ params }: Props) {
   const { slug } = await params;
 
   const page = await getPage(slug);
-  const customCSS = page.customCSS?.replace(/\r\n/g, "\n").trim();
-  const customJS = page.customJS?.replace(/\r\n/g, "\n").trim();
 
   if (!page) {
     redirect("/");
   }
+
+  const customCSS = page.customCSS?.replace(/\r\n/g, "\n").trim();
+  const customJS = page.customJS?.replace(/\r\n/g, "\n").trim();
 
   if (page.slug === "admission/online-application-process") {
     return <AdmissionPage page={page} />;

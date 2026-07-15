@@ -7,10 +7,10 @@ import { Input } from "@/components/ui/input";
 import Footer from "@/components/footer";
 import { RichText, defaultJSXConverters } from "@payloadcms/richtext-lexical/react";
 import BlockRenderer from "@/components/blocks/BlockRenderer";
+import { Clock, User } from "lucide-react";
 
-export default function PageContent({ page }: { page: any }) {
+export default function PostContent({ post }: { post: any }) {
   const ref = useRef(null);
-  const isFullWidth = page.template === "full-width";
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -113,55 +113,60 @@ export default function PageContent({ page }: { page: any }) {
       </form>
     );
   }
-
   return (
-    <main className={[page.template ?? "default", page.pageClass ?? ""].filter(Boolean).join(" ")}>
+    <main>
       <div className="relative">
         <div className="absolute inset-x-0 top-0 z-10 h-52 bg-linear-to-b from-black  to-transparent" />
-        {page.featuredImage ? (
-          <img src={page.featuredImage.cloudinary.secure_url} alt={page.title} className="h-screen md:h-auto md:max-h-[700px] w-full object-cover" />
-        ) : (
-          <img src={"/hero-image.jpg"} alt={page.title} className="h-screen md:h-auto md:max-h-[700px] w-full object-cover" />
-        )}
+        <img src={"/hero-image.jpg"} alt={post.title} className="h-screen md:h-auto md:max-h-[700px] w-full object-cover" />
       </div>
 
       <section className="grid grid-cols-1 md:grid-cols-12 gap-4 container mx-auto md:py-10">
-        {page.template !== "full-width" && (
-          <div id="enquire-now" className="mx-auto container col-span-1 md:col-span-3 ">
-            <div className="py-8 px-4 bg-gray-200">
-              <div ref={ref} className="mb-10">
-                {lines.map((line, index) => {
-                  const start = index * 0.3;
-                  const end = start + 0.3;
+        <div id="enquire-now" className="mx-auto container col-span-1 md:col-span-3 ">
+          <div className="py-8 px-4 bg-gray-200">
+            <div ref={ref} className="mb-10">
+              {lines.map((line, index) => {
+                const start = index * 0.3;
+                const end = start + 0.3;
 
-                  const backgroundPositionX = useTransform(scrollYProgress, [start, end], ["100%", "0%"]);
+                const backgroundPositionX = useTransform(scrollYProgress, [start, end], ["100%", "0%"]);
 
-                  return (
-                    <motion.h2
-                      key={index}
-                      className="text-3xl font-semibold text-center text-transparent bg-clip-text"
-                      style={{
-                        backgroundImage: "linear-gradient(to right, #171a20 0%, #e13e3e 50%, #9CA3AF 50%, #9CA3AF 100%)",
-                        backgroundSize: "200% 100%",
-                        backgroundPositionX,
-                      }}
-                    >
-                      {line}
-                    </motion.h2>
-                  );
-                })}
+                return (
+                  <motion.h2
+                    key={index}
+                    className="text-3xl font-semibold text-center text-transparent bg-clip-text"
+                    style={{
+                      backgroundImage: "linear-gradient(to right, #171a20 0%, #e13e3e 50%, #9CA3AF 50%, #9CA3AF 100%)",
+                      backgroundSize: "200% 100%",
+                      backgroundPositionX,
+                    }}
+                  >
+                    {line}
+                  </motion.h2>
+                );
+              })}
+            </div>
+
+            <EnquiryForm />
+          </div>
+        </div>
+        <div className="py-8 lg:py-0 mx-auto px-4 container col-span-1 md:col-span-9">
+          <div className="mb-10">
+            <h1 className="text-4xl font-heading ">{post.title}</h1>
+            <div className="mt-4 flex gap-6 text-sm py-2 border-t border-b border-gray-200">
+              <div className="flex gap-2 items-center text-gray-800">
+                <User />
+                <span>By {post.author?.name ? post.author.name : "Ecole Globale"}</span>
               </div>
-
-              <EnquiryForm />
+              <div className="flex gap-2 items-center text-gray-800">
+                <Clock />
+                <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
+              </div>
             </div>
           </div>
-        )}
-
-        <div className={`py-8 lg:py-0 mx-auto px-4 container ${isFullWidth ? "col-span-12" : "col-span-1 md:col-span-9"}`}>
-          {!page.hideTitle && <h1 className="text-4xl font-heading mb-10">{page.title}</h1>}
-          <BlockRenderer layout={page.layout} />
+          <BlockRenderer layout={post.layout} />
         </div>
       </section>
+
       <Footer />
     </main>
   );
