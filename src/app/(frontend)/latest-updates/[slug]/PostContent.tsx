@@ -159,7 +159,14 @@ export default function PostContent({ post }: { post: any }) {
               </div>
               <div className="flex gap-2 items-center text-gray-800">
                 <Clock />
-                <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
+                <span>
+                  {post.publishedAt &&
+                    new Date(post.publishedAt).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                </span>
               </div>
             </div>
           </div>

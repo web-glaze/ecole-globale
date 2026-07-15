@@ -62,7 +62,14 @@ export default async function LatestUpdatesPage() {
 
                     <div className="flex items-center gap-2 text-gray-800">
                       <Clock size={20} />
-                      <span>{post.publishedAt && new Date(post.publishedAt).toLocaleDateString()}</span>
+                      <span>
+                        {post.publishedAt &&
+                          new Date(post.publishedAt).toLocaleDateString("en-GB", {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                          })}
+                      </span>
                     </div>
                   </div>
                 </div>
