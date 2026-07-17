@@ -59,6 +59,7 @@ export default async function RootLayout({
           <BottomNavigation />
         </SiteSettingsProvider>
         <script src="//code.tidio.co/soh8q34u3enonxuxlvcqmpos6njf27sh.js" async></script>
+        <script src="https://t.contentsquare.net/uxa/3304c3674532d.js" defer></script>
       </body>
     </html>
   );
