@@ -53,12 +53,12 @@ export default async function RootLayout({
   return (
     <html lang="en" className={cn("h-full", "antialiased", "font-sans", libreCaslonText.variable, manropeHeading.variable)}>
       <body className="min-h-full flex flex-col">
+        <script src="//code.tidio.co/soh8q34u3enonxuxlvcqmpos6njf27sh.js" async></script>
         <SiteSettingsProvider settings={settings} navigation={navigation}>
           <Navbar />
           {children}
           <BottomNavigation />
         </SiteSettingsProvider>
-        <script src="//code.tidio.co/soh8q34u3enonxuxlvcqmpos6njf27sh.js" async></script>
         <script src="https://t.contentsquare.net/uxa/3304c3674532d.js" defer></script>
       </body>
     </html>

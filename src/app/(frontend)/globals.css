@@ -203,3 +203,7 @@
     @apply border p-2;
   }
 }
+
+#tidio-chat {
+  bottom: 65px !important;
+}
