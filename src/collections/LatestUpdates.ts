@@ -41,6 +41,16 @@ export const LatestUpdates: CollectionConfig = {
               name: "title",
               type: "text",
               required: true,
+              admin: {
+                components: {
+                  Cell: {
+                    path: "@/components/admin/TitleWithActions",
+                    clientProps: {
+                      frontendPath: "/latest-updates",
+                    },
+                  },
+                },
+              },
             },
 
             {

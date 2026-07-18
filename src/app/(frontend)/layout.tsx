@@ -7,6 +7,7 @@ import { getNavigation } from "@/lib/getNavigation";
 import Navbar from "@/components/navbar";
 import BottomNavigation from "@/components/bottomNavigation";
 import { SiteSettingsProvider } from "@/lib/site-settings-context";
+import Script from "next/script";
 
 const manropeHeading = Manrope({
   subsets: ["latin"],
@@ -53,13 +54,13 @@ export default async function RootLayout({
   return (
     <html lang="en" className={cn("h-full", "antialiased", "font-sans", libreCaslonText.variable, manropeHeading.variable)}>
       <body className="min-h-full flex flex-col">
-        <script src="//code.tidio.co/soh8q34u3enonxuxlvcqmpos6njf27sh.js" async></script>
+        <Script src="//code.tidio.co/soh8q34u3enonxuxlvcqmpos6njf27sh.js" strategy="beforeInteractive"></Script>
         <SiteSettingsProvider settings={settings} navigation={navigation}>
           <Navbar />
           {children}
           <BottomNavigation />
         </SiteSettingsProvider>
-        <script src="https://t.contentsquare.net/uxa/3304c3674532d.js" defer></script>
+        <Script src="https://t.contentsquare.net/uxa/3304c3674532d.js" strategy="afterInteractive" />
       </body>
     </html>
   );

@@ -204,6 +204,8 @@
   }
 }
 
-#tidio-chat {
-  bottom: 65px !important;
+@media screen and (max-width: 768px) {
+  #tidio-chat {
+    bottom: 50px !important;
+  }
 }

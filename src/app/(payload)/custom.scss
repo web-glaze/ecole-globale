@@ -52,3 +52,38 @@ body {
 .nav-group__indicator svg .stroke {
   stroke: #fff;
 }
+
+// Title Cell
+
+.pl-title-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  .pl-title {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .pl-actions {
+    color: #6b7280;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    transition: all 0.15s;
+    display: flex;
+  }
+
+  .pl-actions a {
+    color: #2271b1;
+    text-decoration: none;
+  }
+
+  .pl-actions a:hover {
+    text-decoration: underline;
+  }
+
+  .pl-actions span {
+    color: #c4c4c4;
+  }
+}

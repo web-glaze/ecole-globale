@@ -5,8 +5,8 @@ export const Pages: CollectionConfig = {
   slug: "pages",
 
   labels: {
-    singular: "Dynamic Page",
-    plural: "Dynamic Pages",
+    singular: "Page",
+    plural: "Pages",
   },
 
   admin: {
@@ -29,6 +29,16 @@ export const Pages: CollectionConfig = {
       name: "title",
       type: "text",
       required: true,
+      admin: {
+        components: {
+          Cell: {
+            path: "@/components/admin/TitleWithActions",
+            clientProps: {
+              frontendPath: "",
+            },
+          },
+        },
+      },
     },
 
     {
