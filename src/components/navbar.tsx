@@ -29,7 +29,7 @@ export default function Navbar() {
     <header className={`absolute inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/40 backdrop-blur-md" : "bg-transparent"}`}>
       <div className="container mx-auto h-20 px-4">
         {/* Desktop */}
-        <div className="hidden h-full items-center justify-between md:flex">
+        <div className="hidden h-full items-center justify-between xl:flex">
           {/* Logo */}
           {scrolled ? (
             <Link href="/">
@@ -42,7 +42,7 @@ export default function Navbar() {
           )}
 
           {/* Menu */}
-          <nav className="flex items-center gap-6">
+          <nav className="flex items-center gap-3">
             {menu.map((item: any) => {
               const label = item.label || item.page?.title;
 
@@ -53,7 +53,7 @@ export default function Navbar() {
                   <Link
                     href={href}
                     target={item.newTab ? "_blank" : "_self"}
-                    className={`flex items-center gap-1 font-medium transition-colors hover:text-primary ${scrolled ? "" : "text-white"}`}
+                    className={`flex items-center gap-1 text-[15px] font-medium transition-colors hover:text-primary ${scrolled ? "" : "text-white"}`}
                   >
                     {label}
 
@@ -88,7 +88,7 @@ export default function Navbar() {
         </div>
 
         {/* Mobile */}
-        <div className="flex h-full items-center justify-between md:hidden text-white">
+        <div className="flex h-full items-center justify-between xl:hidden text-white">
           {/* Hamburger */}
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>{scrolled ? <Menu className="size-6 text-black" /> : <Menu className="size-6 text-white" />}</SheetTrigger>
