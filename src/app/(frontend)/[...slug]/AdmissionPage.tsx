@@ -18,7 +18,7 @@ export default function AdmissionPage({ page }: { page: any }) {
     offset: ["start 80%", "end 20%"],
   });
 
-  const lines = ["Lorem ipsum dolor sit", "amet consectetur elit"];
+  const lines = ["ENQUIRE NOW"];
 
   const academicYear = [
     { label: "2025-2026", value: "2025-2026" },

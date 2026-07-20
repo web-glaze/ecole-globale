@@ -14,7 +14,7 @@ export default function EnquirySection() {
     offset: ["start 80%", "end 20%"],
   });
 
-  const lines = ["Lorem ipsum dolor sit", "amet consectetur elit"];
+  const lines = ["ENQUIRE NOW"];
 
   const [formData, setFormData] = useState({
     name: "",

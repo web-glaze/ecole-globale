@@ -243,7 +243,7 @@ export default function HomeClient({ home }: any) {
 
   const backgroundSize = useTransform(scrollYProgress, [0, 1], ["0% 100%", "100% 100%"]);
 
-  const lines = ["Lorem ipsum dolor sit", "amet consectetur elit"];
+  const lines = ["ENQUIRE NOW"];
 
   const iconMap = {
     file: FileText,
@@ -374,7 +374,7 @@ export default function HomeClient({ home }: any) {
                     <div className="aspect-3/2 " />
 
                     {/* Fixed Card */}
-                    <Card className="w-full max-w-[270px] md:max-w-[400px] mx-auto relative z-10 py-8 px-5 text-center gap-0 rounded-none -mt-6 overflow-visible mb-2">
+                    <Card className="w-full max-w-[270px] md:max-w-[400px] min-h-[250px] mx-auto relative z-10 py-8 px-5 text-center gap-0 rounded-none -mt-6 overflow-visible mb-2">
                       <div className="absolute -top-1 -left-1 w-[calc(100%+8px)] h-[calc(100%+8px)] border border-[#916e27] pointer-events-none" />
                       {slide.subtitle && <p className="mb-2 text-md">{slide.subtitle}</p>}
                       <h3 className="text-xl mb-3 font-heading font-bold uppercase">{slide.title}</h3>

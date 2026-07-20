@@ -17,7 +17,7 @@ export default function PageContent({ page }: { page: any }) {
     offset: ["start 80%", "end 20%"],
   });
 
-  const lines = ["Lorem ipsum dolor sit", "amet consectetur elit"];
+  const lines = ["ENQUIRE NOW"];
 
   function EnquiryForm() {
     const [formData, setFormData] = useState({
