@@ -107,7 +107,7 @@ export default function ContactPage() {
   return (
     <main>
       <div className="relative">
-        <div className="absolute inset-x-0 top-0 z-10 h-52 bg-linear-to-b from-black  to-transparent" />
+        <div className="absolute inset-x-0 top-0 z-10 h-52 bg-gradient-to-b from-black  to-transparent" />
         <img src={"/hero-image.jpg"} alt="Contact Us" className="h-screen md:h-auto md:max-h-[700px] w-full object-cover" />
       </div>
 
