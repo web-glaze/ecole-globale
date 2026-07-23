@@ -8,27 +8,69 @@ import Footer from "@/components/footer";
 import EnquirySection from "@/components/EnquirySection";
 import { Clock, User } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Latest Updates",
-  description: "Latest school news and announcements.",
-};
+import { generateSEOMetadata } from "@/lib/seo";
+import { getSiteSettings } from "@/lib/getSiteSettings";
+import BlockRenderer from "@/components/blocks/BlockRenderer";
 
-export default async function LatestUpdatesPage() {
+export async function generateMetadata(): Promise<Metadata> {
   const payload = await getPayload({
     config: configPromise,
   });
 
-  const posts = await payload.find({
-    collection: "latest-updates",
-    depth: 2,
-    sort: "-publishedAt",
+  const [settings, pageResult] = await Promise.all([
+    getSiteSettings(),
+    payload.find({
+      collection: "pages",
+      where: {
+        slug: {
+          equals: "latest-updates",
+        },
+      },
+      depth: 2,
+      limit: 1,
+    }),
+  ]);
+
+  const page = pageResult.docs[0];
+
+  return generateSEOMetadata({
+    page,
+    settings,
+    pathname: "/latest-updates",
   });
+}
+
+export default async function LatestUpdatesPage() {
+  const payload = await getPayload({ config: configPromise });
+  const [pageResult, posts] = await Promise.all([
+    payload.find({
+      collection: "pages",
+      where: {
+        slug: {
+          equals: "latest-updates",
+        },
+      },
+      depth: 2,
+      limit: 1,
+    }),
+    payload.find({
+      collection: "latest-updates",
+      depth: 2,
+      sort: "-publishedAt",
+    }),
+  ]);
+
+  const page = pageResult.docs[0];
 
   return (
     <main>
       <div className="relative">
         <div className="absolute inset-x-0 top-0 z-10 h-52 bg-linear-to-b from-black  to-transparent" />
-        <img src={"/hero-image.jpg"} alt="Latest Updates" className="h-screen md:h-auto md:max-h-[700px] w-full object-cover" />
+        <img
+          src={page?.featuredImage?.cloudinary?.secure_url ?? "/hero-image.jpg"}
+          alt={page?.title ?? "Latest Updates"}
+          className="h-screen md:h-auto md:max-h-[700px] w-full object-cover"
+        />
       </div>
       <section className="grid grid-cols-1 md:grid-cols-12 gap-4 container mx-auto md:py-10">
         <div id="enquire-now" className="mx-auto container col-span-1 md:col-span-3 ">
@@ -36,7 +78,7 @@ export default async function LatestUpdatesPage() {
         </div>
         <div className="py-8 lg:py-0 mx-auto px-4 container col-span-1 md:col-span-9">
           <div className="mb-10">
-            <h1 className="text-4xl font-heading ">Latest Updates</h1>
+            <h1 className="text-4xl font-heading "> {page?.title}</h1>
           </div>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {posts.docs.map((post: any) => (
@@ -76,6 +118,11 @@ export default async function LatestUpdatesPage() {
               </Link>
             ))}
           </div>
+          {page?.layout?.length ? (
+            <div className="mt-10">
+              <BlockRenderer layout={page.layout} />
+            </div>
+          ) : null}
         </div>
       </section>
       <Footer />

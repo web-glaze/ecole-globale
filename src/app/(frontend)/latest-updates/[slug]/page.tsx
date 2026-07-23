@@ -4,6 +4,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import PostContent from "./PostContent";
+import { getSiteSettings } from "@/lib/getSiteSettings";
+import { generateSEOMetadata } from "@/lib/seo";
 
 type Props = {
   params: Promise<{
@@ -27,7 +29,23 @@ async function getPost(slug: string) {
     limit: 1,
   });
 
-  return result.docs[0];
+  return result.docs[0] ?? null;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+
+  const [post, settings] = await Promise.all([getPost(slug), getSiteSettings()]);
+
+  if (!post) {
+    return {};
+  }
+
+  return generateSEOMetadata({
+    page: post,
+    settings,
+    pathname: `/latest-updates/${post.slug}`,
+  });
 }
 
 export default async function LatestUpdatePage({ params }: Props) {
@@ -40,20 +58,4 @@ export default async function LatestUpdatePage({ params }: Props) {
   }
 
   return <PostContent post={post} />;
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
-
-  const post = await getPost(slug);
-
-  if (!post) return {};
-
-  return {
-    title: post.seo?.metaTitle || post.title,
-    description: post.seo?.metaDescription,
-    openGraph: {
-      images: post.seo?.ogImage?.cloudinary?.secure_url ? [post.seo.ogImage.cloudinary.secure_url] : [],
-    },
-  };
 }

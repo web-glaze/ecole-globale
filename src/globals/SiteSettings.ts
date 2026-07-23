@@ -112,24 +112,172 @@ export const SiteSettings: GlobalConfig = {
           fields: [
             {
               name: "defaultMetaTitle",
+              label: "Default Meta Title",
               type: "text",
+              admin: {
+                description: "Used when a page doesn't have its own Meta Title.",
+              },
             },
             {
               name: "defaultMetaDescription",
+              label: "Default Meta Description",
               type: "textarea",
+              admin: {
+                description: "Used when a page doesn't have its own Meta Description.",
+              },
             },
             {
               name: "defaultOgImage",
+              label: "Default Open Graph Image",
               type: "upload",
               relationTo: "media",
+              admin: {
+                description: "Default social sharing image.",
+              },
             },
+
             {
-              name: "googleAnalyticsId",
-              type: "text",
+              type: "collapsible",
+              label: "Robots Meta",
+              fields: [
+                {
+                  name: "robotsIndex",
+                  label: "Index",
+                  type: "checkbox",
+                  defaultValue: true,
+                },
+                {
+                  name: "robotsNoIndex",
+                  label: "No Index",
+                  type: "checkbox",
+                  defaultValue: false,
+                },
+                {
+                  name: "robotsNoFollow",
+                  label: "No Follow",
+                  type: "checkbox",
+                  defaultValue: false,
+                },
+                {
+                  name: "robotsNoArchive",
+                  label: "No Archive",
+                  type: "checkbox",
+                  defaultValue: false,
+                },
+                {
+                  name: "robotsNoImageIndex",
+                  label: "No Image Index",
+                  type: "checkbox",
+                  defaultValue: false,
+                },
+                {
+                  name: "robotsNoSnippet",
+                  label: "No Snippet",
+                  type: "checkbox",
+                  defaultValue: false,
+                },
+              ],
             },
+
             {
-              name: "googleTagManagerId",
-              type: "text",
+              type: "collapsible",
+              label: "Advanced Robots Meta",
+              fields: [
+                {
+                  name: "maxSnippet",
+                  label: "Snippet",
+                  type: "number",
+                  defaultValue: -1,
+                  admin: {
+                    description: "Maximum text snippet length. Use -1 for no limit.",
+                  },
+                },
+                {
+                  name: "maxVideoPreview",
+                  label: "Video Preview",
+                  type: "number",
+                  defaultValue: -1,
+                  admin: {
+                    description: "Maximum video preview length. Use -1 for no limit.",
+                  },
+                },
+                {
+                  name: "maxImagePreview",
+                  label: "Image Preview",
+                  type: "select",
+                  defaultValue: "large",
+                  options: [
+                    {
+                      label: "Standard",
+                      value: "standard",
+                    },
+                    {
+                      label: "Large",
+                      value: "large",
+                    },
+                    {
+                      label: "None",
+                      value: "none",
+                    },
+                  ],
+                },
+              ],
+            },
+
+            {
+              type: "collapsible",
+              label: "Google Verification",
+              fields: [
+                {
+                  name: "googleVerification",
+                  label: "Google Verification",
+                  type: "text",
+                },
+                {
+                  name: "bingVerification",
+                  label: "Bing Verification",
+                  type: "text",
+                },
+                {
+                  name: "yandexVerification",
+                  label: "Yandex Verification",
+                  type: "text",
+                },
+              ],
+            },
+
+            {
+              type: "collapsible",
+              label: "Custom Scripts",
+              fields: [
+                {
+                  name: "headScripts",
+                  label: "Head Scripts",
+                  type: "code",
+                  admin: {
+                    language: "html",
+                    description: "These scripts will be added inside the <head> section of every page.",
+                  },
+                },
+                {
+                  name: "afterBodyScripts",
+                  label: "Scripts After <body>",
+                  type: "code",
+                  admin: {
+                    language: "html",
+                    description: "These scripts will be inserted immediately after the opening <body> tag.",
+                  },
+                },
+                {
+                  name: "beforeBodyCloseScripts",
+                  label: "Scripts Before </body>",
+                  type: "code",
+                  admin: {
+                    language: "html",
+                    description: "These scripts will be inserted just before the closing </body> tag.",
+                  },
+                },
+              ],
             },
           ],
         },

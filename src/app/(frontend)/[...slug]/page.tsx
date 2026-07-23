@@ -6,6 +6,8 @@ import Script from "next/script";
 
 import PageContent from "./PageContent";
 import AdmissionPage from "./AdmissionPage";
+import { generateSEOMetadata } from "@/lib/seo";
+import { getSiteSettings } from "@/lib/getSiteSettings";
 
 type Props = {
   params: Promise<{
@@ -84,11 +86,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {};
   }
 
-  return {
-    title: page.seo?.metaTitle || page.title,
-    description: page.seo?.metaDescription,
-    openGraph: {
-      images: page.seo?.ogImage?.url ? [page.seo.ogImage.url] : [],
-    },
-  };
+  const settings = await getSiteSettings();
+
+  return generateSEOMetadata({
+    page,
+    settings,
+    pathname: `/${page.slug}`,
+  });
 }

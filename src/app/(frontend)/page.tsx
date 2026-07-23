@@ -1,18 +1,23 @@
+import type { Metadata } from "next";
+import HomeClient from "@/app/(frontend)/HomeClient";
+import { getHome } from "@/lib/getHome";
+import { getSiteSettings } from "@/lib/getSiteSettings";
+import { generateSEOMetadata } from "@/lib/seo";
+
 export const dynamic = "force-dynamic";
 
-import HomeClient from "@/app/(frontend)/HomeClient";
-import { getPayload } from "payload";
-import config from "@payload-config";
+export async function generateMetadata(): Promise<Metadata> {
+  const [home, settings] = await Promise.all([getHome(), getSiteSettings()]);
+
+  return generateSEOMetadata({
+    page: home,
+    settings,
+    pathname: "/",
+  });
+}
 
 export default async function HomePage() {
-  const payload = await getPayload({
-    config,
-  });
-
-  const home = await payload.findGlobal({
-    slug: "home",
-    depth: 2,
-  });
+  const home = await getHome();
 
   return <HomeClient home={home} />;
 }
