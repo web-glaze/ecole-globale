@@ -223,6 +223,21 @@ export const SiteSettings: GlobalConfig = {
                 },
               ],
             },
+            {
+              type: "collapsible",
+              label: "Robots.txt",
+              fields: [
+                {
+                  name: "robotsTxt",
+                  label: false,
+                  type: "code",
+                  admin: {
+                    language: "shell",
+                    description: "Edit your robots.txt file.",
+                  },
+                },
+              ],
+            },
 
             {
               type: "collapsible",
