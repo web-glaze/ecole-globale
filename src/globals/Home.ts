@@ -279,10 +279,10 @@ export const Home: GlobalConfig = {
           ],
         },
         {
-          label: "Videos",
+          label: "Updates & Press Releases",
           fields: [
             {
-              name: "videosSection",
+              name: "updatesSection",
               type: "group",
               fields: [
                 {
@@ -298,21 +298,73 @@ export const Home: GlobalConfig = {
                   type: "text",
                 },
                 {
-                  name: "videos",
+                  name: "items",
                   type: "array",
                   labels: {
-                    singular: "Video",
-                    plural: "Videos",
+                    singular: "Item",
+                    plural: "Items",
                   },
                   fields: [
+                    {
+                      name: "type",
+                      type: "radio",
+                      defaultValue: "video",
+                      options: [
+                        {
+                          label: "Video",
+                          value: "video",
+                        },
+                        {
+                          label: "Press Release",
+                          value: "press",
+                        },
+                      ],
+                    },
+
+                    // Video
                     {
                       name: "video",
                       type: "upload",
                       relationTo: "media",
+                      admin: {
+                        condition: (_, siblingData) => siblingData?.type === "video",
+                      },
                       filterOptions: {
                         mimeType: {
                           contains: "video",
                         },
+                      },
+                    },
+
+                    // Press Release
+                    {
+                      name: "title",
+                      type: "text",
+                      admin: {
+                        condition: (_, siblingData) => siblingData?.type === "press",
+                      },
+                    },
+                    {
+                      name: "description",
+                      type: "textarea",
+                      admin: {
+                        condition: (_, siblingData) => siblingData?.type === "press",
+                      },
+                    },
+                    {
+                      name: "image",
+                      type: "upload",
+                      relationTo: "media",
+                      admin: {
+                        condition: (_, siblingData) => siblingData?.type === "press",
+                      },
+                    },
+                    {
+                      name: "link",
+                      type: "text",
+                      label: "Read More URL",
+                      admin: {
+                        condition: (_, siblingData) => siblingData?.type === "press",
                       },
                     },
                   ],

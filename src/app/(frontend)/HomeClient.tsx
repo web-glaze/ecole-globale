@@ -116,8 +116,8 @@ export default function HomeClient({ home }: any) {
   const testimonials = home.testimonialsSection?.testimonials || [];
   const admissionSection = home.admission || [];
   const admissionSteps = home.admission?.steps || [];
-  const videosSection = home.videosSection || [];
-  const videos = home.videosSection?.videos || [];
+  const updatesSection = home.updatesSection || [];
+  const items = home.updatesSection?.items || [];
   const logos = home?.logos ?? [];
 
   const [api, setApi] = useState<CarouselApi>();
@@ -593,16 +593,18 @@ export default function HomeClient({ home }: any) {
         </section>
 
         {/* Video Carousel Section */}
-        <section className="bg-white">
+        <section className="bg-white py-8 md:py-16">
           <div className="container max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center justify-between">
             <div className="hidden md:block">
-              <h3 className="font-heading text-2xl md:text-5xl leading-14 font-bold tracking-tight mb-5">{videosSection?.heading}</h3>
-              <p className="text-xl font-bold mb-2"> {videosSection?.phoneText}</p>
-              <a className="text-3xl hover:underline cursor-pointer text-red-700" href={`tel:${videosSection?.phoneNumber}`}>
-                {videosSection?.phoneNumber}
+              <h3 className="font-heading text-2xl md:text-5xl leading-14 font-bold tracking-tight mb-5">{updatesSection?.heading}</h3>
+              <p className="text-xl font-bold mb-2"> {updatesSection?.phoneText}</p>
+              <a className="text-3xl hover:underline cursor-pointer text-red-700" href={`tel:${updatesSection?.phoneNumber}`}>
+                {updatesSection?.phoneNumber}
               </a>
             </div>
             <div className="relative ">
+              <h3 className="text-2xl font-bold font-heading text-center">Updates & Press Release</h3>
+
               <Carousel
                 className=""
                 setApi={setVideoApi}
@@ -612,50 +614,87 @@ export default function HomeClient({ home }: any) {
                 }}
               >
                 <CarouselContent className="py-20">
-                  {videos.map((video: any, index: number) => (
+                  {updatesSection?.items?.map((item: any, index: number) => (
                     <CarouselItem key={index} className={`basis-[50%] pl-0 ${currentVideo === index ? "z-20" : "z-0"}`}>
-                      <div
-                        className={`relative transition-all duration-500 border-6 border-white shadow-[0_0px_10px_rgba(0,0,0,0.25)]  ${currentVideo === index ? "scale-[1.2]" : "scale-[.8]"}`}
-                      >
-                        <video
-                          ref={(el) => {
-                            videoRefs.current[index] = el;
-                          }}
-                          src={video.video.cloudinary.secure_url}
-                          loop
-                          playsInline
-                          preload="metadata"
-                          poster="/poster.png"
-                          controls={false}
-                          className="w-full cursor-pointer"
-                          onClick={() => toggleVideo(index)}
-                          onPlay={() => setPlayingIndex(index)}
-                          onPause={() => setPlayingIndex(null)}
-                        />
-
-                        {/* Full Overlay Click Area */}
-                        <div className="absolute inset-0 cursor-pointer" onClick={() => toggleVideo(index)} />
-
-                        {/* Center Play Button */}
-                        {playingIndex !== index && currentVideo === index && (
-                          <button
+                      {item.type === "video" ? (
+                        <div className={`relative transition-all duration-500 border-6 border-white shadow-lg ${currentVideo === index ? "scale-[1.2]" : "scale-[.8]"}`}>
+                          <video
+                            ref={(el) => {
+                              videoRefs.current[index] = el;
+                            }}
+                            src={item.video?.cloudinary?.secure_url}
+                            loop
+                            playsInline
+                            preload="metadata"
+                            controls={false}
+                            poster="/poster.png"
+                            className="w-full cursor-pointer"
                             onClick={() => toggleVideo(index)}
-                            className="absolute left-1/2 top-1/2 z-20 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 backdrop-blur-sm"
-                          >
-                            <Play className="h-5 w-5 text-white fill-white" />
-                          </button>
-                        )}
+                            onPlay={() => setPlayingIndex(index)}
+                            onPause={() => setPlayingIndex(null)}
+                          />
 
-                        {/* Bottom Right Pause Button */}
-                        {playingIndex === index && (
-                          <button
-                            onClick={() => toggleVideo(index)}
-                            className="absolute bottom-4 right-4 z-20 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 backdrop-blur-sm"
-                          >
-                            <Pause className="h-3 w-3 text-white fill-white" />
-                          </button>
-                        )}
-                      </div>
+                          {/* Click Overlay */}
+                          <div className="absolute inset-0 z-10 cursor-pointer" onClick={() => toggleVideo(index)} />
+
+                          {/* Play Button */}
+                          {playingIndex !== index && currentVideo === index && (
+                            <button
+                              onClick={() => toggleVideo(index)}
+                              className="absolute left-1/2 top-1/2 z-20 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 backdrop-blur-sm"
+                            >
+                              <Play className="h-6 w-6 fill-white text-white" />
+                            </button>
+                          )}
+
+                          {/* Pause Button */}
+                          {playingIndex === index && (
+                            <button
+                              onClick={() => toggleVideo(index)}
+                              className="absolute bottom-4 right-4 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 backdrop-blur-sm"
+                            >
+                              <Pause className="h-4 w-4 fill-white text-white" />
+                            </button>
+                          )}
+                        </div>
+                      ) : item.link ? (
+                        <a
+                          href={item.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`bg-white overflow-hidden shadow-lg transition-all duration-500 h-full flex-col justify-center flex  ${currentVideo === index ? "scale-[1.2]" : "scale-[.8]"}`}
+                        >
+                          {item.image?.cloudinary?.secure_url && (
+                            <img src={item.image.cloudinary.secure_url} alt={item.title || "Press Release"} className="w-full aspect-video object-cover" />
+                          )}
+
+                          {(item.title || item.description) && (
+                            <div className="p-5">
+                              {item.title && <h4 className="text-xl font-bold">{item.title}</h4>}
+
+                              {item.description && <p className="mt-2 text-sm line-clamp-[10]">{item.description}</p>}
+
+                              <span className="mt-4 inline-block text-red-600 font-semibold">Read More →</span>
+                            </div>
+                          )}
+                        </a>
+                      ) : (
+                        <div
+                          className={`bg-white overflow-hidden shadow-lg transition-all duration-500 h-full flex-col justify-center flex  ${currentVideo === index ? "scale-[1.2]" : "scale-[.8]"}`}
+                        >
+                          {item.image?.cloudinary?.secure_url && (
+                            <img src={item.image.cloudinary.secure_url} alt={item.title || "Press Release"} className="w-full aspect-video object-cover" />
+                          )}
+
+                          {(item.title || item.description) && (
+                            <div className="p-5">
+                              {item.title && <h4 className="text-xl font-bold">{item.title}</h4>}
+
+                              {item.description && <p className="mt-2 text-sm line-clamp-[10]">{item.description}</p>}
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </CarouselItem>
                   ))}
                 </CarouselContent>

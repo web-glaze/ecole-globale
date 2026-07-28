@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { getNavigation } from "@/lib/getNavigation";
 import { getSiteSettings } from "@/lib/getSiteSettings";
 import { generateSEOMetadata } from "@/lib/seo";
+import EnquiryPopup from "@/components/EnquiryPopup";
 
 import Navbar from "@/components/navbar";
 import BottomNavigation from "@/components/bottomNavigation";
@@ -62,7 +63,22 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           />
         )}
 
-        <Script id="tidio" src="https://code.tidio.co/soh8q34u3enonxuxlvcqmpos6njf27sh.js" strategy="afterInteractive" />
+        {/* <Script id="tidio" src="https://code.tidio.co/soh8q34u3enonxuxlvcqmpos6njf27sh.js" strategy="afterInteractive" /> */}
+
+        <Script id="tawk-to" strategy="afterInteractive">
+          {`
+            var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+            (function() {
+              var s1 = document.createElement("script"),
+                  s0 = document.getElementsByTagName("script")[0];
+              s1.async = true;
+              s1.src = "https://embed.tawk.to/692969ae0d028919595450a1/1jb4s9l3s";
+              s1.charset = "UTF-8";
+              s1.setAttribute("crossorigin", "*");
+              s0.parentNode.insertBefore(s1, s0);
+            })();
+          `}
+        </Script>
 
         <Script src="https://t.contentsquare.net/uxa/3304c3674532d.js" strategy="afterInteractive" />
 
@@ -82,6 +98,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           />
         )}
       </body>
+      <EnquiryPopup />
     </html>
   );
 }
