@@ -26,7 +26,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   return (
-    <header className={`absolute inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/40 backdrop-blur-md" : "bg-transparent"}`}>
+    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "bg-black/60 backdrop-blur-md" : "bg-transparent"}`}>
       <div className="container mx-auto h-20 px-4">
         {/* Desktop */}
         <div className="hidden h-full items-center justify-between xl:flex">
@@ -88,10 +88,10 @@ export default function Navbar() {
         </div>
 
         {/* Mobile */}
-        <div className="flex h-full items-center justify-between xl:hidden text-white">
+        <div className="flex h-full items-center justify-between xl:hidden text-white relative">
           {/* Hamburger */}
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-            <SheetTrigger asChild>{scrolled ? <Menu className="size-6 text-black" /> : <Menu className="size-6 text-white" />}</SheetTrigger>
+            <SheetTrigger asChild>{scrolled ? <Menu className="size-6 text-white" /> : <Menu className="size-6 text-white" />}</SheetTrigger>
 
             <SheetContent side="left" className="w-[320px] p-0">
               <SheetHeader>
@@ -167,27 +167,15 @@ export default function Navbar() {
           </Sheet>
 
           {/* Logo Center */}
-          {scrolled ? (
-            <Link href="/">
-              <img src={logo} alt="Logo" width="200" />
-            </Link>
-          ) : (
-            <Link href="/">
-              <img src={logo} alt="Logo" width="200" />
-            </Link>
-          )}
+          <Link href="/">
+            <img src={logo} alt="Logo" width="200" />
+          </Link>
 
           {/* Phone Icon */}
 
-          {scrolled ? (
-            <a href={`tel:${settings.phone}`}>
-              <Phone className="size-6 text-black" />
-            </a>
-          ) : (
-            <a href={`tel:${settings.phone}`}>
-              <Phone className="size-6 text-white" />
-            </a>
-          )}
+          <a href={`tel:${settings.phone}`} className="sticky top-0">
+            <Phone className="size-6 text-white" />
+          </a>
         </div>
       </div>
     </header>
