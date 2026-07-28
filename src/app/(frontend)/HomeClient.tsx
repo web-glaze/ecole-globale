@@ -476,6 +476,7 @@ export default function HomeClient({ home }: any) {
             <h3 className="mb-4 text-2xl font-bold font-heading text-center">Words from Parents: Who Matter Most</h3>
             <div className="pt-2">
               <Carousel
+                className="overflow-auto"
                 opts={{
                   align: "start",
                   loop: true,
@@ -483,24 +484,24 @@ export default function HomeClient({ home }: any) {
               >
                 <CarouselContent className="-ml-0">
                   {testimonials.map((item: any) => (
-                    <CarouselItem key={item.id} className="basis-[95%] md:basis-1/2 p-2 pl-2">
-                      <Card className="h-full rounded-none border-0 bg-white p-4 transition-all duration-300 hover:-translate-y-2">
-                        <CardContent className="flex h-full flex-col items-center p-0">
-                          <div className="mb-5">
+                    <CarouselItem key={item.id} className="basis-[98%] md:basis-1/2 p-1 pl-1 mt-15 overflow-visible">
+                      <Card className="h-full rounded-4xl border-0 bg-white p-4 transition-all duration-300 hover:-translate-y-2 overflow-visible">
+                        <CardContent className="flex h-full flex-col items-center p-0 overflow-visible">
+                          <div className="-mt-15 mb-5">
                             {item.photo?.cloudinary?.secure_url ? (
-                              <img src={item.photo?.cloudinary?.secure_url} alt={item.name} className="h-24 w-24 rounded-full object-cover" />
+                              <img src={item.photo?.cloudinary?.secure_url} alt={item.name} className="h-26 w-26 rounded-full object-cover" />
                             ) : (
-                              <img src="/user-placeholder.png" alt={item.name} className="h-24 w-24 p-2 rounded-full object-cover bg-gray-200" />
+                              <img src="/user-placeholder.png" alt={item.name} className="h-26 w-26 p-2 rounded-full object-cover bg-gray-200" />
                             )}
                           </div>
-                          <h3 className="font-heading text-xl font-bold">{item.name}</h3>
+                          <h3 className="font-heading text-2xl font-bold">{item.name}</h3>
                           <p className="mb-5 text-muted-foreground">{item.designation}</p>
                           <p className="mb-6 flex-1 text-center font-heading text-sm leading-relaxed md:text-lg">"{item.review}"</p>
                           <div className="flex items-center gap-1">
                             {Array.from({
                               length: item.rating || 5,
                             }).map((_, i) => (
-                              <Star key={i} className="h-4 w-4 fill-yellow-500 text-yellow-500" />
+                              <Star key={i} className="h-5 w-5 fill-yellow-500 text-yellow-500" />
                             ))}
                           </div>
                         </CardContent>
@@ -627,7 +628,7 @@ export default function HomeClient({ home }: any) {
                             playsInline
                             preload="metadata"
                             controls={false}
-                            poster="/poster.png"
+                            poster={item.poster?.cloudinary?.secure_url}
                             className="w-full cursor-pointer"
                             onClick={() => toggleVideo(index)}
                             onPlay={() => setPlayingIndex(index)}

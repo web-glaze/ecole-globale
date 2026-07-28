@@ -26,7 +26,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "bg-black/60 backdrop-blur-md" : "bg-transparent"}`}>
+    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "xl:bg-black/60 xl:backdrop-blur-md" : "bg-transparent"}`}>
       <div className="container mx-auto h-20 px-4">
         {/* Desktop */}
         <div className="hidden h-full items-center justify-between xl:flex">
@@ -53,7 +53,7 @@ export default function Navbar() {
                   <Link
                     href={href}
                     target={item.newTab ? "_blank" : "_self"}
-                    className={`flex items-center gap-1 text-[15px] font-medium transition-colors hover:text-primary ${scrolled ? "" : "text-white"}`}
+                    className={`flex items-center gap-1 text-[15px] font-medium transition-colors hover:text-primary ${scrolled ? "text-white" : "text-white"}`}
                   >
                     {label}
 
@@ -91,7 +91,7 @@ export default function Navbar() {
         <div className="flex h-full items-center justify-between xl:hidden text-white relative">
           {/* Hamburger */}
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-            <SheetTrigger asChild>{scrolled ? <Menu className="size-6 text-white" /> : <Menu className="size-6 text-white" />}</SheetTrigger>
+            <SheetTrigger asChild>{scrolled ? <div></div> : <Menu className="size-6 text-white" />}</SheetTrigger>
 
             <SheetContent side="left" className="w-[320px] p-0">
               <SheetHeader>
@@ -167,15 +167,26 @@ export default function Navbar() {
           </Sheet>
 
           {/* Logo Center */}
-          <Link href="/">
-            <img src={logo} alt="Logo" width="200" />
-          </Link>
+
+          {scrolled ? (
+            <div></div>
+          ) : (
+            <Link href="/">
+              <img src={logo} alt="Logo" width="200" />
+            </Link>
+          )}
 
           {/* Phone Icon */}
 
-          <a href={`tel:${settings.phone}`} className="sticky top-0">
-            <Phone className="size-6 text-white" />
-          </a>
+          {scrolled ? (
+            <a href={`tel:${settings.phone}`} className="bg-red-700 p-2 rounded-md transition-all duration-300">
+              <Phone className="size-6 text-white" />
+            </a>
+          ) : (
+            <a href={`tel:${settings.phone}`} className="transition-all duration-300">
+              <Phone className="size-6 text-white" />
+            </a>
+          )}
         </div>
       </div>
     </header>

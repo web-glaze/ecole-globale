@@ -209,3 +209,7 @@
     bottom: 50px !important;
   }
 }
+
+.carousel-overflow-auto [data-slot="carousel-content"] {
+  overflow: visible !important;
+}

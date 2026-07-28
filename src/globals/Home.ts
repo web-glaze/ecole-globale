@@ -335,6 +335,21 @@ export const Home: GlobalConfig = {
                         },
                       },
                     },
+                    {
+                      name: "poster",
+                      label: "Video Poster",
+                      type: "upload",
+                      relationTo: "media",
+                      admin: {
+                        condition: (_, siblingData) => siblingData?.type === "video",
+                        description: "Optional thumbnail/poster image displayed before the video plays.",
+                      },
+                      filterOptions: {
+                        mimeType: {
+                          contains: "image",
+                        },
+                      },
+                    },
 
                     // Press Release
                     {
