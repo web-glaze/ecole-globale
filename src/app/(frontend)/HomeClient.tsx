@@ -113,6 +113,7 @@ export default function HomeClient({ home }: any) {
   const welcome = home.welcome || [];
   const welcomeSlides = home.welcome?.cards || [];
   const featured = home.featured?.items || [];
+  const testimonialsSection = home.testimonialsSection || [];
   const testimonials = home.testimonialsSection?.testimonials || [];
   const admissionSection = home.admission || [];
   const admissionSteps = home.admission?.steps || [];
@@ -472,8 +473,8 @@ export default function HomeClient({ home }: any) {
 
         {/* Testimonial or Review Section */}
         <section className="bg-white py-8 md:py-16">
-          <div className="container mx-auto px-4">
-            <h3 className="mb-4 text-2xl font-bold font-heading text-center">Words from Parents: Who Matter Most</h3>
+          <div className="container mx-auto">
+            <h3 className="mb-4 text-3xl font-bold font-heading text-center">{testimonialsSection.heading}</h3>
             <div className="pt-2">
               <Carousel
                 className="overflow-auto"
@@ -484,19 +485,19 @@ export default function HomeClient({ home }: any) {
               >
                 <CarouselContent className="-ml-0">
                   {testimonials.map((item: any) => (
-                    <CarouselItem key={item.id} className="basis-[98%] md:basis-1/2 p-1 pl-1 mt-15 overflow-visible">
-                      <Card className="h-full rounded-4xl border-0 bg-white p-4 transition-all duration-300 hover:-translate-y-2 overflow-visible">
-                        <CardContent className="flex h-full flex-col items-center p-0 overflow-visible">
-                          <div className="-mt-15 mb-5">
+                    <CarouselItem key={item.id} className="md:basis-1/2 mt-15 mb-10 overflow-visible px-4">
+                      <Card className="rounded-[40px] border-0 bg-white p-3 pb-5 overflow-visible shadow-sm">
+                        <CardContent className="flex flex-col items-center p-0 overflow-visible">
+                          <div className="-mt-15 mb-2">
                             {item.photo?.cloudinary?.secure_url ? (
                               <img src={item.photo?.cloudinary?.secure_url} alt={item.name} className="h-26 w-26 rounded-full object-cover" />
                             ) : (
                               <img src="/user-placeholder.png" alt={item.name} className="h-26 w-26 p-2 rounded-full object-cover bg-gray-200" />
                             )}
                           </div>
-                          <h3 className="font-heading text-2xl font-bold">{item.name}</h3>
-                          <p className="mb-5 text-muted-foreground">{item.designation}</p>
-                          <p className="mb-6 flex-1 text-center font-heading text-sm leading-relaxed md:text-lg">"{item.review}"</p>
+                          <h3 className="font-heading text-xl font-bold">{item.name}</h3>
+                          <p className="mb-5 text-base">{item.designation}</p>
+                          <p className="mb-4  text-center font-heading text-xm leading-relaxed md:text-lg">"{item.review}"</p>
                           <div className="flex items-center gap-1">
                             {Array.from({
                               length: item.rating || 5,
@@ -593,7 +594,7 @@ export default function HomeClient({ home }: any) {
           </div>
         </section>
 
-        {/* Video Carousel Section */}
+        {/* Update & Press Release Section */}
         <section className="bg-white py-8 md:py-16">
           <div className="container max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center justify-between">
             <div className="hidden md:block">

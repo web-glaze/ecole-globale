@@ -26,7 +26,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "xl:bg-black/60 xl:backdrop-blur-md" : "bg-transparent"}`}>
+    <header className={`absolute inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "xl:bg-black/60 xl:backdrop-blur-md" : "bg-transparent"}`}>
       <div className="container mx-auto h-20 px-4">
         {/* Desktop */}
         <div className="hidden h-full items-center justify-between xl:flex">
@@ -178,15 +178,9 @@ export default function Navbar() {
 
           {/* Phone Icon */}
 
-          {scrolled ? (
-            <a href={`tel:${settings.phone}`} className="bg-red-700 p-2 rounded-md transition-all duration-300">
-              <Phone className="size-6 text-white" />
-            </a>
-          ) : (
-            <a href={`tel:${settings.phone}`} className="transition-all duration-300">
-              <Phone className="size-6 text-white" />
-            </a>
-          )}
+          <a href={`tel:${settings.phone}`} className="transition-all duration-300">
+            <Phone className="size-6 text-white" />
+          </a>
         </div>
       </div>
     </header>

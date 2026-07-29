@@ -63,46 +63,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           />
         )}
 
-        {/* <Script id="tidio" src="https://code.tidio.co/soh8q34u3enonxuxlvcqmpos6njf27sh.js" strategy="afterInteractive" /> */}
-
-        <Script id="tawk-to" strategy="afterInteractive">
-          {`
-    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-
-    Tawk_API.customStyle = {
-      visibility: {
-        desktop: {
-          position: "br",
-          xOffset: "20px", // Distance from right
-          yOffset: "90px"  // Move widget up
-        },
-        mobile: {
-          position: "br",
-          xOffset: "20px",
-          yOffset: "90px"
-        },
-        bubble: {
-          rotate: "0deg",
-          xOffset: 0,
-          yOffset: 0
-        }
-      }
-    };
-
-    (function() {
-      var s1 = document.createElement("script"),
-          s0 = document.getElementsByTagName("script")[0];
-
-      s1.async = true;
-      s1.src = "https://embed.tawk.to/692969ae0d028919595450a1/1jb4s9l3s";
-      s1.charset = "UTF-8";
-      s1.setAttribute("crossorigin", "*");
-
-      s0.parentNode.insertBefore(s1, s0);
-    })();
-  `}
-        </Script>
-
         <Script src="https://t.contentsquare.net/uxa/3304c3674532d.js" strategy="afterInteractive" />
 
         <SiteSettingsProvider settings={settings} navigation={navigation}>
