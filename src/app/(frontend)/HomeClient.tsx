@@ -474,7 +474,7 @@ export default function HomeClient({ home }: any) {
         {/* Testimonial or Review Section */}
         <section className="bg-white py-8 md:py-16">
           <div className="container mx-auto">
-            <h3 className="mb-4 text-3xl font-bold font-heading text-center">{testimonialsSection.heading}</h3>
+            <h3 className="mb-4 text-3xl font-bold font-heading text-center uppercase text-gray-500">{testimonialsSection.heading}</h3>
             <div className="pt-2">
               <Carousel
                 className="overflow-auto"
@@ -486,7 +486,7 @@ export default function HomeClient({ home }: any) {
                 <CarouselContent className="-ml-0">
                   {testimonials.map((item: any) => (
                     <CarouselItem key={item.id} className="md:basis-1/2 mt-15 mb-10 overflow-visible px-4">
-                      <Card className="rounded-[40px] border-0 bg-white p-3 pb-5 overflow-visible shadow-sm">
+                      <Card className="rounded-[40px] border-0 bg-white p-3 pb-5 overflow-visible shadow-[0_0px_10px_0px_rgba(0,0,0,0.3)]">
                         <CardContent className="flex flex-col items-center p-0 overflow-visible">
                           <div className="-mt-15 mb-2">
                             {item.photo?.cloudinary?.secure_url ? (
