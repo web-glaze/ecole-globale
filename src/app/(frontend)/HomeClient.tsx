@@ -472,7 +472,7 @@ export default function HomeClient({ home }: any) {
         </section>
 
         {/* Testimonial or Review Section */}
-        <section className="bg-white py-8 md:py-16">
+        <section className="bg-white py-8 md:pt-16 pb-0">
           <div className="container mx-auto">
             <h3 className="mb-4 text-3xl font-bold font-heading text-center uppercase text-gray-500">{testimonialsSection.heading}</h3>
             <div className="pt-2">
@@ -515,87 +515,8 @@ export default function HomeClient({ home }: any) {
           </div>
         </section>
 
-        {/* Three Step Section */}
-        <section className="bg-gray-200 py-8 md:py-16">
-          <div className="container mx-auto px-4 font-heading">
-            <Carousel
-              setApi={setAdmissionApi}
-              opts={{
-                align: "start",
-              }}
-              className="w-full"
-            >
-              <CarouselContent>
-                <CarouselItem className="basis-full md:basis-[33%] pr-3">
-                  <div className="mx-auto">
-                    <Badge variant="outline" className="mb-5 rounded-full text-sm border-yellow-500">
-                      {admissionSection.badge}
-                    </Badge>
-
-                    <h2 className="font-heading text-2xl md:text-4xl font-bold tracking-tight">{admissionSection.heading}</h2>
-
-                    <p className="mt-3 text-sm md:text-lg leading-relaxed font-heading">{admissionSection.description}</p>
-                  </div>
-                </CarouselItem>
-                {/* Step Slides */}
-                {admissionSteps.map((step: any) => {
-                  const Icon = iconMap[step.icon as keyof typeof iconMap];
-
-                  return (
-                    <CarouselItem key={step.number} className="basis-full md:basis-[33%] pr-3">
-                      <Card className="border-0 overflow-hidden h-full p-0 rounded-none">
-                        <CardContent className="p-3 md:p-8">
-                          <div className="flex items-center justify-between mb-2">
-                            {Icon && <Icon className="size-8 text-primary" />}
-                            <span className="text-4xl font-black text-primary/20">{step.number}</span>
-                          </div>
-                          <h3 className="font-heading text-2xl font-bold mb-4">{step.title}</h3>
-                          <p className="leading-relaxed md:text-lg">{step.description}</p>
-                        </CardContent>
-                      </Card>
-                    </CarouselItem>
-                  );
-                })}
-
-                <CarouselItem className="basis-full  md:basis-[33%] pr-3">
-                  <Card className="border-0 h-full p-0 rounded-none">
-                    <CardContent className="p-3 md:p-8 ">
-                      <h3 className="mb-4 text-2xl font-bold font-heading text-gray-500 text-center">ENQUIRE NOW</h3>
-                      <EnquiryForm />
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-              </CarouselContent>
-
-              <div className="mt-2 flex justify-center items-center ">
-                <button onClick={() => admissionApi?.scrollPrev()} className="transition hover:opacity-70">
-                  <ChevronLeft className="size-8" />
-                </button>
-
-                <div className="w-48">
-                  <div className="h-[2px] bg-neutral-300">
-                    <div
-                      className="h-[2px] bg-black transition-all duration-300"
-                      style={{
-                        width: `${(admissionCurrent / admissionCount) * 100}%`,
-                      }}
-                    />
-                  </div>
-                </div>
-
-                <button onClick={() => admissionApi?.scrollNext()} className="transition hover:opacity-70">
-                  <ChevronRight className="size-8" />
-                </button>
-              </div>
-              <div className="mt-2 text-center text-sm tracking-[0.2em]">
-                {String(admissionCurrent).padStart(2, "0")} / {String(admissionCount).padStart(2, "0")}
-              </div>
-            </Carousel>
-          </div>
-        </section>
-
         {/* Update & Press Release Section */}
-        <section className="bg-white py-8 md:py-16">
+        <section className="bg-white py-8 md:pb-16 pt-0">
           <div className="container max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center justify-between">
             <div className="hidden md:block">
               <h3 className="font-heading text-2xl md:text-5xl leading-14 font-bold tracking-tight mb-5">{updatesSection?.heading}</h3>
