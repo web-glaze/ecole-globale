@@ -460,7 +460,15 @@ export default function HomeClient({ home }: any) {
                 <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">{featured[4].title}</h3>
               </Link>
               <Link href={`${featured[5]?.link}`} className="relative col-span-2 overflow-hidden h-[220px] md:h-[320px]">
-                <iframe className="absolute inset-0 h-full w-full" src={featured[5].videoUrl} allow="autoplay" />
+                <iframe
+                  className="absolute inset-0 h-full w-full"
+                  src={featured[5].videoUrl}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  referrerPolicy="strict-origin-when-cross-origin"
+                />
 
                 <div className="absolute inset-0 bg-black/20" />
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
