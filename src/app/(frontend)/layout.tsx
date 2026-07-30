@@ -17,7 +17,7 @@ import { Libre_Caslon_Text, Manrope } from "next/font/google";
 
 const heading = Manrope({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-manrope",
 });
 
 const body = Libre_Caslon_Text({
