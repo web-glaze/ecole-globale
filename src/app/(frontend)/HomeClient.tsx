@@ -629,7 +629,10 @@ export default function HomeClient({ home }: any) {
                             playsInline
                             preload="metadata"
                             controls={false}
-                            poster={item.poster?.cloudinary?.secure_url}
+                            poster={
+                              item.poster?.cloudinary?.secure_url ||
+                              item.video?.cloudinary?.secure_url?.replace("/video/upload/", "/video/upload/so_0/")?.replace(/\.(mp4|mov|webm|m4v)$/i, ".jpg")
+                            }
                             className="w-full cursor-pointer"
                             onClick={() => toggleVideo(index)}
                             onPlay={() => setPlayingIndex(index)}
