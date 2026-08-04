@@ -70,13 +70,14 @@ function EnquiryForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 font-heading">
+    <form onSubmit={handleSubmit} autoComplete="true" className="space-y-4 font-heading">
       <Input
         name="name"
         placeholder="Your Name"
         value={formData.name}
         onChange={handleChange}
-        className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
+        className="bg-gray-100 rounded-none ring-0 focus-visible:ring-0 focus-visible:ring-gray-200 border-gray-200 "
+        autoComplete="name"
         required
       />
       <Input
@@ -85,7 +86,8 @@ function EnquiryForm() {
         placeholder="Phone Number"
         value={formData.phone}
         onChange={handleChange}
-        className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
+        className="bg-gray-100 rounded-none ring-0 focus-visible:ring-0 focus-visible:ring-gray-200 border-gray-200"
+        autoComplete="tel"
       />
       <Input
         name="email"
@@ -93,11 +95,12 @@ function EnquiryForm() {
         placeholder="Email Address"
         value={formData.email}
         onChange={handleChange}
-        className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
+        className="bg-gray-100 rounded-none ring-0 focus-visible:ring-0 focus-visible:ring-gray-200 border-gray-200"
+        autoComplete="email"
         required
       />
 
-      <Button className="w-full" disabled={loading}>
+      <Button className="w-full bg-[#3e6ae1] hover:bg-blue-800 text-white rounded-sm py-5 text-base" disabled={loading}>
         {loading ? "Submitting..." : "Submit Enquiry"}
       </Button>
 
@@ -338,7 +341,7 @@ export default function HomeClient({ home }: any) {
               );
             })}
           </div>
-          <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-[#171a20] via-[#e13e3e] to-[#171a20] bg-clip-text text-transparent">ENQUIRE NOW</h3>
+          <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-[#171a20] via-[#3e6ae1] to-[#171a20] bg-clip-text text-transparent">ENQUIRE NOW</h3>
           <EnquiryForm />
         </div>
 
