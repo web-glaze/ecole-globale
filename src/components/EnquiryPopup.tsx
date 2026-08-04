@@ -70,7 +70,7 @@ export default function EnquiryPopup() {
 
     const timer = setTimeout(() => {
       setOpen(true);
-    }, 10000);
+    }, 15000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -137,7 +137,7 @@ export default function EnquiryPopup() {
   }, [open]);
 
   const closePopup = () => {
-    document.cookie = "popup_closed=true; max-age=2592000; path=/; SameSite=Lax";
+    document.cookie = "popup_closed=true; max-age=86400; path=/; SameSite=Lax";
     setOpen(false);
   };
 
@@ -306,12 +306,7 @@ export default function EnquiryPopup() {
               <p className="text-[11px] text-[#8696a0] mt-1.5">Online</p>
             </div>
           </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={closePopup}
-            className="text-[#8696a0] hover:text-white hover:bg-[#2a3942] rounded-full w-8 h-8 cursor-pointer flex-shrink-0"
-          >
+          <Button variant="ghost" size="icon" onClick={closePopup} className="text-[#8696a0] hover:text-white hover:bg-[#2a3942] rounded-full w-8 h-8 cursor-pointer flex-shrink-0">
             <X className="w-4 h-4" />
           </Button>
         </div>
@@ -336,20 +331,18 @@ export default function EnquiryPopup() {
               >
                 <div
                   className={`px-3 py-1.5 rounded-lg text-[13px] leading-relaxed shadow-sm flex flex-col min-w-[70px] max-w-[85%] ${
-                    msg.sender === "user"
-                      ? "bg-[#005c4b] text-[#e9edef] rounded-tr-none"
-                      : "bg-[#202c33] text-[#e9edef] rounded-tl-none"
+                    msg.sender === "user" ? "bg-[#005c4b] text-[#e9edef] rounded-tr-none" : "bg-[#202c33] text-[#e9edef] rounded-tl-none"
                   }`}
                 >
                   <p className="whitespace-pre-line text-[#e9edef]">{msg.text}</p>
-                  
+
                   {/* Timestamp & double checkmarks offset wrapper */}
                   <div className="flex items-center justify-end gap-1.5 self-end mt-1 -mr-1 -mb-0.5 select-none opacity-80">
                     <span className="text-[9px] text-[#8696a0] font-sans font-normal leading-none">{msg.time}</span>
                     {msg.sender === "user" && (
                       <svg className="w-3.5 h-3.5 text-[#53bdeb] flex-shrink-0" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1.5 6L5 9.5L14.5 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M5.5 6L9 9.5L18.5 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M1.5 6L5 9.5L14.5 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M5.5 6L9 9.5L18.5 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     )}
                   </div>
@@ -358,11 +351,7 @@ export default function EnquiryPopup() {
             ))}
 
             {isTyping && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="flex justify-start"
-              >
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex justify-start">
                 <div className="bg-[#202c33] rounded-lg rounded-tl-none px-3.5 py-2.5 shadow-sm flex items-center">
                   <div className="flex items-center gap-1">
                     <span className="w-1.5 h-1.5 bg-[#8696a0] rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
@@ -416,7 +405,7 @@ export default function EnquiryPopup() {
                           : "Type a message..."
                 }
                 disabled={isTyping || loading}
-                className="flex-1 bg-[#2a3942] border-none text-[#e9edef] rounded-full py-4.5 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-[13px] placeholder-[#8696a0] h-9"
+                className="flex-1 bg-[#2a3942] border-none text-[#e9edef] rounded-full py-4.5 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base placeholder-[#8696a0] h-9"
                 type={step === "phone" ? "tel" : step === "email" ? "email" : "text"}
                 autoComplete="off"
               />
