@@ -367,6 +367,14 @@ export const Home: GlobalConfig = {
                       },
                     },
                     {
+                      name: "sourcetitle",
+                      type: "text",
+                      label: "Source Title",
+                      admin: {
+                        condition: (_, siblingData) => siblingData?.type === "press",
+                      },
+                    },
+                    {
                       name: "image",
                       type: "upload",
                       relationTo: "media",

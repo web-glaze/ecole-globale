@@ -338,7 +338,7 @@ export default function HomeClient({ home }: any) {
               );
             })}
           </div>
-          <h3 className="mb-4 text-2xl font-bold font-heading text-gray-500 text-center">ENQUIRE NOW</h3>
+          <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-[#171a20] via-[#e13e3e] to-[#171a20] bg-clip-text text-transparent">ENQUIRE NOW</h3>
           <EnquiryForm />
         </div>
 
@@ -535,7 +535,6 @@ export default function HomeClient({ home }: any) {
             </div>
             <div className="relative ">
               <h3 className="text-2xl font-bold font-heading text-center">Updates & Press Release</h3>
-
               <Carousel
                 className=""
                 setApi={setVideoApi}
@@ -604,6 +603,7 @@ export default function HomeClient({ home }: any) {
 
                           {(item.title || item.description) && (
                             <div className="p-5">
+                              <span className="text-red-700 text-sm">{item.sourcetitle}</span>
                               {item.title && <h4 className="text-xl font-bold">{item.title}</h4>}
 
                               {item.description && <p className="mt-2 text-sm line-clamp-[10]">{item.description}</p>}
@@ -622,6 +622,7 @@ export default function HomeClient({ home }: any) {
 
                           {(item.title || item.description) && (
                             <div className="p-5">
+                              <span className="text-red-700 text-sm">{item.sourcetitle}</span>
                               {item.title && <h4 className="text-xl font-bold">{item.title}</h4>}
 
                               {item.description && <p className="mt-2 text-sm line-clamp-[10]">{item.description}</p>}

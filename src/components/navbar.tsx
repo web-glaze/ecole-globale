@@ -91,7 +91,9 @@ export default function Navbar() {
         <div className="flex h-full items-center justify-between xl:hidden text-white relative">
           {/* Hamburger */}
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-            <SheetTrigger asChild>{scrolled ? <div></div> : <Menu className="size-6 text-white" />}</SheetTrigger>
+            <SheetTrigger asChild>
+              <Menu className="size-6 text-white" />
+            </SheetTrigger>
 
             <SheetContent side="left" className="w-[320px] p-0">
               <SheetHeader>
@@ -168,13 +170,11 @@ export default function Navbar() {
 
           {/* Logo Center */}
 
-          {scrolled ? (
-            <div></div>
-          ) : (
-            <Link href="/">
-              <img src={logo} alt="Logo" width="200" />
-            </Link>
-          )}
+          <Link href="/" className="flex flex-col justify-center items-center">
+            {/* <img src={logo} alt="Logo" width="200" /> */}
+            <div className="text-2xl text-white font-medium">Ecole Globale</div>
+            <span className="text-white text-sm">International Girls' School</span>
+          </Link>
 
           {/* Phone Icon */}
 
