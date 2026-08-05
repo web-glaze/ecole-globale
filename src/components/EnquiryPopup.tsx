@@ -65,9 +65,6 @@ export default function EnquiryPopup() {
   }, [step, isTyping]);
 
   useEffect(() => {
-    // Don't show if already closed
-    if (document.cookie.includes("popup_closed=true")) return;
-
     const timer = setTimeout(() => {
       setOpen(true);
     }, 15000);
@@ -137,7 +134,6 @@ export default function EnquiryPopup() {
   }, [open]);
 
   const closePopup = () => {
-    document.cookie = "popup_closed=true; max-age=86400; path=/; SameSite=Lax";
     setOpen(false);
   };
 

@@ -70,26 +70,35 @@ function EnquiryForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 font-heading">
+    <form onSubmit={handleSubmit} autoComplete="on" className="space-y-4 font-heading">
       <Input
+        id="name"
         name="name"
+        type="text"
+        autoComplete="name"
         placeholder="Your Name"
         value={formData.name}
         onChange={handleChange}
         className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
         required
       />
+
       <Input
+        id="phone"
         name="phone"
         type="tel"
+        autoComplete="tel"
         placeholder="Phone Number"
         value={formData.phone}
         onChange={handleChange}
         className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary"
       />
+
       <Input
+        id="email"
         name="email"
         type="email"
+        autoComplete="email"
         placeholder="Email Address"
         value={formData.email}
         onChange={handleChange}
@@ -482,7 +491,7 @@ export default function HomeClient({ home }: any) {
         {/* Testimonial or Review Section */}
         <section className="bg-white py-8 md:pt-16 pb-0">
           <div className="container mx-auto">
-            <h3 className="mb-4 text-3xl font-bold font-heading text-center uppercase text-gray-500">{testimonialsSection.heading}</h3>
+            <h3 className="mb-4 text-2xl font-bold font-heading text-center uppercase text-gray-500">{testimonialsSection.heading}</h3>
             <div className="pt-2">
               <Carousel
                 className="overflow-auto"
@@ -503,9 +512,9 @@ export default function HomeClient({ home }: any) {
                               <img src="/user-placeholder.png" alt={item.name} className="h-26 w-26 p-2 rounded-full object-cover bg-gray-200" />
                             )}
                           </div>
-                          <h3 className="font-heading text-xl font-bold">{item.name}</h3>
-                          <p className="mb-5 text-base">{item.designation}</p>
-                          <p className="mb-4  text-center font-heading text-xm leading-relaxed md:text-lg">"{item.review}"</p>
+                          <h3 className="font-heading text-lg font-bold">{item.name}</h3>
+                          <p className="mb-5 text-sm">{item.designation}</p>
+                          <p className="mb-4  text-center font-heading text-sm leading-relaxed md:text-lg">"{item.review}"</p>
                           <div className="flex items-center gap-1">
                             {Array.from({
                               length: item.rating || 5,

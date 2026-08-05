@@ -13,17 +13,12 @@ import Navbar from "@/components/navbar";
 import BottomNavigation from "@/components/bottomNavigation";
 import { SiteSettingsProvider } from "@/lib/site-settings-context";
 
-import { Libre_Caslon_Text, Manrope } from "next/font/google";
+import { Libre_Caslon_Text } from "next/font/google";
 
-const heading = Manrope({
-  subsets: ["latin"],
-  variable: "--font-manrope",
-});
-
-const body = Libre_Caslon_Text({
+const font = Libre_Caslon_Text({
   subsets: ["latin"],
   weight: "400",
-  variable: "--font-heading",
+  variable: "--font-libre-caslon",
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -39,7 +34,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const navigation = await getNavigation();
 
   return (
-    <html lang="en" className={cn("h-full", "antialiased", heading.variable, body.variable)}>
+    <html lang="en" className={cn("h-full", "antialiased", font.variable)}>
       <head>
         {settings.headScripts && (
           <Script
