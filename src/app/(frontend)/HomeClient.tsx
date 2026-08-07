@@ -604,11 +604,18 @@ export default function HomeClient({ home }: any) {
                           href={item.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className={`bg-white overflow-hidden shadow-lg transition-all duration-500 h-full flex-col justify-center flex  ${currentVideo === index ? "scale-[1.2]" : "scale-[.8]"}`}
+                          className={`bg-white overflow-hidden shadow-lg transition-all duration-500 ${
+                            item.title || item.description ? "flex flex-col h-full" : "block"
+                          } ${currentVideo === index ? "scale-[1.2]" : "scale-[.8]"}`}
                         >
-                          {item.image?.cloudinary?.secure_url && (
-                            <img src={item.image.cloudinary.secure_url} alt={item.title || "Press Release"} className="w-full aspect-video object-cover" />
-                          )}
+                          {item.image?.cloudinary?.secure_url &&
+                            (item.title || item.description ? (
+                              <img src={item.image.cloudinary.secure_url} alt={item.title || "Press Release"} className="w-full aspect-video object-cover" />
+                            ) : (
+                              <div className="w-full aspect-[3/4] flex items-center justify-center bg-white">
+                                <img src={item.image.cloudinary.secure_url} alt={item.title || "Press Release"} className="max-w-full max-h-full object-contain" />
+                              </div>
+                            ))}
 
                           {(item.title || item.description) && (
                             <div className="p-5">
@@ -623,11 +630,18 @@ export default function HomeClient({ home }: any) {
                         </a>
                       ) : (
                         <div
-                          className={`bg-white overflow-hidden shadow-lg transition-all duration-500 h-full flex-col justify-center flex  ${currentVideo === index ? "scale-[1.2]" : "scale-[.8]"}`}
+                          className={`bg-white overflow-hidden shadow-lg transition-all duration-500 ${
+                            item.title || item.description ? "flex flex-col h-full" : "block"
+                          } ${currentVideo === index ? "scale-[1.2]" : "scale-[.8]"}`}
                         >
-                          {item.image?.cloudinary?.secure_url && (
-                            <img src={item.image.cloudinary.secure_url} alt={item.title || "Press Release"} className="w-full aspect-video object-cover" />
-                          )}
+                          {item.image?.cloudinary?.secure_url &&
+                            (item.title || item.description ? (
+                              <img src={item.image.cloudinary.secure_url} alt={item.title || "Press Release"} className="w-full aspect-video object-cover" />
+                            ) : (
+                              <div className="w-full aspect-[3/4] flex items-center justify-center bg-white">
+                                <img src={item.image.cloudinary.secure_url} alt={item.title || "Press Release"} className="max-w-full max-h-full object-contain" />
+                              </div>
+                            ))}
 
                           {(item.title || item.description) && (
                             <div className="p-5">
