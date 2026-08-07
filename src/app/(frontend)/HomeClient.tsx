@@ -605,7 +605,7 @@ export default function HomeClient({ home }: any) {
                           target="_blank"
                           rel="noopener noreferrer"
                           className={`bg-white overflow-hidden shadow-lg transition-all duration-500 ${
-                            item.title || item.description ? "flex flex-col h-full" : "block"
+                            item.title || item.description ? "flex flex-col h-full" : "block mt-14"
                           } ${currentVideo === index ? "scale-[1.2]" : "scale-[.8]"}`}
                         >
                           {item.image?.cloudinary?.secure_url &&
@@ -631,7 +631,7 @@ export default function HomeClient({ home }: any) {
                       ) : (
                         <div
                           className={`bg-white overflow-hidden shadow-lg transition-all duration-500 ${
-                            item.title || item.description ? "flex flex-col h-full" : "block"
+                            item.title || item.description ? "flex flex-col h-full" : "block mt-14"
                           } ${currentVideo === index ? "scale-[1.2]" : "scale-[.8]"}`}
                         >
                           {item.image?.cloudinary?.secure_url &&
