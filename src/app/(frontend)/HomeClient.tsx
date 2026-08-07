@@ -656,29 +656,40 @@ export default function HomeClient({ home }: any) {
           </div>
         </section>
 
-        {/* Brand Carousel */}
-        <section className="bg-white py-8 pb-24 overflow-hidden">
+        {/* Brand Logos */}
+        <section className="bg-white py-8 pb-24">
           <div className="container mx-auto">
-            <div className="relative overflow-hidden">
-              <div className="absolute left-0 top-0 z-10 h-full w-24 bg-gradient-to-r from-white to-transparent" />
-              <div className="absolute right-0 top-0 z-10 h-full w-24 bg-gradient-to-l from-white to-transparent" />
-
-              <motion.div
-                className="flex gap-12"
-                animate={{ x: ["0%", "-50%"] }}
-                transition={{
-                  duration: 20,
-                  ease: "linear",
-                  repeat: Infinity,
-                }}
-              >
-                {[...logos, ...logos].map((logo) => (
-                  <div key={`${logo.id}-${Math.random()}`} className="shrink-0">
-                    <img src={logo.cloudinary?.secure_url} alt={logo.alt || ""} className="h-16 md:h-20 w-auto object-contain" />
+            {(() => {
+              if (logos.length <= 7) {
+                return (
+                  <div className="flex justify-center items-center flex-wrap gap-8">
+                    {logos.map((logo: any) => (
+                      <div key={logo.id} className="w-48 h-24 flex items-center justify-center">
+                        <img src={logo.cloudinary?.secure_url} alt={logo.alt || ""} className="h-20 w-auto object-contain" />
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </motion.div>
-            </div>
+                );
+              }
+
+              const logosPerRow = 7;
+
+              const rows = Array.from({ length: Math.ceil(logos.length / logosPerRow) }, (_, index) => logos.slice(index * logosPerRow, (index + 1) * logosPerRow));
+
+              return (
+                <div className="flex flex-col gap-8">
+                  {rows.map((row, rowIndex) => (
+                    <div key={rowIndex} className="grid grid-flow-col auto-cols-max justify-center gap-x-28">
+                      {row.map((logo: any) => (
+                        <div key={logo.id} className="w-48 h-24 flex items-center justify-center">
+                          <img src={logo.cloudinary?.secure_url} alt={logo.alt || ""} className="h-20 w-auto object-contain" />
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              );
+            })()}
           </div>
         </section>
       </main>

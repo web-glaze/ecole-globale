@@ -29,6 +29,9 @@ export default function EnquiryPopup() {
     email: "",
   });
   const [loading, setLoading] = useState(false);
+  const [leadSubmitted, setLeadSubmitted] = useState(false);
+  const hasShownExitPopup = useRef(false);
+  const hasShownTimerPopup = useRef(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -66,11 +69,48 @@ export default function EnquiryPopup() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setOpen(true);
+      if (!leadSubmitted && !hasShownExitPopup.current && !hasShownTimerPopup.current) {
+        hasShownTimerPopup.current = true;
+        setOpen(true);
+      }
     }, 15000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [leadSubmitted]);
+
+  useEffect(() => {
+    if (leadSubmitted) return;
+
+    // Prevent immediate back navigation
+    window.history.pushState({ popup: true }, "", window.location.href);
+
+    const handlePopState = () => {
+      if (!isOpenRef.current && !leadSubmitted && !hasShownExitPopup.current) {
+        hasShownExitPopup.current = true;
+        hasShownTimerPopup.current = true;
+
+        setOpen(true);
+
+        window.history.pushState({ popup: true }, "", window.location.href);
+      }
+    };
+
+    const handleMouseLeave = (e: MouseEvent) => {
+      if (e.clientY <= 0 && e.relatedTarget === null && !isOpenRef.current && !leadSubmitted && !hasShownExitPopup.current) {
+        hasShownExitPopup.current = true;
+        hasShownTimerPopup.current = true;
+        setOpen(true);
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    document.addEventListener("mouseout", handleMouseLeave);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+      document.removeEventListener("mouseout", handleMouseLeave);
+    };
+  }, [leadSubmitted]);
 
   // Sequential onboarding bot sequence
   const runWelcomeSequence = async () => {
@@ -127,8 +167,11 @@ export default function EnquiryPopup() {
     ]);
   };
 
+  const hasInitialized = useRef(false);
+
   useEffect(() => {
-    if (open) {
+    if (open && !hasInitialized.current) {
+      hasInitialized.current = true;
       runWelcomeSequence();
     }
   }, [open]);
@@ -238,6 +281,10 @@ export default function EnquiryPopup() {
       setLoading(false);
 
       if (success) {
+        setLeadSubmitted(true);
+        hasShownExitPopup.current = true;
+        hasShownTimerPopup.current = true;
+        hasInitialized.current = false;
         setMessages((prev) => [
           ...prev,
           { id: `bot-thankyou-${Date.now()}`, sender: "bot", text: "Thank you!", time: getFormattedTime() },
@@ -276,7 +323,7 @@ export default function EnquiryPopup() {
         if (!value) {
           closePopup();
         } else {
-          runWelcomeSequence();
+          setOpen(true);
         }
       }}
     >
