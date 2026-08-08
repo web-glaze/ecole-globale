@@ -679,14 +679,14 @@ export default function HomeClient({ home }: any) {
 
               <motion.div
                 className="flex gap-12"
-                animate={{ x: ["0%", "-50%"] }}
+                animate={{ x: ["0%", "-200%"] }}
                 transition={{
-                  duration: 20,
+                  duration: 60,
                   ease: "linear",
                   repeat: Infinity,
                 }}
               >
-                {[...logos, ...logos].map((logo) => (
+                {[...logos].map((logo) => (
                   <div key={`${logo.id}-${Math.random()}`} className="shrink-0">
                     <img src={logo.cloudinary?.secure_url} alt={logo.alt || ""} className="h-16 md:h-20 w-auto object-contain" />
                   </div>
