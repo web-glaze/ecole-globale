@@ -679,7 +679,7 @@ export default function HomeClient({ home }: any) {
         <section className="bg-white py-8 pb-24 overflow-hidden">
           <div className="container mx-auto px-4">
             <h3 className="text-2xl md:text-3xl font-bold font-heading text-center">{accolades?.heading || "Ecole Globale Accolades"} </h3>
-            <Tabs defaultValue="awards" className="w-full">
+            <Tabs defaultValue="placements" className="w-full">
               <TabsList className="mx-auto mt-3 mb-2 grid w-full max-w-xl grid-cols-3">
                 <TabsTrigger className="data-[state=active]:bg-black data-[state=active]:text-white  " value="placements">
                   Placements
