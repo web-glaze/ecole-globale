@@ -681,20 +681,20 @@ export default function HomeClient({ home }: any) {
             <h3 className="text-2xl md:text-3xl font-bold font-heading text-center">{accolades?.heading || "Ecole Globale Accolades"} </h3>
             <Tabs defaultValue="awards" className="w-full">
               <TabsList className="mx-auto mt-3 mb-2 grid w-full max-w-xl grid-cols-3">
-                <TabsTrigger className="data-[state=active]:bg-black data-[state=active]:text-white  " value="awards">
-                  Awards
-                </TabsTrigger>
                 <TabsTrigger className="data-[state=active]:bg-black data-[state=active]:text-white  " value="placements">
                   Placements
+                </TabsTrigger>
+                <TabsTrigger className="data-[state=active]:bg-black data-[state=active]:text-white  " value="awards">
+                  Awards
                 </TabsTrigger>
                 <TabsTrigger className="data-[state=active]:bg-black data-[state=active]:text-white  " value="associates">
                   Our Associates
                 </TabsTrigger>
               </TabsList>
 
-              <TabsContent value="awards">
+              <TabsContent value="placements">
                 <div className="grid grid-cols-3 md:flex md:flex-wrap justify-center gap-2 md:gap-4">
-                  {awards.map((logo: any, index: number) => (
+                  {placements.map((logo: any, index: number) => (
                     <div
                       key={`${logo.id}-${index}`}
                       className="border border-gray-300 hover:border-gray-400 transition-colors duration-300 cursor-pointer bg-white rounded-md overflow-hidden flex items-center justify-center"
@@ -705,9 +705,9 @@ export default function HomeClient({ home }: any) {
                 </div>
               </TabsContent>
 
-              <TabsContent value="placements">
+              <TabsContent value="awards">
                 <div className="grid grid-cols-3 md:flex md:flex-wrap justify-center gap-2 md:gap-4">
-                  {placements.map((logo: any, index: number) => (
+                  {awards.map((logo: any, index: number) => (
                     <div
                       key={`${logo.id}-${index}`}
                       className="border border-gray-300 hover:border-gray-400 transition-colors duration-300 cursor-pointer bg-white rounded-md overflow-hidden flex items-center justify-center"
