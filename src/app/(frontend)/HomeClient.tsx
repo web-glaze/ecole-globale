@@ -672,26 +672,16 @@ export default function HomeClient({ home }: any) {
 
         {/* Brand Logos */}
         <section className="bg-white py-8 pb-24 overflow-hidden">
-          <div className="container mx-auto">
-            <div className="relative overflow-hidden">
-              <div className="absolute left-0 top-0 z-10 h-full w-24 bg-gradient-to-r from-white to-transparent" />
-              <div className="absolute right-0 top-0 z-10 h-full w-24 bg-gradient-to-l from-white to-transparent" />
-
-              <motion.div
-                className="flex gap-12"
-                animate={{ x: ["0%", "-200%"] }}
-                transition={{
-                  duration: 60,
-                  ease: "linear",
-                  repeat: Infinity,
-                }}
-              >
-                {[...logos].map((logo) => (
-                  <div key={`${logo.id}-${Math.random()}`} className="shrink-0">
-                    <img src={logo.cloudinary?.secure_url} alt={logo.alt || ""} className="h-16 md:h-20 w-auto object-contain" />
-                  </div>
-                ))}
-              </motion.div>
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-2">
+              {[...logos].map((logo) => (
+                <div
+                  key={`${logo.id}-${Math.random()}`}
+                  className="border border-gray-300 hover:border-gray-400 transition-colors duration-300 cursor-pointer bg-white rounded-md overflow-hidden"
+                >
+                  <img src={logo.cloudinary?.secure_url} alt={logo.alt || ""} className="h-16 md:h-20 w-auto object-contain" />
+                </div>
+              ))}
             </div>
           </div>
         </section>
