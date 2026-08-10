@@ -129,11 +129,25 @@ export default function HomeClient({ home }: any) {
   const admissionSteps = home.admission?.steps || [];
   const updatesSection = home.updatesSection || [];
   const items = home.updatesSection?.items || [];
-  const accolades = home?.accolades;
 
+  const accolades = home?.accolades;
   const awards = accolades?.awards || [];
   const placements = accolades?.placements || [];
   const associates = accolades?.associates || [];
+
+  const tabs = ["placements", "awards", "associates"];
+  const [activeTab, setActiveTab] = useState("placements");
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveTab((current) => {
+        const currentIndex = tabs.indexOf(current);
+        return tabs[(currentIndex + 1) % tabs.length];
+      });
+    }, 2000); // 2 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(1);
@@ -679,15 +693,17 @@ export default function HomeClient({ home }: any) {
         <section className="bg-white py-8 pb-24 overflow-hidden">
           <div className="container mx-auto px-4">
             <h3 className="text-2xl md:text-3xl font-bold font-heading text-center">{accolades?.heading || "Ecole Globale Accolades"} </h3>
-            <Tabs defaultValue="placements" className="w-full">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="mx-auto mt-3 mb-2 grid w-full max-w-xl grid-cols-3">
-                <TabsTrigger className="data-[state=active]:bg-black data-[state=active]:text-white  " value="placements">
+                <TabsTrigger className="data-[state=active]:bg-black data-[state=active]:text-white" value="placements">
                   Placements
                 </TabsTrigger>
-                <TabsTrigger className="data-[state=active]:bg-black data-[state=active]:text-white  " value="awards">
+
+                <TabsTrigger className="data-[state=active]:bg-black data-[state=active]:text-white" value="awards">
                   Awards
                 </TabsTrigger>
-                <TabsTrigger className="data-[state=active]:bg-black data-[state=active]:text-white  " value="associates">
+
+                <TabsTrigger className="data-[state=active]:bg-black data-[state=active]:text-white" value="associates">
                   Our Associates
                 </TabsTrigger>
               </TabsList>
