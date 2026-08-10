@@ -11,6 +11,7 @@ import { ChevronLeft, ChevronRight, Star, FileText, ClipboardCheck, School, Icon
 import { Badge } from "@/components/ui/badge";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import Autoplay from "embla-carousel-autoplay";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 function EnquiryForm() {
   const [formData, setFormData] = useState({
@@ -128,7 +129,11 @@ export default function HomeClient({ home }: any) {
   const admissionSteps = home.admission?.steps || [];
   const updatesSection = home.updatesSection || [];
   const items = home.updatesSection?.items || [];
-  const logos = home?.logos ?? [];
+  const accolades = home?.accolades;
+
+  const awards = accolades?.awards || [];
+  const placements = accolades?.placements || [];
+  const associates = accolades?.associates || [];
 
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(1);
@@ -673,16 +678,59 @@ export default function HomeClient({ home }: any) {
         {/* Brand Logos */}
         <section className="bg-white py-8 pb-24 overflow-hidden">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-2">
-              {[...logos].map((logo) => (
-                <div
-                  key={`${logo.id}-${Math.random()}`}
-                  className="border border-gray-300 hover:border-gray-400 transition-colors duration-300 cursor-pointer bg-white rounded-md overflow-hidden"
-                >
-                  <img src={logo.cloudinary?.secure_url} alt={logo.alt || ""} className="h-16 md:h-20 w-auto object-contain" />
+            <h3 className="text-2xl md:text-3xl font-bold font-heading text-center">{accolades?.heading || "Ecole Globale Accolades"} </h3>
+            <Tabs defaultValue="awards" className="w-full">
+              <TabsList className="mx-auto mt-3 mb-2 grid w-full max-w-xl grid-cols-3">
+                <TabsTrigger className="data-[state=active]:bg-black data-[state=active]:text-white  " value="awards">
+                  Awards
+                </TabsTrigger>
+                <TabsTrigger className="data-[state=active]:bg-black data-[state=active]:text-white  " value="placements">
+                  Placements
+                </TabsTrigger>
+                <TabsTrigger className="data-[state=active]:bg-black data-[state=active]:text-white  " value="associates">
+                  Our Associates
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="awards">
+                <div className="grid grid-cols-3 md:flex md:flex-wrap justify-center gap-2 md:gap-4">
+                  {awards.map((logo: any, index: number) => (
+                    <div
+                      key={`${logo.id}-${index}`}
+                      className="border border-gray-300 hover:border-gray-400 transition-colors duration-300 cursor-pointer bg-white rounded-md overflow-hidden flex items-center justify-center"
+                    >
+                      <img src={logo.cloudinary?.secure_url} alt={logo.alt || ""} className="h-16 md:h-20 w-auto object-contain" />
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </TabsContent>
+
+              <TabsContent value="placements">
+                <div className="grid grid-cols-3 md:flex md:flex-wrap justify-center gap-2 md:gap-4">
+                  {placements.map((logo: any, index: number) => (
+                    <div
+                      key={`${logo.id}-${index}`}
+                      className="border border-gray-300 hover:border-gray-400 transition-colors duration-300 cursor-pointer bg-white rounded-md overflow-hidden flex items-center justify-center"
+                    >
+                      <img src={logo.cloudinary?.secure_url} alt={logo.alt || ""} className="h-16 md:h-20 w-auto object-contain" />
+                    </div>
+                  ))}
+                </div>
+              </TabsContent>
+
+              <TabsContent value="associates">
+                <div className="grid grid-cols-3 md:flex md:flex-wrap justify-center gap-2 md:gap-4">
+                  {associates.map((logo: any, index: number) => (
+                    <div
+                      key={`${logo.id}-${index}`}
+                      className="border border-gray-300 hover:border-gray-400 transition-colors duration-300 cursor-pointer bg-white rounded-md overflow-hidden flex items-center justify-center"
+                    >
+                      <img src={logo.cloudinary?.secure_url} alt={logo.alt || ""} className="h-16 md:h-20 w-auto object-contain" />
+                    </div>
+                  ))}
+                </div>
+              </TabsContent>
+            </Tabs>
           </div>
         </section>
       </main>

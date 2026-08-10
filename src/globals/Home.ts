@@ -397,15 +397,85 @@ export const Home: GlobalConfig = {
           ],
         },
         {
-          label: "Logo Strip",
+          label: "Brand Logos",
           fields: [
             {
-              name: "logos",
-              label: "Logos",
-              type: "upload",
-              relationTo: "media",
-              hasMany: true,
-              required: false,
+              name: "accolades",
+              type: "group",
+              fields: [
+                {
+                  name: "heading",
+                  label: "Section Heading",
+                  type: "text",
+                  defaultValue: "Ecole Globale Accolades",
+                  admin: {
+                    description: "Main heading displayed above the accolades section.",
+                  },
+                },
+                {
+                  name: "subHeading",
+                  label: "Section Description",
+                  type: "textarea",
+                  admin: {
+                    description: "Optional text displayed below the section heading.",
+                  },
+                },
+                {
+                  type: "tabs",
+                  tabs: [
+                    {
+                      label: "Awards",
+                      fields: [
+                        {
+                          name: "awards",
+                          label: "Award Logos",
+                          type: "upload",
+                          relationTo: "media",
+                          hasMany: true,
+                          required: false,
+                          admin: {
+                            description: "Upload logos, badges, and recognitions received by the school.",
+                          },
+                        },
+                      ],
+                    },
+
+                    {
+                      label: "Placements",
+                      fields: [
+                        {
+                          name: "placements",
+                          label: "Placement Logos",
+                          type: "upload",
+                          relationTo: "media",
+                          hasMany: true,
+                          required: false,
+                          admin: {
+                            description: "Upload logos of companies associated with student placements.",
+                          },
+                        },
+                      ],
+                    },
+
+                    {
+                      label: "Our Associates",
+                      fields: [
+                        {
+                          name: "associates",
+                          label: "Associate Logos",
+                          type: "upload",
+                          relationTo: "media",
+                          hasMany: true,
+                          required: false,
+                          admin: {
+                            description: "Upload logos of partner organisations, institutions, and associates.",
+                          },
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
             },
           ],
         },
