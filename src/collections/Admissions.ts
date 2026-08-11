@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { sendAdmissionEmail } from "@/lib/sendAdmissionEmail";
 
 export const Admissions: CollectionConfig = {
   slug: "admissions",
@@ -46,7 +47,9 @@ export const Admissions: CollectionConfig = {
 
           return {
             ...data,
+
             studentName: [data.studentFirstName, data.studentMiddleName, data.studentLastName].filter(Boolean).join(" "),
+
             pageUrl,
             ipAddress,
             userAgent,
@@ -56,8 +59,54 @@ export const Admissions: CollectionConfig = {
 
         return {
           ...data,
+
           studentName: [data.studentFirstName, data.studentMiddleName, data.studentLastName].filter(Boolean).join(" "),
         };
+      },
+    ],
+
+    afterChange: [
+      async ({ doc, operation }) => {
+        if (operation === "create") {
+          try {
+            await sendAdmissionEmail({
+              academicYear: doc.academicYear,
+              admissionClass: doc.admissionClass,
+
+              studentFirstName: doc.studentFirstName,
+              studentMiddleName: doc.studentMiddleName,
+              studentLastName: doc.studentLastName,
+              studentName: doc.studentName,
+
+              dateOfBirth: doc.dateOfBirth,
+              email: doc.email,
+              aadhaarNumber: doc.aadhaarNumber,
+              phone: doc.phone,
+
+              fatherSalutation: doc.fatherSalutation,
+              fatherName: doc.fatherName,
+
+              motherSalutation: doc.motherSalutation,
+              motherName: doc.motherName,
+
+              address: doc.address,
+              city: doc.city,
+              state: doc.state,
+              pinCode: doc.pinCode,
+              country: doc.country,
+
+              agree: doc.agree,
+
+              pageUrl: doc.pageUrl,
+              ipAddress: doc.ipAddress,
+              userAgent: doc.userAgent,
+              submittedAt: doc.submittedAt,
+            });
+          } catch (error) {
+            // Don't fail the admission submission if email delivery fails.
+            console.error("Admission email notification failed:", error);
+          }
+        }
       },
     ],
   },
