@@ -13,12 +13,24 @@ import Navbar from "@/components/navbar";
 import BottomNavigation from "@/components/bottomNavigation";
 import { SiteSettingsProvider } from "@/lib/site-settings-context";
 
-import { Libre_Caslon_Text } from "next/font/google";
+import { Cinzel, Inter, Cabin } from "next/font/google";
 
-const font = Libre_Caslon_Text({
+const cinzel = Cinzel({
   subsets: ["latin"],
   weight: "400",
-  variable: "--font-libre-caslon",
+  variable: "--font-cinzel",
+});
+
+const cabin = Cabin({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-cabin",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-inter",
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -34,7 +46,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const navigation = await getNavigation();
 
   return (
-    <html lang="en" className={cn("h-full", "antialiased", font.variable)}>
+    <html lang="en" className={cn("h-full", "antialiased", inter.variable, cinzel.variable, cabin.variable)}>
       <head>
         {settings.headScripts && (
           <Script

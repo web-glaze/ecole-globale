@@ -282,7 +282,7 @@ export default function HomeClient({ home }: any) {
 
   return (
     <>
-      <main>
+      <main className="font-cabin">
         {/* Hero Section */}
         <section id="hero-section" className="relative overflow-hidden bg-[#f2e9e6]">
           {/* Top Gradient */}
@@ -333,7 +333,7 @@ export default function HomeClient({ home }: any) {
               <div className="absolute inset-0 z-20 hidden lg:flex items-center pointer-events-none">
                 <div className="container mx-auto flex justify-end">
                   <div className="pointer-events-auto w-full max-w-md bg-white p-8 shadow-2xl backdrop-blur">
-                    <h3 className="mb-6 text-center font-heading text-3xl font-bold text-gray-700">ENQUIRE NOW</h3>
+                    <h3 className="mb-6 text-center font-cabin text-3xl font-bold text-gray-700">ENQUIRE NOW</h3>
                     <EnquiryForm />
                   </div>
                 </div>
@@ -366,7 +366,7 @@ export default function HomeClient({ home }: any) {
               );
             })}
           </div>
-          <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-[#171a20] via-[#e13e3e] to-[#171a20] bg-clip-text text-transparent">ENQUIRE NOW</h3>
+          <h3 className="mb-4 text-3xl font-bold font-cabin text-center bg-gradient-to-r from-[#171a20] via-[#e13e3e] to-[#171a20] bg-clip-text text-transparent">ENQUIRE NOW</h3>
           <EnquiryForm />
         </div>
 
@@ -374,8 +374,8 @@ export default function HomeClient({ home }: any) {
         <section className="bg-gray-200 py-8 md:py-16">
           <div className="flex flex-col gap-12 container mx-auto px-4">
             <div className="md:text-center">
-              <h5 className="text-2xl md:text-3xl mb-2 font-heading italic"> {welcome.smallHeading}</h5>
-              <h3 className="text-3xl md:text-4xl font-bold font-heading mb-3 uppercase">{welcome.heading}</h3>
+              <h5 className="text-2xl md:text-3xl mb-2 font-cabin italic"> {welcome.smallHeading}</h5>
+              <h3 className="text-3xl md:text-4xl font-bold font-cabin mb-3 uppercase">{welcome.heading}</h3>
               <div className="text-sm md:text-lg max-w-2xl mx-auto">
                 <RichText data={welcome.description} />
               </div>
@@ -406,12 +406,12 @@ export default function HomeClient({ home }: any) {
                     <Card className="w-full max-w-[270px] md:max-w-[400px] min-h-[250px] mx-auto relative z-10 py-8 px-5 text-center gap-0 rounded-none -mt-6 overflow-visible mb-2">
                       <div className="absolute -top-1 -left-1 w-[calc(100%+8px)] h-[calc(100%+8px)] border border-[#916e27] pointer-events-none" />
                       {slide.subtitle && <p className="mb-2 text-md">{slide.subtitle}</p>}
-                      <h3 className="text-xl mb-3 font-heading font-bold uppercase">{slide.title}</h3>
+                      <h3 className="text-xl mb-3 font-cabin font-bold uppercase">{slide.title}</h3>
                       <h4 className="text-base">{slide.description}</h4>
 
                       {slide.buttonLink && (
                         <div className="mt-4">
-                          <Link href={slide.buttonLink} className="font-heading inline-block border-b-2 border-black pb-1 text-base font-bold transition hover:border-primary">
+                          <Link href={slide.buttonLink} className="font-cabin inline-block border-b-2 border-black pb-1 text-base font-bold transition hover:border-primary">
                             {slide.buttonText || "Read More"}
                           </Link>
                         </div>
@@ -459,33 +459,33 @@ export default function HomeClient({ home }: any) {
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
                 <img src={featured[0]?.image?.cloudinary?.secure_url} alt="" className="h-[220px] md:h-[320px] w-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">{featured[0]?.title}</h3>
+                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-cabin text-white">{featured[0]?.title}</h3>
               </Link>
 
               <Link href={`${featured[1]?.link}`} className="relative row-span-2 overflow-hidden">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
                 <img src={featured[1].image.cloudinary?.secure_url} alt="" className="h-full w-full object-cover object-[55%]" />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">{featured[1].title}</h3>
+                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-cabin text-white">{featured[1].title}</h3>
               </Link>
 
               <Link href={`${featured[2]?.link}`} className="relative overflow-hidden">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
                 <img src={featured[2].image.cloudinary?.secure_url} alt="" className="h-[220px] md:h-[320px] w-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">{featured[2].title}</h3>
+                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-cabin text-white">{featured[2].title}</h3>
               </Link>
               <Link href={`${featured[3]?.link}`} className="relative overflow-hidden">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
                 <img src={featured[3].image.cloudinary?.secure_url} alt="" className="h-[220px] md:h-[320px] w-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">{featured[3].title}</h3>
+                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-cabin text-white">{featured[3].title}</h3>
               </Link>
               <Link href={`${featured[4]?.link}`} className="relative overflow-hidden">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
                 <img src={featured[4].image.cloudinary?.secure_url} alt="" className="h-[220px] md:h-[320px] w-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
-                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">{featured[4].title}</h3>
+                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-cabin text-white">{featured[4].title}</h3>
               </Link>
               <Link href={`${featured[5]?.link}`} className="relative col-span-2 overflow-hidden h-[220px] md:h-[320px]">
                 <iframe
@@ -501,7 +501,7 @@ export default function HomeClient({ home }: any) {
                 <div className="absolute inset-0 bg-black/20" />
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
 
-                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-heading text-white">{featured[5].title}</h3>
+                <h3 className="absolute bottom-4 w-full text-center text-base px-2 text-shadow-lg uppercase font-cabin text-white">{featured[5].title}</h3>
               </Link>
             </div>
           </div>
@@ -510,7 +510,7 @@ export default function HomeClient({ home }: any) {
         {/* Testimonial or Review Section */}
         <section className="bg-white py-8 md:pt-16 pb-0">
           <div className="container mx-auto">
-            <h3 className="mb-4 text-2xl font-bold font-heading text-center uppercase text-gray-500">{testimonialsSection.heading}</h3>
+            <h3 className="mb-4 text-2xl font-bold font-cabin text-center uppercase text-gray-500">{testimonialsSection.heading}</h3>
             <div className="pt-2">
               <Carousel
                 className="overflow-auto"
@@ -531,7 +531,7 @@ export default function HomeClient({ home }: any) {
                               <img src="/user-placeholder.png" alt={item.name} className="h-26 w-26 p-2 rounded-full object-cover bg-gray-200" />
                             )}
                           </div>
-                          <h3 className="font-heading text-lg font-bold">{item.name}</h3>
+                          <h3 className="font-cabin text-lg font-bold">{item.name}</h3>
                           <p className="mb-5 text-sm">{item.designation}</p>
                           <p className="mb-4  text-center text-sm leading-relaxed md:text-lg">"{item.review}"</p>
                           <div className="flex items-center gap-1">
@@ -555,14 +555,14 @@ export default function HomeClient({ home }: any) {
         <section className="bg-white py-8 md:pb-16 pt-0">
           <div className="container max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center justify-between">
             <div className="hidden md:block">
-              <h3 className="font-heading text-2xl md:text-5xl leading-14 font-bold tracking-tight mb-5">{updatesSection?.heading}</h3>
+              <h3 className="font-cabin text-2xl md:text-5xl leading-14 font-bold tracking-tight mb-5">{updatesSection?.heading}</h3>
               <p className="text-xl font-bold mb-2"> {updatesSection?.phoneText}</p>
               <a className="text-3xl hover:underline cursor-pointer text-red-700" href={`tel:${updatesSection?.phoneNumber}`}>
                 {updatesSection?.phoneNumber}
               </a>
             </div>
             <div className="relative ">
-              <h3 className="text-2xl font-bold font-heading text-center">Updates & Press Release</h3>
+              <h3 className="text-2xl font-bold font-cabin text-center">Updates & Press Release</h3>
               <Carousel
                 className=""
                 setApi={setVideoApi}
@@ -692,7 +692,7 @@ export default function HomeClient({ home }: any) {
         {/* Brand Logos */}
         <section className="bg-white py-8 pb-24 overflow-hidden">
           <div className="container mx-auto px-4">
-            <h3 className="text-2xl md:text-3xl font-bold font-heading text-center">{accolades?.heading || "Ecole Globale Accolades"} </h3>
+            <h3 className="text-2xl md:text-3xl font-bold font-cabin text-center">{accolades?.heading || "Ecole Globale Accolades"} </h3>
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="mx-auto mt-3 mb-2 grid w-full max-w-xl grid-cols-3">
                 <TabsTrigger className="data-[state=active]:bg-black data-[state=active]:text-white" value="placements">
