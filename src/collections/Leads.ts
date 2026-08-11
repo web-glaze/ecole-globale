@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { sendLeadEmail } from "@/lib/sendLeadEmail";
 
 export const Leads: CollectionConfig = {
   slug: "leads",
@@ -23,10 +24,7 @@ export const Leads: CollectionConfig = {
         if (operation === "create") {
           if (req) {
             const host = req.headers?.get("host") || "";
-            let ipAddress =
-              req.headers?.get("x-forwarded-for")?.split(",")[0].trim() ||
-              req.headers?.get("x-real-ip") ||
-              "Unknown";
+            let ipAddress = req.headers?.get("x-forwarded-for")?.split(",")[0].trim() || req.headers?.get("x-real-ip") || "Unknown";
 
             if (ipAddress === "Unknown" && (host.includes("localhost") || host.includes("127.0.0.1"))) {
               ipAddress = "::ffff:127.0.0.1";
@@ -53,6 +51,35 @@ export const Leads: CollectionConfig = {
           };
         }
         return data;
+      },
+    ],
+    // Send email AFTER lead is successfully saved
+    afterChange: [
+      async ({ doc, operation }) => {
+        // Only send email for new leads
+        if (operation !== "create") {
+          return doc;
+        }
+
+        try {
+          await sendLeadEmail({
+            name: doc.name,
+            email: doc.email,
+            phone: doc.phone,
+            message: doc.message,
+            pageUrl: doc.pageUrl,
+            ipAddress: doc.ipAddress,
+            userAgent: doc.userAgent,
+            submittedAt: doc.submittedAt,
+          });
+
+          console.log("✅ Lead notification email sent");
+        } catch (error) {
+          // Don't prevent the lead from being saved
+          console.error("❌ Lead email notification failed:", error);
+        }
+
+        return doc;
       },
     ],
   },
