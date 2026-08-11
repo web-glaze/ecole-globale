@@ -13,7 +13,7 @@ import Navbar from "@/components/navbar";
 import BottomNavigation from "@/components/bottomNavigation";
 import { SiteSettingsProvider } from "@/lib/site-settings-context";
 
-import { Cinzel, Inter, Cabin } from "next/font/google";
+import { Cinzel, Inter, Cabin, Urbanist, DM_Sans } from "next/font/google";
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -33,6 +33,12 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const urbanist = Urbanist({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-urbanist",
+});
+
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
 
@@ -46,7 +52,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const navigation = await getNavigation();
 
   return (
-    <html lang="en" className={cn("h-full", "antialiased", inter.variable, cinzel.variable, cabin.variable)}>
+    <html lang="en" className={cn("h-full", "antialiased", inter.variable, cinzel.variable, cabin.variable, urbanist.variable)}>
       <head>
         {settings.headScripts && (
           <Script
