@@ -535,7 +535,7 @@ export default function HomeClient({ home }: any) {
                           </div>
                           <h3 className="font-urbanist text-lg font-bold">{item.name}</h3>
                           <p className="mb-5 text-sm">{item.designation}</p>
-                          <p className="mb-4  text-center text-sm leading-relaxed md:text-lg">"{item.review}"</p>
+                          <p className="mb-4  text-left text-sm leading-relaxed md:text-lg">"{item.review}"</p>
                           <div className="flex items-center gap-1">
                             {Array.from({
                               length: item.rating || 5,
