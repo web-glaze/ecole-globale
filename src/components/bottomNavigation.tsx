@@ -5,9 +5,14 @@ import { Phone, CalendarPlus } from "lucide-react";
 import { motion } from "framer-motion";
 import { FaInstagram, FaPhone } from "react-icons/fa6";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function BottomNavigation() {
   const [compact, setCompact] = useState(false);
+  const pathname = usePathname();
+  const phoneNumber = pathname === "/vacancies" ? "tel:+91-7217017047" : "tel:+91-9557291888";
+  const formLink = pathname === "/vacancies" ? "mailto:hr@ecoleglobale.com" : "#enquire-now";
+
   return (
     <>
       <motion.div
@@ -27,7 +32,7 @@ export default function BottomNavigation() {
             duration: 0.5,
           }}
         >
-          <Link href="tel:+91-9557291888" className="flex items-center justify-center gap-2 px-3">
+          <Link href={phoneNumber} className="flex items-center justify-center gap-2 px-3">
             <Phone size={18} />
 
             {/* <AnimatePresence>{!compact && */}
@@ -43,7 +48,7 @@ export default function BottomNavigation() {
             {/* } </AnimatePresence> */}
           </Link>
 
-          <Link href="#enquire-now" className="flex items-center justify-center gap-2 px-3">
+          <Link href={formLink} className="flex items-center justify-center gap-2 px-3">
             <CalendarPlus size={18} />
 
             {/* <AnimatePresence>{!compact &&  */}

@@ -123,8 +123,12 @@ export default function HomeClient({ home }: any) {
   const welcome = home.welcome || [];
   const welcomeSlides = home.welcome?.cards || [];
   const featured = home.featured?.items || [];
+
   const testimonialsSection = home.testimonialsSection || [];
   const testimonials = home.testimonialsSection?.testimonials || [];
+  const [carouselTestimonialsApi, setCarouselTestimonialsApi] = useState<CarouselApi>();
+  const [currentTestimonialsSlide, setCurrentTestimonialsSlide] = useState(0);
+
   const admissionSection = home.admission || [];
   const admissionSteps = home.admission?.steps || [];
   const updatesSection = home.updatesSection || [];
@@ -333,7 +337,7 @@ export default function HomeClient({ home }: any) {
               <div className="absolute inset-0 z-20 hidden lg:flex items-center pointer-events-none">
                 <div className="container mx-auto flex justify-end">
                   <div className="pointer-events-auto w-full max-w-md bg-white p-8 shadow-2xl backdrop-blur">
-                    <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-[#171a20] via-[#e13e3e] to-[#171a20] bg-clip-text text-transparent">
+                    <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-[#171a20] via-[#fdc700] to-[#171a20] bg-clip-text text-transparent">
                       ENQUIRE NOW
                     </h3>
                     <EnquiryForm />
@@ -368,7 +372,7 @@ export default function HomeClient({ home }: any) {
               );
             })}
           </div>
-          <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-[#171a20] via-[#e13e3e] to-[#171a20] bg-clip-text text-transparent">ENQUIRE NOW</h3>
+          <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-[#171a20] via-[#fdc700] to-[#171a20] bg-clip-text text-transparent">ENQUIRE NOW</h3>
           <EnquiryForm />
         </div>
 
@@ -512,7 +516,8 @@ export default function HomeClient({ home }: any) {
         {/* Testimonial or Review Section */}
         <section className="bg-white py-8 md:pt-16 pb-0">
           <div className="container mx-auto">
-            <h3 className="mb-4 text-2xl font-bold font-heading text-center uppercase text-gray-500 px-4">{testimonialsSection.heading}</h3>
+            <h3 className="mb-4 px-4 text-2xl font-bold uppercase text-gray-500 font-heading md:text-center">{testimonialsSection.heading}</h3>
+
             <div className="pt-2">
               <Carousel
                 className="overflow-auto"
@@ -520,22 +525,37 @@ export default function HomeClient({ home }: any) {
                   align: "start",
                   loop: true,
                 }}
+                setApi={(api) => {
+                  setCarouselTestimonialsApi(api);
+
+                  if (!api) return;
+
+                  setCurrentTestimonialsSlide(api.selectedScrollSnap());
+
+                  api.on("select", () => {
+                    setCurrentTestimonialsSlide(api.selectedScrollSnap());
+                  });
+                }}
               >
                 <CarouselContent className="-ml-0">
                   {testimonials.map((item: any) => (
-                    <CarouselItem key={item.id} className="md:basis-1/2 mt-15 mb-10 overflow-visible px-4">
-                      <Card className="rounded-[40px] border-0 bg-white p-3 pb-5 overflow-visible shadow-[0_0px_10px_0px_rgba(0,0,0,0.3)]">
-                        <CardContent className="flex flex-col items-center p-0 overflow-visible">
+                    <CarouselItem key={item.id} className="mt-15 mb-6 overflow-visible px-4 md:basis-1/2">
+                      <Card className="overflow-visible rounded-[40px] border-0 bg-white p-3 pb-5 shadow-[0_0px_10px_0px_rgba(0,0,0,0.3)]">
+                        <CardContent className="flex flex-col items-center overflow-visible p-0">
                           <div className="-mt-15 mb-2">
                             {item.photo?.cloudinary?.secure_url ? (
-                              <img src={item.photo?.cloudinary?.secure_url} alt={item.name} className="h-26 w-26 rounded-full object-cover" />
+                              <img src={item.photo.cloudinary.secure_url} alt={item.name} className="h-26 w-26 rounded-full object-cover" />
                             ) : (
-                              <img src="/user-placeholder.png" alt={item.name} className="h-26 w-26 p-2 rounded-full object-cover bg-gray-200" />
+                              <img src="/user-placeholder.png" alt={item.name} className="h-26 w-26 rounded-full bg-gray-200 p-2 object-cover" />
                             )}
                           </div>
+
                           <h3 className="font-heading text-lg font-bold">{item.name}</h3>
+
                           <p className="mb-5 text-sm">{item.designation}</p>
+
                           <p className="mb-4 text-sm leading-relaxed md:text-lg">"{item.review}"</p>
+
                           <div className="flex items-center gap-1">
                             {Array.from({
                               length: item.rating || 5,
@@ -549,6 +569,19 @@ export default function HomeClient({ home }: any) {
                   ))}
                 </CarouselContent>
               </Carousel>
+
+              {/* Navigation Dots */}
+              <div className="mb-14 flex justify-center gap-2">
+                {testimonials.map((item: any, index: number) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => carouselTestimonialsApi?.scrollTo(index)}
+                    aria-label={`Go to testimonial ${index + 1}`}
+                    className={`cursor-pointer h-2.5 rounded-full transition-all duration-300 ${currentTestimonialsSlide === index ? "w-7 bg-black" : "w-2.5 bg-gray-300 hover:bg-gray-400"}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -564,7 +597,7 @@ export default function HomeClient({ home }: any) {
               </a>
             </div>
             <div className="relative ">
-              <h3 className="text-2xl font-bold font-heading text-center px-4">Updates & Press Release</h3>
+              <h3 className="text-2xl font-bold font-heading md:text-center px-4">Updates & Press Release</h3>
               <Carousel
                 className=""
                 setApi={setVideoApi}
@@ -573,7 +606,7 @@ export default function HomeClient({ home }: any) {
                   loop: true,
                 }}
               >
-                <CarouselContent className="py-20">
+                <CarouselContent className="py-14">
                   {updatesSection?.items?.map((item: any, index: number) => (
                     <CarouselItem key={index} className={`basis-[50%] pl-0 ${currentVideo === index ? "z-20" : "z-0"}`}>
                       {item.type === "video" ? (
@@ -694,7 +727,7 @@ export default function HomeClient({ home }: any) {
         {/* Brand Logos */}
         <section className="bg-white py-8 pb-24 overflow-hidden">
           <div className="container mx-auto px-4">
-            <h3 className="text-2xl md:text-3xl font-bold font-heading text-center">{accolades?.heading || "Ecole Globale Accolades"} </h3>
+            <h3 className="text-2xl md:text-3xl font-bold font-heading md:text-center">{accolades?.heading || "Ecole Globale Accolades"} </h3>
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="mx-auto mt-3 mb-2 grid w-full max-w-xl grid-cols-3">
                 <TabsTrigger className="data-[state=active]:bg-black data-[state=active]:text-white" value="placements">
@@ -711,12 +744,9 @@ export default function HomeClient({ home }: any) {
               </TabsList>
 
               <TabsContent value="placements">
-                <div className="grid grid-cols-3 md:flex md:flex-wrap justify-center gap-2 md:gap-4">
+                <div className="grid grid-cols-4 md:flex md:flex-wrap justify-center gap-2 md:gap-4">
                   {placements.map((logo: any, index: number) => (
-                    <div
-                      key={`${logo.id}-${index}`}
-                      className="border border-gray-300 hover:border-gray-400 transition-colors duration-300 cursor-pointer bg-white rounded-md overflow-hidden flex items-center justify-center"
-                    >
+                    <div key={`${logo.id}-${index}`} className="">
                       <img src={logo.cloudinary?.secure_url} alt={logo.alt || ""} className="h-16 md:h-20 w-auto object-contain" />
                     </div>
                   ))}
@@ -724,12 +754,9 @@ export default function HomeClient({ home }: any) {
               </TabsContent>
 
               <TabsContent value="awards">
-                <div className="grid grid-cols-3 md:flex md:flex-wrap justify-center gap-2 md:gap-4">
+                <div className="grid grid-cols-4 md:flex md:flex-wrap justify-center gap-2 md:gap-4">
                   {awards.map((logo: any, index: number) => (
-                    <div
-                      key={`${logo.id}-${index}`}
-                      className="border border-gray-300 hover:border-gray-400 transition-colors duration-300 cursor-pointer bg-white rounded-md overflow-hidden flex items-center justify-center"
-                    >
+                    <div key={`${logo.id}-${index}`} className="">
                       <img src={logo.cloudinary?.secure_url} alt={logo.alt || ""} className="h-16 md:h-20 w-auto object-contain" />
                     </div>
                   ))}
@@ -737,12 +764,9 @@ export default function HomeClient({ home }: any) {
               </TabsContent>
 
               <TabsContent value="associates">
-                <div className="grid grid-cols-3 md:flex md:flex-wrap justify-center gap-2 md:gap-4">
+                <div className="grid grid-cols-4 md:flex md:flex-wrap justify-center gap-2 md:gap-4">
                   {associates.map((logo: any, index: number) => (
-                    <div
-                      key={`${logo.id}-${index}`}
-                      className="border border-gray-300 hover:border-gray-400 transition-colors duration-300 cursor-pointer bg-white rounded-md overflow-hidden flex items-center justify-center"
-                    >
+                    <div key={`${logo.id}-${index}`} className="">
                       <img src={logo.cloudinary?.secure_url} alt={logo.alt || ""} className="h-16 md:h-20 w-auto object-contain" />
                     </div>
                   ))}

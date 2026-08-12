@@ -6,6 +6,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Bot, Send, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 interface Message {
   id: string;
@@ -36,6 +37,7 @@ export default function EnquiryPopup() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const isOpenRef = useRef(open);
+  const pathname = usePathname();
 
   useEffect(() => {
     isOpenRef.current = open;
@@ -315,6 +317,10 @@ export default function EnquiryPopup() {
       }
     }
   };
+
+  if (pathname === "/vacancies") {
+    return null;
+  }
 
   return (
     <Dialog
