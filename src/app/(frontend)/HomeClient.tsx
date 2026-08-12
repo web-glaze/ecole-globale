@@ -512,7 +512,7 @@ export default function HomeClient({ home }: any) {
         {/* Testimonial or Review Section */}
         <section className="bg-white py-8 md:pt-16 pb-0">
           <div className="container mx-auto">
-            <h3 className="mb-4 text-2xl font-bold font-heading text-center uppercase text-gray-500 px-4">{testimonialsSection.heading}</h3>
+            <h3 className="mb-4 text-2xl font-bold font-heading md:text-center uppercase text-gray-500 px-4">{testimonialsSection.heading}</h3>
             <div className="pt-2">
               <Carousel
                 className="overflow-auto"
@@ -564,7 +564,7 @@ export default function HomeClient({ home }: any) {
               </a>
             </div>
             <div className="relative ">
-              <h3 className="text-2xl font-bold font-heading text-center px-4">Updates & Press Release</h3>
+              <h3 className="text-2xl font-bold font-heading md:text-center px-4">Updates & Press Release</h3>
               <Carousel
                 className=""
                 setApi={setVideoApi}
@@ -694,7 +694,7 @@ export default function HomeClient({ home }: any) {
         {/* Brand Logos */}
         <section className="bg-white py-8 pb-24 overflow-hidden">
           <div className="container mx-auto px-4">
-            <h3 className="text-2xl md:text-3xl font-bold font-heading text-center">{accolades?.heading || "Ecole Globale Accolades"} </h3>
+            <h3 className="text-2xl md:text-3xl font-bold font-heading md:text-center">{accolades?.heading || "Ecole Globale Accolades"} </h3>
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="mx-auto mt-3 mb-2 grid w-full max-w-xl grid-cols-3">
                 <TabsTrigger className="data-[state=active]:bg-black data-[state=active]:text-white" value="placements">
