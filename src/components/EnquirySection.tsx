@@ -7,15 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export default function EnquirySection() {
-  const ref = useRef(null);
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 80%", "end 20%"],
-  });
-
-  const lines = ["ENQUIRE NOW"];
-
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -73,37 +64,16 @@ export default function EnquirySection() {
 
   return (
     <div className="bg-gray-200 px-4 py-8">
-      <div ref={ref} className="mb-10">
-        {lines.map((line, index) => {
-          const start = index * 0.3;
-          const end = start + 0.3;
+      <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-[#171a20] via-[#e13e3e] to-[#171a20] bg-clip-text text-transparent">ENQUIRE NOW</h3>
 
-          const backgroundPositionX = useTransform(scrollYProgress, [start, end], ["100%", "0%"]);
-
-          return (
-            <motion.h2
-              key={index}
-              className="text-3xl font-semibold text-center text-transparent bg-clip-text"
-              style={{
-                backgroundImage: "linear-gradient(to right, #171a20 0%, #e13e3e 50%, #9CA3AF 50%, #9CA3AF 100%)",
-                backgroundSize: "200% 100%",
-                backgroundPositionX,
-              }}
-            >
-              {line}
-            </motion.h2>
-          );
-        })}
-      </div>
-
-      <form onSubmit={handleSubmit} className="space-y-4 font-heading">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <Input
           name="name"
           placeholder="Your Name"
           value={formData.name}
           onChange={handleChange}
           required
-          className="rounded-none border-x-0 border-t-0 border-b-2 border-primary p-0 focus-visible:ring-0"
+          className="border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary text-base md:text-base"
         />
 
         <Input
@@ -112,7 +82,7 @@ export default function EnquirySection() {
           placeholder="Phone Number"
           value={formData.phone}
           onChange={handleChange}
-          className="rounded-none border-x-0 border-t-0 border-b-2 border-primary p-0 focus-visible:ring-0"
+          className="border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary text-base md:text-base"
         />
 
         <Input
@@ -122,10 +92,10 @@ export default function EnquirySection() {
           value={formData.email}
           onChange={handleChange}
           required
-          className="rounded-none border-x-0 border-t-0 border-b-2 border-primary p-0 focus-visible:ring-0"
+          className="border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary text-base md:text-base"
         />
 
-        <Button className="w-full" disabled={loading}>
+        <Button className="w-full font-semibold text-base font-heading" disabled={loading}>
           {loading ? "Submitting..." : "Submit Enquiry"}
         </Button>
 
