@@ -28,26 +28,26 @@ export default function BottomNavigation() {
           }}
         >
           <Link href="tel:+91-9557291888" className="flex items-center justify-center gap-2 px-3">
-            <Phone size={20} />
+            <Phone size={18} />
 
             {/* <AnimatePresence>{!compact && */}
-            <motion.span className="overflow-hidden whitespace-nowrap text-[13px] font-medium">Call Us</motion.span>
+            <motion.span className="overflow-hidden whitespace-nowrap text-sm font-heading font-medium">Call Us</motion.span>
             {/* } </AnimatePresence> */}
           </Link>
 
           <Link href="https://www.instagram.com/ecole_girls_school" className="flex items-center justify-center gap-2 px-3" target="_blank">
-            <FaInstagram size={20} />
+            <FaInstagram size={18} />
 
             {/* <AnimatePresence>{!compact && */}
-            <motion.span className="overflow-hidden whitespace-nowrap text-[13px] font-medium">Instagram</motion.span>
+            <motion.span className="overflow-hidden whitespace-nowrap text-sm font-heading font-medium">Instagram</motion.span>
             {/* } </AnimatePresence> */}
           </Link>
 
           <Link href="#enquire-now" className="flex items-center justify-center gap-2 px-3">
-            <CalendarPlus size={20} />
+            <CalendarPlus size={18} />
 
             {/* <AnimatePresence>{!compact &&  */}
-            <motion.span className="overflow-hidden whitespace-nowrap text-[13px] font-medium">Enquire Now</motion.span>
+            <motion.span className="overflow-hidden whitespace-nowrap text-sm font-heading font-medium">Enquire Now</motion.span>
             {/* } </AnimatePresence> */}
           </Link>
         </motion.div>

@@ -42,7 +42,7 @@ export default function Navbar() {
           )}
 
           {/* Menu */}
-          <nav className="flex items-center gap-3">
+          <nav className="flex items-center gap-2.5">
             {menu.map((item: any) => {
               const label = item.label || item.page?.title;
 
@@ -53,12 +53,12 @@ export default function Navbar() {
                   <Link
                     href={href}
                     target={item.newTab ? "_blank" : "_self"}
-                    className={`flex items-center gap-1 text-[15px] font-medium transition-colors hover:text-primary ${scrolled ? "text-white" : "text-white"}`}
+                    className={`flex items-center gap-1 text-base font-medium transition-colors hover:text-primary ${scrolled ? "text-white" : "text-white"}`}
                   >
                     {label}
 
                     {item.children?.length > 0 && (
-                      <svg className="h-4 w-4 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="h-3.5 w-3.5 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                       </svg>
                     )}
@@ -116,7 +116,7 @@ export default function Navbar() {
                               setMobileOpen(false);
                               setOpenMenu(null);
                             }}
-                            className="flex-1 rounded-lg px-3 py-3 text-[15px] font-medium transition hover:bg-muted hover:text-primary"
+                            className="flex-1 rounded-lg px-3 py-3 text-base font-medium transition hover:bg-muted hover:text-primary"
                           >
                             {item.label}
                           </Link>
@@ -172,7 +172,7 @@ export default function Navbar() {
 
           <Link href="/" className="flex flex-col justify-center items-center">
             {/* <img src={logo} alt="Logo" width="200" /> */}
-            <div className="text-2xl text-white font-medium">Ecole Globale</div>
+            <div className="text-2xl text-white font-heading font-medium">Ecole Globale</div>
             <span className="text-white text-sm">International Girls' School</span>
           </Link>
 

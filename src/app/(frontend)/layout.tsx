@@ -17,26 +17,14 @@ import { Cinzel, Inter, Cabin, Urbanist, DM_Sans } from "next/font/google";
 
 const cinzel = Cinzel({
   subsets: ["latin"],
-  weight: "400",
+  weight: ["400", "500", "600", "700"],
   variable: "--font-cinzel",
-});
-
-const cabin = Cabin({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-cabin",
 });
 
 const inter = Inter({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-inter",
-});
-
-const urbanist = Urbanist({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-urbanist",
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -52,7 +40,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const navigation = await getNavigation();
 
   return (
-    <html lang="en" className={cn("h-full", "antialiased", inter.variable, cinzel.variable, cabin.variable, urbanist.variable)}>
+    <html lang="en" className={cn("h-full", "antialiased", inter.variable, cinzel.variable)}>
       <head>
         {settings.headScripts && (
           <Script
