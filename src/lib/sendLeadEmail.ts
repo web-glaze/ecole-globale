@@ -60,12 +60,20 @@ export async function sendLeadEmail(lead: LeadData) {
     fields.push(`Submitted At: ${submittedAt}`);
   }
 
+  // Check if lead is from vacancy page
+  const isVacancyLead = lead.pageUrl?.includes("/vacancies");
+
+  // Different email and subject for vacancies
+  const recipient = isVacancyLead ? process.env.VACANCY_EMAIL : process.env.LEAD_EMAIL;
+
+  const subject = isVacancyLead ? `Job Application @Ecole Globale` : `Enquiry @Ecole Globale`;
+
   try {
     const info = await transporter.sendMail({
       from: `"Ecole Globale Website" <${process.env.GMAIL_USER}>`,
-      to: process.env.LEAD_EMAIL?.split(","),
+      to: recipient?.split(","),
       replyTo: lead.email,
-      subject: `Enquiry @ Ecole Globale - ${lead.name}`,
+      subject,
       text: `New Website Lead
 
 ${fields.join("\n")}
