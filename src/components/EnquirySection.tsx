@@ -64,7 +64,7 @@ export default function EnquirySection() {
 
   return (
     <div className="bg-gray-200 px-4 py-8">
-      <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-[#171a20] via-[#e13e3e] to-[#171a20] bg-clip-text text-transparent">ENQUIRE NOW</h3>
+      <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-[#171a20] via-[#fdc700] to-[#171a20] bg-clip-text text-transparent">ENQUIRE NOW</h3>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input

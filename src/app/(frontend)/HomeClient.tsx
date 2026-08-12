@@ -337,7 +337,7 @@ export default function HomeClient({ home }: any) {
               <div className="absolute inset-0 z-20 hidden lg:flex items-center pointer-events-none">
                 <div className="container mx-auto flex justify-end">
                   <div className="pointer-events-auto w-full max-w-md bg-white p-8 shadow-2xl backdrop-blur">
-                    <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-[#171a20] via-[#e13e3e] to-[#171a20] bg-clip-text text-transparent">
+                    <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-[#171a20] via-[#fdc700] to-[#171a20] bg-clip-text text-transparent">
                       ENQUIRE NOW
                     </h3>
                     <EnquiryForm />
@@ -372,7 +372,7 @@ export default function HomeClient({ home }: any) {
               );
             })}
           </div>
-          <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-[#171a20] via-[#e13e3e] to-[#171a20] bg-clip-text text-transparent">ENQUIRE NOW</h3>
+          <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-[#171a20] via-[#fdc700] to-[#171a20] bg-clip-text text-transparent">ENQUIRE NOW</h3>
           <EnquiryForm />
         </div>
 
@@ -516,7 +516,7 @@ export default function HomeClient({ home }: any) {
         {/* Testimonial or Review Section */}
         <section className="bg-white py-8 md:pt-16 pb-0">
           <div className="container mx-auto">
-            <h3 className="mb-4 px-4 text-2xl font-bold uppercase text-gray-500 font-heading text-center">{testimonialsSection.heading}</h3>
+            <h3 className="mb-4 px-4 text-2xl font-bold uppercase text-gray-500 font-heading md:text-center">{testimonialsSection.heading}</h3>
 
             <div className="pt-2">
               <Carousel
@@ -597,7 +597,7 @@ export default function HomeClient({ home }: any) {
               </a>
             </div>
             <div className="relative ">
-              <h3 className="text-2xl font-bold font-heading text-center px-4">Updates & Press Release</h3>
+              <h3 className="text-2xl font-bold font-heading md:text-center px-4">Updates & Press Release</h3>
               <Carousel
                 className=""
                 setApi={setVideoApi}
@@ -727,7 +727,7 @@ export default function HomeClient({ home }: any) {
         {/* Brand Logos */}
         <section className="bg-white py-8 pb-24 overflow-hidden">
           <div className="container mx-auto px-4">
-            <h3 className="text-2xl md:text-3xl font-bold font-heading text-center">{accolades?.heading || "Ecole Globale Accolades"} </h3>
+            <h3 className="text-2xl md:text-3xl font-bold font-heading md:text-center">{accolades?.heading || "Ecole Globale Accolades"} </h3>
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="mx-auto mt-3 mb-2 grid w-full max-w-xl grid-cols-3">
                 <TabsTrigger className="data-[state=active]:bg-black data-[state=active]:text-white" value="placements">
