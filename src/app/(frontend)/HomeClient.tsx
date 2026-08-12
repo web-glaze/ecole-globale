@@ -333,7 +333,7 @@ export default function HomeClient({ home }: any) {
               <div className="absolute inset-0 z-20 hidden lg:flex items-center pointer-events-none">
                 <div className="container mx-auto flex justify-end">
                   <div className="pointer-events-auto w-full max-w-md bg-white p-8 shadow-2xl backdrop-blur">
-                    <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-[#171a20] via-[#e13e3e] to-[#171a20] bg-clip-text text-transparent">
+                    <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-[#171a20] via-[#fdc700] to-[#171a20] bg-clip-text text-transparent">
                       ENQUIRE NOW
                     </h3>
                     <EnquiryForm />
@@ -368,7 +368,7 @@ export default function HomeClient({ home }: any) {
               );
             })}
           </div>
-          <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-[#171a20] via-[#e13e3e] to-[#171a20] bg-clip-text text-transparent">ENQUIRE NOW</h3>
+          <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-[#171a20] via-[#fdc700] to-[#171a20] bg-clip-text text-transparent">ENQUIRE NOW</h3>
           <EnquiryForm />
         </div>
 
@@ -711,12 +711,9 @@ export default function HomeClient({ home }: any) {
               </TabsList>
 
               <TabsContent value="placements">
-                <div className="grid grid-cols-3 md:flex md:flex-wrap justify-center gap-2 md:gap-4">
+                <div className="grid grid-cols-4 md:flex md:flex-wrap justify-center gap-2 md:gap-4">
                   {placements.map((logo: any, index: number) => (
-                    <div
-                      key={`${logo.id}-${index}`}
-                      className="border border-gray-300 hover:border-gray-400 transition-colors duration-300 cursor-pointer bg-white rounded-md overflow-hidden flex items-center justify-center"
-                    >
+                    <div key={`${logo.id}-${index}`} className="">
                       <img src={logo.cloudinary?.secure_url} alt={logo.alt || ""} className="h-16 md:h-20 w-auto object-contain" />
                     </div>
                   ))}
@@ -724,12 +721,9 @@ export default function HomeClient({ home }: any) {
               </TabsContent>
 
               <TabsContent value="awards">
-                <div className="grid grid-cols-3 md:flex md:flex-wrap justify-center gap-2 md:gap-4">
+                <div className="grid grid-cols-4 md:flex md:flex-wrap justify-center gap-2 md:gap-4">
                   {awards.map((logo: any, index: number) => (
-                    <div
-                      key={`${logo.id}-${index}`}
-                      className="border border-gray-300 hover:border-gray-400 transition-colors duration-300 cursor-pointer bg-white rounded-md overflow-hidden flex items-center justify-center"
-                    >
+                    <div key={`${logo.id}-${index}`} className="">
                       <img src={logo.cloudinary?.secure_url} alt={logo.alt || ""} className="h-16 md:h-20 w-auto object-contain" />
                     </div>
                   ))}
@@ -737,12 +731,9 @@ export default function HomeClient({ home }: any) {
               </TabsContent>
 
               <TabsContent value="associates">
-                <div className="grid grid-cols-3 md:flex md:flex-wrap justify-center gap-2 md:gap-4">
+                <div className="grid grid-cols-4 md:flex md:flex-wrap justify-center gap-2 md:gap-4">
                   {associates.map((logo: any, index: number) => (
-                    <div
-                      key={`${logo.id}-${index}`}
-                      className="border border-gray-300 hover:border-gray-400 transition-colors duration-300 cursor-pointer bg-white rounded-md overflow-hidden flex items-center justify-center"
-                    >
+                    <div key={`${logo.id}-${index}`} className="">
                       <img src={logo.cloudinary?.secure_url} alt={logo.alt || ""} className="h-16 md:h-20 w-auto object-contain" />
                     </div>
                   ))}

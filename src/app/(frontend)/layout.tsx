@@ -7,13 +7,15 @@ import { cn } from "@/lib/utils";
 import { getNavigation } from "@/lib/getNavigation";
 import { getSiteSettings } from "@/lib/getSiteSettings";
 import { generateSEOMetadata } from "@/lib/seo";
-import EnquiryPopup from "@/components/EnquiryPopup";
 
+import EnquiryPopup from "@/components/EnquiryPopup";
 import Navbar from "@/components/navbar";
 import BottomNavigation from "@/components/bottomNavigation";
 import { SiteSettingsProvider } from "@/lib/site-settings-context";
 
-import { Cinzel, Inter, Cabin, Urbanist, DM_Sans } from "next/font/google";
+import CustomScripts from "@/components/CustomScripts";
+
+import { Cinzel, Inter } from "next/font/google";
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -42,47 +44,28 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" className={cn("h-full", "antialiased", inter.variable, cinzel.variable)}>
       <head>
-        {settings.headScripts && (
-          <Script
-            id="head-scripts"
-            strategy="beforeInteractive"
-            dangerouslySetInnerHTML={{
-              __html: settings.headScripts,
-            }}
-          />
-        )}
+        <CustomScripts html={settings.headScripts} location="head" />
       </head>
 
       <body className="min-h-full flex flex-col">
-        {settings.afterBodyScripts && (
-          <Script
-            id="after-body"
-            strategy="afterInteractive"
-            dangerouslySetInnerHTML={{
-              __html: settings.afterBodyScripts,
-            }}
-          />
-        )}
+        {/* Scripts immediately after <body> */}
+        <CustomScripts html={settings.afterBodyScripts} location="body" />
 
         <Script src="https://t.contentsquare.net/uxa/3304c3674532d.js" strategy="afterInteractive" />
 
         <SiteSettingsProvider settings={settings} navigation={navigation}>
           <Navbar />
+
           {children}
+
           <BottomNavigation />
         </SiteSettingsProvider>
 
-        {settings.beforeBodyCloseScripts && (
-          <Script
-            id="before-close"
-            strategy="afterInteractive"
-            dangerouslySetInnerHTML={{
-              __html: settings.beforeBodyCloseScripts,
-            }}
-          />
-        )}
+        <EnquiryPopup />
+
+        {/* Scripts before </body> */}
+        <CustomScripts html={settings.beforeBodyCloseScripts} location="body" />
       </body>
-      <EnquiryPopup />
     </html>
   );
 }
