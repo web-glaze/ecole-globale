@@ -9,6 +9,12 @@ export const Media: CollectionConfig = {
     hidden: ({ user }) => user?.role !== "admin",
   },
 
+  access: {
+    read: () => true,
+    create: () => true,
+    update: () => true,
+  },
+
   upload: {
     staticDir: "media",
 
