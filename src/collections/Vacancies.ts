@@ -1,12 +1,13 @@
 import type { CollectionConfig } from "payload";
-import { sendLeadEmail } from "@/lib/sendLeadEmail";
+import { sendVacancyEmail } from "@/lib/sendVacancyEmail";
 
-export const Leads: CollectionConfig = {
-  slug: "leads",
+export const Vacancies: CollectionConfig = {
+  slug: "vacancies",
 
   admin: {
     group: "Forms",
     useAsTitle: "name",
+    defaultColumns: ["name", "email", "phone", "postAppliedFor", "subject", "submittedAt"],
   },
 
   access: {
@@ -37,6 +38,7 @@ export const Leads: CollectionConfig = {
         if (operation === "create") {
           if (req) {
             const host = req.headers?.get("host") || "";
+
             let ipAddress = req.headers?.get("x-forwarded-for")?.split(",")[0].trim() || req.headers?.get("x-real-ip") || "Unknown";
 
             if (ipAddress === "Unknown" && (host.includes("localhost") || host.includes("127.0.0.1"))) {
@@ -44,6 +46,7 @@ export const Leads: CollectionConfig = {
             }
 
             const userAgent = req.headers?.get("user-agent") || "Unknown";
+
             let pageUrl = req.headers?.get("referer") || req.headers?.get("origin") || "Unknown";
 
             if (pageUrl.includes("/admin")) {
@@ -58,38 +61,39 @@ export const Leads: CollectionConfig = {
               submittedAt: new Date(),
             };
           }
+
           return {
             ...data,
             submittedAt: new Date(),
           };
         }
+
         return data;
       },
     ],
-    // Send email AFTER lead is successfully saved
+
     afterChange: [
       async ({ doc, operation }) => {
-        // Only send email for new leads
         if (operation !== "create") {
           return doc;
         }
 
         try {
-          await sendLeadEmail({
+          await sendVacancyEmail({
             name: doc.name,
             email: doc.email,
             phone: doc.phone,
-            message: doc.message,
+            postAppliedFor: doc.postAppliedFor,
+            subject: doc.subject,
             pageUrl: doc.pageUrl,
             ipAddress: doc.ipAddress,
             userAgent: doc.userAgent,
             submittedAt: doc.submittedAt,
           });
 
-          console.log("✅ Lead notification email sent");
+          console.log("✅ Vacancy application email sent");
         } catch (error) {
-          // Don't prevent the lead from being saved
-          console.error("❌ Lead email notification failed:", error);
+          console.error("❌ Vacancy email notification failed:", error);
         }
 
         return doc;
@@ -103,19 +107,43 @@ export const Leads: CollectionConfig = {
       type: "text",
       required: true,
     },
+
+    {
+      name: "phone",
+      type: "text",
+      required: true,
+    },
+
     {
       name: "email",
       type: "email",
       required: true,
     },
+
     {
-      name: "phone",
+      name: "postAppliedFor",
+      label: "Post Applied For",
+      type: "select",
+      required: true,
+      options: [
+        {
+          label: "PGT",
+          value: "PGT",
+        },
+        {
+          label: "TGT",
+          value: "TGT",
+        },
+      ],
+    },
+
+    {
+      name: "subject",
+      label: "Subject",
       type: "text",
+      required: true,
     },
-    {
-      name: "message",
-      type: "textarea",
-    },
+
     {
       name: "pageUrl",
       label: "Page URL",
@@ -125,6 +153,7 @@ export const Leads: CollectionConfig = {
         readOnly: true,
       },
     },
+
     {
       name: "userAgent",
       label: "Browser User Agent",
@@ -134,6 +163,7 @@ export const Leads: CollectionConfig = {
         readOnly: true,
       },
     },
+
     {
       name: "ipAddress",
       label: "IP Address",
@@ -143,6 +173,7 @@ export const Leads: CollectionConfig = {
         readOnly: true,
       },
     },
+
     {
       name: "submittedAt",
       label: "Submission Time",

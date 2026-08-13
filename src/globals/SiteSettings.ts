@@ -11,6 +11,7 @@ export const SiteSettings: GlobalConfig = {
 
   admin: {
     group: "Settings",
+    hidden: ({ user }) => user?.role !== "admin",
   },
 
   fields: [
@@ -234,62 +235,6 @@ export const SiteSettings: GlobalConfig = {
                   admin: {
                     language: "shell",
                     description: "Edit your robots.txt file.",
-                  },
-                },
-              ],
-            },
-
-            {
-              type: "collapsible",
-              label: "Google Verification",
-              fields: [
-                {
-                  name: "googleVerification",
-                  label: "Google Verification",
-                  type: "text",
-                },
-                {
-                  name: "bingVerification",
-                  label: "Bing Verification",
-                  type: "text",
-                },
-                {
-                  name: "yandexVerification",
-                  label: "Yandex Verification",
-                  type: "text",
-                },
-              ],
-            },
-
-            {
-              type: "collapsible",
-              label: "Custom Scripts",
-              fields: [
-                {
-                  name: "headScripts",
-                  label: "Head Scripts",
-                  type: "code",
-                  admin: {
-                    language: "html",
-                    description: "These scripts will be added inside the <head> section of every page.",
-                  },
-                },
-                {
-                  name: "afterBodyScripts",
-                  label: "Scripts After <body>",
-                  type: "code",
-                  admin: {
-                    language: "html",
-                    description: "These scripts will be inserted immediately after the opening <body> tag.",
-                  },
-                },
-                {
-                  name: "beforeBodyCloseScripts",
-                  label: "Scripts Before </body>",
-                  type: "code",
-                  admin: {
-                    language: "html",
-                    description: "These scripts will be inserted just before the closing </body> tag.",
                   },
                 },
               ],

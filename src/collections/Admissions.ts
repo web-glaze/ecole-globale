@@ -12,9 +12,22 @@ export const Admissions: CollectionConfig = {
 
   access: {
     create: () => true,
-    read: ({ req }) => Boolean(req.user),
-    update: ({ req }) => Boolean(req.user),
-    delete: ({ req }) => Boolean(req.user),
+
+    read: ({ req }) => {
+      if (!req.user) return false;
+
+      return req.user.role === "admin" || req.user.role === "leads-manager";
+    },
+
+    update: ({ req }) => {
+      if (!req.user) return false;
+
+      return req.user.role === "admin" || req.user.role === "leads-manager";
+    },
+
+    delete: ({ req }) => {
+      return req.user?.role === "admin";
+    },
   },
 
   timestamps: true,

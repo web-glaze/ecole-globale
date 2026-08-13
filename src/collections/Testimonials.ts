@@ -12,6 +12,7 @@ export const Testimonials: CollectionConfig = {
     useAsTitle: "name",
     group: "Content",
     defaultColumns: ["name", "designation", "featured", "sort"],
+    hidden: ({ user }) => user?.role !== "admin",
   },
 
   access: {

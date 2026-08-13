@@ -12,10 +12,12 @@ import { Navigation } from "./globals/Navigation";
 import { Leads } from "./collections/Leads";
 import { Admissions } from "./collections/Admissions";
 import { LatestUpdates } from "./collections/LatestUpdates";
+import { Users } from "./collections/Users";
+import { Vacancies } from "./collections/Vacancies";
 
 export default buildConfig({
   editor: lexicalEditor(),
-  collections: [Media, Pages, Testimonials, Leads, Admissions, LatestUpdates],
+  collections: [Media, Pages, Testimonials, Leads, Admissions, LatestUpdates, Users, Vacancies],
   globals: [SiteSettings, Home, Navigation],
 
   admin: {

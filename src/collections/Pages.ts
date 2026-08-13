@@ -18,6 +18,7 @@ export const Pages: CollectionConfig = {
       const slug = doc.slug === "home" ? "" : doc.slug;
       return `${process.env.NEXT_PUBLIC_SITE_URL}/${slug}`;
     },
+    hidden: ({ user }) => user?.role !== "admin",
   },
 
   access: {

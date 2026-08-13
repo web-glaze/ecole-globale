@@ -20,6 +20,7 @@ export const LatestUpdates: CollectionConfig = {
 
       return `${process.env.NEXT_PUBLIC_SITE_URL}/latest-updates/${doc.slug}`;
     },
+    hidden: ({ user }) => user?.role !== "admin",
   },
 
   access: {

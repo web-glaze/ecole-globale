@@ -11,6 +11,7 @@ export const Home: GlobalConfig = {
 
   admin: {
     group: "Pages",
+    hidden: ({ user }) => user?.role !== "admin",
   },
 
   fields: [

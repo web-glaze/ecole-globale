@@ -6,6 +6,7 @@ export const Navigation: GlobalConfig = {
 
   admin: {
     group: "Settings",
+    hidden: ({ user }) => user?.role !== "admin",
   },
 
   access: {

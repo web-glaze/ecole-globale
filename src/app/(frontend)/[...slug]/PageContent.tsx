@@ -8,9 +8,14 @@ import Footer from "@/components/footer";
 import { RichText, defaultJSXConverters } from "@payloadcms/richtext-lexical/react";
 import BlockRenderer from "@/components/blocks/BlockRenderer";
 import EnquirySection from "@/components/EnquirySection";
+import VacancyForm from "@/components/VacancyForm";
+import { usePathname } from "next/navigation";
 
 export default function PageContent({ page }: { page: any }) {
+  const pathname = usePathname();
+
   const isFullWidth = page.template === "full-width";
+  const isVacancyPage = pathname === "/vacancies";
 
   return (
     <main className={[page.template ?? "default", page.pageClass ?? ""].filter(Boolean).join(" ")}>
@@ -26,7 +31,7 @@ export default function PageContent({ page }: { page: any }) {
       <section className="grid grid-cols-1 md:grid-cols-12 gap-4 container mx-auto md:py-10">
         {page.template !== "full-width" && (
           <div id="enquire-now" className="mx-auto container col-span-1 md:col-span-3 ">
-            <EnquirySection />
+            {isVacancyPage ? <VacancyForm /> : <EnquirySection />}
           </div>
         )}
 

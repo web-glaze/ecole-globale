@@ -6,6 +6,7 @@ export const Media: CollectionConfig = {
   admin: {
     group: "Content",
     useAsTitle: "alt",
+    hidden: ({ user }) => user?.role !== "admin",
   },
 
   upload: {

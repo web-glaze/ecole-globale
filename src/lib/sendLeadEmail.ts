@@ -60,13 +60,9 @@ export async function sendLeadEmail(lead: LeadData) {
     fields.push(`Submitted At: ${submittedAt}`);
   }
 
-  // Check if lead is from vacancy page
-  const isVacancyLead = lead.pageUrl?.includes("/vacancies");
+  const recipient = process.env.LEAD_EMAIL;
 
-  // Different email and subject for vacancies
-  const recipient = isVacancyLead ? process.env.VACANCY_EMAIL : process.env.LEAD_EMAIL;
-
-  const subject = isVacancyLead ? `Job Application @Ecole Globale` : `Enquiry @Ecole Globale`;
+  const subject = "Enquiry @Ecole Globale";
 
   try {
     const info = await transporter.sendMail({
@@ -74,13 +70,16 @@ export async function sendLeadEmail(lead: LeadData) {
       to: recipient?.split(","),
       replyTo: lead.email,
       subject,
-      text: `New Website Lead
+
+      text: `New Website Enquiry
 
 ${fields.join("\n")}
 
 This email was automatically generated from the Ecole Globale website.`,
     });
+
     console.log("✅ Lead email sent:", info.messageId);
+
     return info;
   } catch (error) {
     console.error("❌ Failed to send lead email:", error);
