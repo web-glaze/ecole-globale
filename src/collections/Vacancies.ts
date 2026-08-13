@@ -73,18 +73,38 @@ export const Vacancies: CollectionConfig = {
     ],
 
     afterChange: [
-      async ({ doc, operation }) => {
+      async ({ doc, operation, req }) => {
         if (operation !== "create") {
           return doc;
         }
 
         try {
+          let cvData = doc.cv;
+
+          // If cv is only an ID, fetch the full media document
+          if (cvData && typeof cvData === "string") {
+            const media = await req.payload.findByID({
+              collection: "media",
+              id: cvData,
+              depth: 0,
+            });
+
+            if (media) {
+              cvData = {
+                url: media.url,
+                filename: media.filename,
+                mimeType: media.mimeType,
+              };
+            }
+          }
+
           await sendVacancyEmail({
             name: doc.name,
             email: doc.email,
             phone: doc.phone,
             postAppliedFor: doc.postAppliedFor,
             subject: doc.subject,
+            cv: cvData,
             pageUrl: doc.pageUrl,
             ipAddress: doc.ipAddress,
             userAgent: doc.userAgent,
@@ -141,6 +161,14 @@ export const Vacancies: CollectionConfig = {
       name: "subject",
       label: "Subject",
       type: "text",
+      required: true,
+    },
+
+    {
+      name: "cv",
+      label: "Upload CV",
+      type: "upload",
+      relationTo: "media",
       required: true,
     },
 

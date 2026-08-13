@@ -36,7 +36,7 @@ export default function PageContent({ page }: { page: any }) {
         )}
 
         <div className={`py-8 lg:py-0 mx-auto px-4 container ${isFullWidth ? "col-span-12" : "col-span-1 md:col-span-9"}`}>
-          {!page.hideTitle && <h1 className="text-4xl font-heading mb-10">{page.title}</h1>}
+          {!page.hideTitle && <h1 className="text-4xl font-heading mb-10 font-semibold">{page.title}</h1>}
           <BlockRenderer layout={page.layout} />
         </div>
       </section>

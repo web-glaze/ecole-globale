@@ -13,7 +13,7 @@ export default function VacancyForm() {
     postAppliedFor: "",
     subject: "",
   });
-
+  const [cv, setCv] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -33,31 +33,77 @@ export default function VacancyForm() {
     setErrorMessage("");
 
     try {
+      if (!cv) {
+        setErrorMessage("Please upload your CV");
+        return;
+      }
+
+      const mediaFormData = new FormData();
+      mediaFormData.append("file", cv);
+
+      mediaFormData.append("_payload", JSON.stringify({}));
+
+      const mediaRes = await fetch("/api/media", {
+        method: "POST",
+        body: mediaFormData,
+      });
+
+      const mediaResult = await mediaRes.json();
+
+      if (!mediaRes.ok) {
+        console.error("Media upload failed:", mediaResult);
+        setErrorMessage(mediaResult?.errors?.[0]?.message || mediaResult?.message || "Failed to upload CV");
+        return;
+      }
+
+      const mediaId = mediaResult.doc?.id || mediaResult.id;
+
+      if (!mediaId) {
+        setErrorMessage("CV uploaded but no ID returned");
+        return;
+      }
+
+      const vacancyData = {
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        postAppliedFor: formData.postAppliedFor,
+        subject: formData.subject,
+        cv: mediaId,
+      };
+
       const res = await fetch("/api/vacancies", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(vacancyData),
       });
 
       const result = await res.json();
 
-      if (res.ok) {
-        setSuccessMessage("Your application has been submitted successfully!");
-
-        setFormData({
-          name: "",
-          phone: "",
-          email: "",
-          postAppliedFor: "",
-          subject: "",
-        });
-      } else {
-        setErrorMessage(result.message ?? result.errors?.[0]?.message ?? "Failed to submit application.");
+      if (!res.ok) {
+        console.error("Vacancy API error:", result);
+        setErrorMessage(result?.errors?.[0]?.message || result?.message || `Submission failed (${res.status})`);
+        return;
       }
-    } catch {
-      setErrorMessage("Something went wrong. Please try again.");
+
+      setSuccessMessage("Your application has been submitted successfully!");
+
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        postAppliedFor: "",
+        subject: "",
+      });
+      setCv(null);
+
+      const fileInput = document.getElementById("cv") as HTMLInputElement | null;
+      if (fileInput) fileInput.value = "";
+    } catch (error) {
+      console.error("Vacancy submission error:", error);
+      setErrorMessage(error instanceof Error ? error.message : "Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -117,6 +163,36 @@ export default function VacancyForm() {
           required
           className="border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary text-base"
         />
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-700">Upload CV</label>
+
+          <label
+            htmlFor="cv"
+            className="flex cursor-pointer items-center gap-3 rounded-md border-2 border-dashed border-primary bg-transparent px-4 py-4 transition hover:bg-gray-100"
+          >
+            <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary/10">📎</div>
+
+            <div className="flex-1">
+              <p className="text-sm font-medium">{cv ? cv.name : "Attach your CV"}</p>
+
+              <p className="text-xs text-gray-500">PDF, DOC or DOCX • Max 5MB</p>
+            </div>
+
+            <span className="rounded-md border px-3 py-2 text-sm font-medium">Browse</span>
+          </label>
+
+          <Input
+            id="cv"
+            name="cv"
+            type="file"
+            accept=".pdf,.doc,.docx"
+            required
+            className="hidden"
+            onChange={(e) => {
+              setCv(e.target.files?.[0] || null);
+            }}
+          />
+        </div>
 
         <Button type="submit" className="w-full font-heading text-base font-semibold" disabled={loading}>
           {loading ? "Submitting..." : "Submit Application"}

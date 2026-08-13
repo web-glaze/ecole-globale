@@ -14,6 +14,17 @@ type VacancyData = {
   phone?: string;
   postAppliedFor?: string;
   subject?: string;
+  cv?:
+    | {
+        url?: string;
+        filename?: string;
+        mimeType?: string;
+        cloudinary?: {
+          secure_url?: string;
+        };
+      }
+    | string
+    | null;
   pageUrl?: string;
   ipAddress?: string;
   userAgent?: string;
@@ -63,6 +74,35 @@ export async function sendVacancyEmail(vacancy: VacancyData) {
 
   if (submittedAt) {
     fields.push(`Submitted At: ${submittedAt}`);
+  }
+
+  // ---------------------------------------------
+  // Get CV URL
+  // ---------------------------------------------
+
+  let cvUrl = "";
+
+  if (vacancy.cv && typeof vacancy.cv === "object") {
+    cvUrl = vacancy.cv.cloudinary?.secure_url || vacancy.cv.url || "";
+
+    // If Payload returns a relative URL
+    if (cvUrl.startsWith("/")) {
+      const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || process.env.PAYLOAD_PUBLIC_SERVER_URL || "";
+
+      if (baseUrl) {
+        cvUrl = `${baseUrl.replace(/\/$/, "")}${cvUrl}`;
+      }
+    }
+  }
+
+  // ---------------------------------------------
+  // Add CV link to email
+  // ---------------------------------------------
+
+  if (cvUrl) {
+    fields.push(`CV: ${cvUrl}`);
+  } else {
+    fields.push(`CV: Not provided`);
   }
 
   const recipient = process.env.VACANCY_EMAIL;

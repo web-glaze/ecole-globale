@@ -110,21 +110,27 @@ export default function Navbar() {
                     return (
                       <div key={index} className="border-b py-1">
                         <div className="flex items-center">
-                          <Link
-                            href={href}
-                            onClick={() => {
-                              setMobileOpen(false);
-                              setOpenMenu(null);
-                            }}
-                            className="flex-1 rounded-lg px-3 py-3 text-base font-medium transition hover:bg-muted hover:text-primary"
-                          >
-                            {item.label}
-                          </Link>
+                          {hasChildren ? (
+                            <button
+                              type="button"
+                              onClick={() => setOpenMenu(openMenu === index ? null : index)}
+                              className="flex w-full items-center justify-between rounded-lg px-3 py-3 text-left text-base font-medium transition hover:bg-muted hover:text-primary"
+                            >
+                              <span>{item.label}</span>
 
-                          {hasChildren && (
-                            <button onClick={() => setOpenMenu(openMenu === index ? null : index)} className="rounded-lg p-3 hover:bg-muted">
-                              <ChevronDown className={`h-5 w-5 transition-transform duration-300 ${openMenu === index ? "rotate-180" : ""}`} />
+                              <ChevronDown className={`h-5 w-5 shrink-0 transition-transform duration-300 ${openMenu === index ? "rotate-180" : ""}`} />
                             </button>
+                          ) : (
+                            <Link
+                              href={href}
+                              onClick={() => {
+                                setMobileOpen(false);
+                                setOpenMenu(null);
+                              }}
+                              className="flex w-full items-center rounded-lg px-3 py-3 text-base font-medium transition hover:bg-muted hover:text-primary"
+                            >
+                              {item.label}
+                            </Link>
                           )}
                         </div>
 

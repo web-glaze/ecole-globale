@@ -12,7 +12,7 @@ export const Media: CollectionConfig = {
   upload: {
     staticDir: "media",
 
-    mimeTypes: ["image/*", "video/*"],
+    mimeTypes: ["image/*", "video/*", "application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 
     adminThumbnail: "thumbnail",
   },
