@@ -83,7 +83,13 @@ export default function EnquiryPopup() {
   useEffect(() => {
     if (leadSubmitted) return;
 
-    // Prevent immediate back navigation
+    // Exit popup is ONLY enabled on desktop.
+    // Mobile will still have the 15-second timer popup.
+    const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+
+    if (!isDesktop) return;
+
+    // Prevent immediate back navigation on desktop
     window.history.pushState({ popup: true }, "", window.location.href);
 
     const handlePopState = () => {
@@ -97,6 +103,7 @@ export default function EnquiryPopup() {
       }
     };
 
+    // Mouse exit intent - desktop only
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 0 && e.relatedTarget === null && !isOpenRef.current && !leadSubmitted && !hasShownExitPopup.current) {
         hasShownExitPopup.current = true;
