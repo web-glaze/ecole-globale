@@ -17,6 +17,12 @@ interface Message {
 
 type Step = "welcome" | "name" | "phone" | "email" | "completed";
 
+interface FormData {
+  name: string;
+  phone: string;
+  email: string;
+}
+
 export default function EnquiryPopup() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -24,16 +30,21 @@ export default function EnquiryPopup() {
   const [step, setStep] = useState<Step>("welcome");
   const [inputValue, setInputValue] = useState("");
   const [validationError, setValidationError] = useState("");
-  const [formData, setFormData] = useState({
+
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     phone: "",
     email: "",
   });
+
   const [loading, setLoading] = useState(false);
   const [leadSubmitted, setLeadSubmitted] = useState(false);
+
   const hasShownExitPopup = useRef(false);
   const hasShownTimerPopup = useRef(false);
+  const hasInitialized = useRef(false);
 
+  const leadSubmittedRef = useRef(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const isOpenRef = useRef(open);
@@ -43,33 +54,83 @@ export default function EnquiryPopup() {
     isOpenRef.current = open;
   }, [open]);
 
-  // Utility to get current time in HH:MM format
   const getFormattedTime = () => {
     const now = new Date();
+
     const hours = now.getHours().toString().padStart(2, "0");
     const minutes = now.getMinutes().toString().padStart(2, "0");
+
     return `${hours}:${minutes}`;
   };
 
-  // Auto scroll to bottom
+  const validateName = (value: string): string => {
+    const name = value.trim();
+
+    if (!name) {
+      return "Please enter your name.";
+    }
+
+    if (name.length < 2) {
+      return "Name must be at least 2 characters.";
+    }
+
+    if (name.length > 100) {
+      return "Name must not exceed 100 characters.";
+    }
+
+    return "";
+  };
+
+  const validatePhone = (value: string): string => {
+    const phone = value.trim();
+    if (!phone) {
+      return "Please enter your phone number.";
+    }
+    const phoneDigits = phone.replace(/\D/g, "");
+    if (phoneDigits.length < 7 || phoneDigits.length > 15) {
+      return "Please enter a valid phone number.";
+    }
+    return "";
+  };
+
+  const validateEmail = (value: string): string => {
+    const email = value.trim();
+    if (!email) {
+      return "Please enter your email address.";
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!emailRegex.test(email)) {
+      return "Please enter a valid email address.";
+    }
+    if (email.length > 150) {
+      return "Email must not exceed 150 characters.";
+    }
+    return "";
+  };
+
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
   };
 
   useEffect(() => {
     scrollToBottom();
   }, [messages, isTyping]);
 
-  // Focus input field when typing completes
   useEffect(() => {
-    if (step !== "welcome" && step !== "completed" && !isTyping) {
-      setTimeout(() => {
+    if (step !== "welcome" && step !== "completed" && !isTyping && open) {
+      const timer = setTimeout(() => {
         inputRef.current?.focus();
       }, 80);
+
+      return () => clearTimeout(timer);
     }
-  }, [step, isTyping]);
+  }, [step, isTyping, open]);
 
   useEffect(() => {
+    if (leadSubmitted) return;
+
     const timer = setTimeout(() => {
       if (!leadSubmitted && !hasShownExitPopup.current && !hasShownTimerPopup.current) {
         hasShownTimerPopup.current = true;
@@ -101,6 +162,7 @@ export default function EnquiryPopup() {
       if (e.clientY <= 0 && e.relatedTarget === null && !isOpenRef.current && !leadSubmitted && !hasShownExitPopup.current) {
         hasShownExitPopup.current = true;
         hasShownTimerPopup.current = true;
+
         setOpen(true);
       }
     };
@@ -114,16 +176,20 @@ export default function EnquiryPopup() {
     };
   }, [leadSubmitted]);
 
-  // Sequential onboarding bot sequence
   const runWelcomeSequence = async () => {
     setMessages([]);
     setStep("welcome");
     setInputValue("");
     setValidationError("");
-    setFormData({ name: "", phone: "", email: "" });
+    setFormData({
+      name: "",
+      phone: "",
+      email: "",
+    });
     setLoading(false);
 
     if (!isOpenRef.current) return;
+
     setIsTyping(true);
     await new Promise((resolve) => setTimeout(resolve, 800));
     if (!isOpenRef.current) return;
@@ -131,7 +197,7 @@ export default function EnquiryPopup() {
     setMessages((prev) => [
       ...prev,
       {
-        id: "1",
+        id: "welcome-1",
         sender: "bot",
         text: "👋 Welcome to India's No. 1 Residential School.",
         time: getFormattedTime(),
@@ -146,7 +212,7 @@ export default function EnquiryPopup() {
     setMessages((prev) => [
       ...prev,
       {
-        id: "2",
+        id: "welcome-2",
         sender: "bot",
         text: "We'll help you connect with our admission counsellor.",
         time: getFormattedTime(),
@@ -161,15 +227,13 @@ export default function EnquiryPopup() {
     setMessages((prev) => [
       ...prev,
       {
-        id: "3",
+        id: "welcome-3",
         sender: "bot",
         text: "🤖 Would you like to continue?",
         time: getFormattedTime(),
       },
     ]);
   };
-
-  const hasInitialized = useRef(false);
 
   useEffect(() => {
     if (open && !hasInitialized.current) {
@@ -178,26 +242,14 @@ export default function EnquiryPopup() {
     }
   }, [open]);
 
-  const closePopup = () => {
-    setOpen(false);
-  };
+  const submitLead = async (data: FormData, isPartial = false) => {
+    if (!data.name && !data.phone && !data.email) {
+      return false;
+    }
+    if (leadSubmittedRef.current) {
+      return true;
+    }
 
-  const handleContinue = async () => {
-    setMessages((prev) => [...prev, { id: `user-continue`, sender: "user", text: "Yes, Continue", time: getFormattedTime() }]);
-    setStep("name");
-
-    setIsTyping(true);
-    await new Promise((resolve) => setTimeout(resolve, 900));
-    setIsTyping(false);
-    setMessages((prev) => [...prev, { id: `bot-great`, sender: "bot", text: "Great! 😊", time: getFormattedTime() }]);
-
-    setIsTyping(true);
-    await new Promise((resolve) => setTimeout(resolve, 800));
-    setIsTyping(false);
-    setMessages((prev) => [...prev, { id: `bot-name`, sender: "bot", text: "Please tell me your name.", time: getFormattedTime() }]);
-  };
-
-  const submitLead = async (data: typeof formData) => {
     try {
       const res = await fetch("/api/leads", {
         method: "POST",
@@ -205,91 +257,267 @@ export default function EnquiryPopup() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          ...data,
-          message: "Submitted via Admission Assistant Chatbot",
+          name: data.name || "",
+          phone: data.phone || "",
+          email: data.email || "",
+          message: isPartial ? "Partial enquiry submitted via Admission Assistant Chatbot" : "Submitted via Admission Assistant Chatbot",
+          source: "Admission Assistant Chatbot",
+          pageUrl: typeof window !== "undefined" ? window.location.href : "",
         }),
       });
+
+      if (res.ok) {
+        leadSubmittedRef.current = true;
+        setLeadSubmitted(true);
+      }
+
       return res.ok;
-    } catch {
+    } catch (error) {
+      console.error("Lead submission failed:", error);
       return false;
     }
   };
 
+  const closePopup = async () => {
+    if (leadSubmittedRef.current || leadSubmitted) {
+      setOpen(false);
+      return;
+    }
+
+    let dataToSubmit: FormData = {
+      ...formData,
+    };
+
+    const currentValue = inputValue.trim();
+    if (currentValue) {
+      if (step === "name") {
+        const error = validateName(currentValue);
+
+        if (!error) {
+          dataToSubmit.name = currentValue;
+        }
+      }
+      if (step === "phone") {
+        const error = validatePhone(currentValue);
+        if (!error) {
+          dataToSubmit.phone = currentValue;
+        }
+      }
+      if (step === "email") {
+        const error = validateEmail(currentValue);
+        if (!error) {
+          dataToSubmit.email = currentValue;
+        }
+      }
+    }
+    if (dataToSubmit.name || dataToSubmit.phone || dataToSubmit.email) {
+      await submitLead(dataToSubmit, true);
+    }
+    setOpen(false);
+  };
+
+  const handleContinue = async () => {
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: `user-continue-${Date.now()}`,
+        sender: "user",
+        text: "Yes, Continue",
+        time: getFormattedTime(),
+      },
+    ]);
+
+    setStep("name");
+    setIsTyping(true);
+    await new Promise((resolve) => setTimeout(resolve, 900));
+    if (!isOpenRef.current) return;
+    setIsTyping(false);
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: `bot-great-${Date.now()}`,
+        sender: "bot",
+        text: "Great! 😊",
+        time: getFormattedTime(),
+      },
+    ]);
+
+    setIsTyping(true);
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    if (!isOpenRef.current) return;
+    setIsTyping(false);
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: `bot-name-${Date.now()}`,
+        sender: "bot",
+        text: "Please tell me your name.",
+        time: getFormattedTime(),
+      },
+    ]);
+  };
+
   const handleSend = async () => {
     if (!inputValue.trim()) return;
-
     const val = inputValue.trim();
+    setValidationError("");
 
     if (step === "name") {
-      setFormData((prev) => ({ ...prev, name: val }));
-      setMessages((prev) => [...prev, { id: `user-name-${Date.now()}`, sender: "user", text: val, time: getFormattedTime() }]);
+      const error = validateName(val);
+
+      if (error) {
+        setValidationError(error);
+        return;
+      }
+
+      setFormData((prev) => ({
+        ...prev,
+        name: val,
+      }));
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `user-name-${Date.now()}`,
+          sender: "user",
+          text: val,
+          time: getFormattedTime(),
+        },
+      ]);
+
       setInputValue("");
       setStep("phone");
+      setIsTyping(true);
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      if (!isOpenRef.current) return;
+      setIsTyping(false);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `bot-nice-meet-${Date.now()}`,
+          sender: "bot",
+          text: `Nice to meet you, ${val}.`,
+          time: getFormattedTime(),
+        },
+      ]);
 
       setIsTyping(true);
       await new Promise((resolve) => setTimeout(resolve, 800));
+      if (!isOpenRef.current) return;
       setIsTyping(false);
-      setMessages((prev) => [...prev, { id: `bot-nice-meet-${Date.now()}`, sender: "bot", text: `Nice to meet you, ${val}.`, time: getFormattedTime() }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `bot-ask-phone-${Date.now()}`,
+          sender: "bot",
+          text: "Can I have your mobile number?",
+          time: getFormattedTime(),
+        },
+      ]);
+      return;
+    }
 
-      setIsTyping(true);
-      await new Promise((resolve) => setTimeout(resolve, 800));
-      setIsTyping(false);
-      setMessages((prev) => [...prev, { id: `bot-ask-phone-${Date.now()}`, sender: "bot", text: "Can I have your mobile number?", time: getFormattedTime() }]);
-    } else if (step === "phone") {
-      // Validate immediately: 10 digits and only numbers
-      const isPhoneValid = /^\d{10}$/.test(val);
-      if (!isPhoneValid) {
-        setValidationError("Please enter a valid 10-digit mobile number containing only numbers.");
+    if (step === "phone") {
+      const error = validatePhone(val);
+
+      if (error) {
+        setValidationError(error);
         return;
       }
-      setValidationError("");
 
-      setFormData((prev) => ({ ...prev, phone: val }));
-      setMessages((prev) => [...prev, { id: `user-phone-${Date.now()}`, sender: "user", text: val, time: getFormattedTime() }]);
+      setFormData((prev) => ({
+        ...prev,
+        phone: val,
+      }));
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `user-phone-${Date.now()}`,
+          sender: "user",
+          text: val,
+          time: getFormattedTime(),
+        },
+      ]);
+
       setInputValue("");
       setStep("email");
+      setIsTyping(true);
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      if (!isOpenRef.current) return;
+      setIsTyping(false);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `bot-thanks-${Date.now()}`,
+          sender: "bot",
+          text: "Thanks!",
+          time: getFormattedTime(),
+        },
+      ]);
 
       setIsTyping(true);
       await new Promise((resolve) => setTimeout(resolve, 800));
+      if (!isOpenRef.current) return;
       setIsTyping(false);
-      setMessages((prev) => [...prev, { id: `bot-thanks-${Date.now()}`, sender: "bot", text: "Thanks!", time: getFormattedTime() }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `bot-ask-email-${Date.now()}`,
+          sender: "bot",
+          text: "What's your email address?",
+          time: getFormattedTime(),
+        },
+      ]);
 
-      setIsTyping(true);
-      await new Promise((resolve) => setTimeout(resolve, 800));
-      setIsTyping(false);
-      setMessages((prev) => [...prev, { id: `bot-ask-email-${Date.now()}`, sender: "bot", text: "What's your email address?", time: getFormattedTime() }]);
-    } else if (step === "email") {
-      // Validate email pattern
-      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
-      if (!isEmailValid) {
-        setValidationError("Please enter a valid email address.");
+      return;
+    }
+
+    if (step === "email") {
+      const error = validateEmail(val);
+      if (error) {
+        setValidationError(error);
         return;
       }
-      setValidationError("");
+      setFormData((prev) => ({
+        ...prev,
+        email: val,
+      }));
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `user-email-${Date.now()}`,
+          sender: "user",
+          text: val,
+          time: getFormattedTime(),
+        },
+      ]);
 
-      setFormData((prev) => ({ ...prev, email: val }));
-      setMessages((prev) => [...prev, { id: `user-email-${Date.now()}`, sender: "user", text: val, time: getFormattedTime() }]);
       setInputValue("");
       setStep("completed");
       setLoading(true);
-
       setIsTyping(true);
-      // Submit lead to Payload CMS
-      const finalData = { ...formData, email: val };
-      const success = await submitLead(finalData);
+      const finalData: FormData = {
+        ...formData,
+        email: val,
+      };
 
+      const success = await submitLead(finalData);
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setIsTyping(false);
       setLoading(false);
-
       if (success) {
-        setLeadSubmitted(true);
         hasShownExitPopup.current = true;
         hasShownTimerPopup.current = true;
         hasInitialized.current = false;
         setMessages((prev) => [
           ...prev,
-          { id: `bot-thankyou-${Date.now()}`, sender: "bot", text: "Thank you!", time: getFormattedTime() },
+          {
+            id: `bot-thankyou-${Date.now()}`,
+            sender: "bot",
+            text: "Thank you!",
+            time: getFormattedTime(),
+          },
           {
             id: `bot-assist-${Date.now()}`,
             sender: "bot",
@@ -302,7 +530,12 @@ export default function EnquiryPopup() {
             text: "One of our experts will call you within the next 2 working hours.",
             time: getFormattedTime(),
           },
-          { id: `bot-day-${Date.now()}`, sender: "bot", text: "Have a wonderful day! 😊", time: getFormattedTime() },
+          {
+            id: `bot-day-${Date.now()}`,
+            sender: "bot",
+            text: "Have a wonderful day! 😊",
+            time: getFormattedTime(),
+          },
         ]);
       } else {
         setMessages((prev) => [
@@ -310,7 +543,7 @@ export default function EnquiryPopup() {
           {
             id: `bot-error-${Date.now()}`,
             sender: "bot",
-            text: "Thank you! Your information was saved. But we encountered an issue processing the direct sync. Rest assured, our team will reach out to you soon.",
+            text: "We couldn't process your enquiry right now. Please try again.",
             time: getFormattedTime(),
           },
         ]);
@@ -321,7 +554,6 @@ export default function EnquiryPopup() {
   if (pathname === "/vacancies") {
     return null;
   }
-
   return (
     <Dialog
       open={open}
@@ -343,29 +575,33 @@ export default function EnquiryPopup() {
           <DialogTitle>Admission Assistant Chatbot</DialogTitle>
         </DialogHeader>
 
-        {/* WhatsApp Custom Header */}
+        {/* WhatsApp Header */}
+
         <div className="flex items-center justify-between px-4 py-3 bg-[#202c33] border-b border-[#0b141a] flex-shrink-0">
           <div className="flex items-center space-x-3">
             <div className="relative flex items-center justify-center w-10 h-10 rounded-full bg-slate-800 text-[#e9edef] border border-[#00a884]">
               <Bot className="w-5.5 h-5.5 text-[#00a884]" />
+
               <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-[#00e676] border-2 border-[#202c33] rounded-full animate-pulse" />
             </div>
+
             <div>
               <h4 className="text-sm font-semibold tracking-tight text-[#e9edef] leading-none">Admission Assistant</h4>
+
               <p className="text-[11px] text-[#8696a0] mt-1.5">Online</p>
             </div>
           </div>
+
           <Button variant="ghost" size="icon" onClick={closePopup} className="text-[#8696a0] hover:text-white hover:bg-[#2a3942] rounded-full w-8 h-8 cursor-pointer flex-shrink-0">
             <X className="w-4 h-4" />
           </Button>
         </div>
 
-        {/* WhatsApp Chat Feed with wallpaper doodle pattern */}
         <div
           className="flex-1 overflow-y-auto p-4 space-y-3.5 scroll-smooth min-h-0 relative"
           style={{
             backgroundColor: "#0b141a",
-            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath fill-rule='evenodd' d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zM11 61c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm74-24c0 9.941-8.059 18-18 18s-18-8.059-18-18 8.059-18 18-18 18 8.059 18 18zM34 14c0 4.418-3.582 8-8 8s-8-3.582-8-8 3.582-8 8-8 8 3.582 8 8zm-8 48c0 4.418-3.582 8-8 8s-8-3.582-8-8 3.582-8 8-8 8 3.582 8 8zm44-38c0 4.418-3.582 8-8 8s-8-3.582-8-8 3.582-8 8-8 8 3.582 8 8zm-8 48c0 4.418-3.582 8-8 8s-8-3.582-8-8 3.582-8 8-8 8 3.582 8 8z'/%3E%3C/g%3E%3C/svg%3E")`,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath fill-rule='evenodd' d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zM11 61c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm74-24c0 9.941-8.059 18-18 18s-18-8.059-18-18 8.059-18 18-18 18 8.059 18 18zM34 14c0 4.418-3.582-8 8-8s8 3.582 8 8-3.582 8-8 8-8-3.582-8-8zm-8 48c0 4.418-3.582 8-8 8s-8-3.582-8-8 3.582-8 8-8 8 3.582 8 8zm44-38c0-4.418-3.582-8-8-8s-8 3.582-8 8 3.582 8 8 8 8-3.582 8-8zm-8 48c0-4.418-3.582-8-8-8s-8 3.582-8 8 3.582 8 8 8 8-3.582 8-8z'/%3E%3C/g%3E%3C/svg%3E")`,
             backgroundAttachment: "local",
           }}
         >
@@ -373,9 +609,20 @@ export default function EnquiryPopup() {
             {messages.map((msg) => (
               <motion.div
                 key={msg.id}
-                initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
+                initial={{
+                  opacity: 0,
+                  scale: 0.95,
+                  y: 10,
+                }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                  y: 0,
+                }}
+                transition={{
+                  duration: 0.2,
+                  ease: "easeOut",
+                }}
                 className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
               >
                 <div
@@ -385,12 +632,15 @@ export default function EnquiryPopup() {
                 >
                   <p className="whitespace-pre-line text-[#e9edef]">{msg.text}</p>
 
-                  {/* Timestamp & double checkmarks offset wrapper */}
+                  {/* Timestamp */}
+
                   <div className="flex items-center justify-end gap-1.5 self-end mt-1 -mr-1 -mb-0.5 select-none opacity-80">
                     <span className="text-[9px] text-[#8696a0] font-sans font-normal leading-none">{msg.time}</span>
+
                     {msg.sender === "user" && (
                       <svg className="w-3.5 h-3.5 text-[#53bdeb] flex-shrink-0" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M1.5 6L5 9.5L14.5 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+
                         <path d="M5.5 6L9 9.5L18.5 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     )}
@@ -399,22 +649,51 @@ export default function EnquiryPopup() {
               </motion.div>
             ))}
 
+            {/* Typing */}
+
             {isTyping && (
-              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex justify-start">
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  y: 10,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                className="flex justify-start"
+              >
                 <div className="bg-[#202c33] rounded-lg rounded-tl-none px-3.5 py-2.5 shadow-sm flex items-center">
                   <div className="flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 bg-[#8696a0] rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                    <span className="w-1.5 h-1.5 bg-[#8696a0] rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                    <span className="w-1.5 h-1.5 bg-[#8696a0] rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                    <span
+                      className="w-1.5 h-1.5 bg-[#8696a0] rounded-full animate-bounce"
+                      style={{
+                        animationDelay: "0ms",
+                      }}
+                    />
+
+                    <span
+                      className="w-1.5 h-1.5 bg-[#8696a0] rounded-full animate-bounce"
+                      style={{
+                        animationDelay: "150ms",
+                      }}
+                    />
+
+                    <span
+                      className="w-1.5 h-1.5 bg-[#8696a0] rounded-full animate-bounce"
+                      style={{
+                        animationDelay: "300ms",
+                      }}
+                    />
                   </div>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
+
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input / Action Area */}
         {step === "welcome" && (
           <div className="p-3 bg-[#111b21] border-t border-[#202c33]/40 flex flex-col gap-2 flex-shrink-0">
             <Button
@@ -439,8 +718,28 @@ export default function EnquiryPopup() {
                 ref={inputRef}
                 value={inputValue}
                 onChange={(e) => {
-                  setInputValue(e.target.value);
-                  if (validationError) setValidationError("");
+                  let value = e.target.value;
+
+                  // Name
+                  if (step === "name") {
+                    value = value.slice(0, 100);
+                  }
+
+                  // Phone
+                  if (step === "phone") {
+                    value = value.slice(0, 20);
+                  }
+
+                  // Email
+                  if (step === "email") {
+                    value = value.slice(0, 150);
+                  }
+
+                  setInputValue(value);
+
+                  if (validationError) {
+                    setValidationError("");
+                  }
                 }}
                 placeholder={
                   isTyping
@@ -448,7 +747,7 @@ export default function EnquiryPopup() {
                     : step === "name"
                       ? "Type your name..."
                       : step === "phone"
-                        ? "Enter 10-digit mobile number..."
+                        ? "Enter phone number..."
                         : step === "email"
                           ? "Enter email address..."
                           : "Type a message..."
@@ -456,8 +755,10 @@ export default function EnquiryPopup() {
                 disabled={isTyping || loading}
                 className="flex-1 bg-[#2a3942] border-none text-[#e9edef] rounded-full py-4.5 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base placeholder-[#8696a0] h-9"
                 type={step === "phone" ? "tel" : step === "email" ? "email" : "text"}
+                inputMode={step === "phone" ? "tel" : step === "email" ? "email" : "text"}
                 autoComplete="off"
               />
+
               <Button
                 type="submit"
                 disabled={!inputValue.trim() || isTyping || loading}
@@ -467,9 +768,11 @@ export default function EnquiryPopup() {
                 <Send className="w-4 h-4" />
               </Button>
             </div>
+
             {validationError && (
-              <p className="text-xs text-red-400 px-2 font-medium flex items-center gap-1 mt-0.5 animate-pulse">
-                <span>⚠️</span> {validationError}
+              <p className="text-xs text-red-400 px-2 font-medium flex items-center gap-1 mt-0.5">
+                <span>⚠️</span>
+                {validationError}
               </p>
             )}
           </form>
@@ -479,9 +782,10 @@ export default function EnquiryPopup() {
           <div className="p-3 bg-[#111b21] border-t border-[#202c33]/40 flex-shrink-0">
             <Button
               onClick={closePopup}
-              className="w-full bg-[#00a884] text-white hover:bg-[#008f72] font-semibold py-4.5 cursor-pointer rounded-xl flex items-center justify-center gap-2 border-none shadow-sm text-sm transition-colors"
+              disabled={loading}
+              className="w-full bg-[#00a884] text-white hover:bg-[#008f72] font-semibold py-4.5 cursor-pointer rounded-xl flex items-center justify-center gap-2 border-none shadow-sm text-sm transition-colors disabled:opacity-50"
             >
-              Close Chat
+              {loading ? "Submitting..." : "Close Chat"}
             </Button>
           </div>
         )}

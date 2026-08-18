@@ -21,31 +21,106 @@ function EnquiryForm() {
     message: "",
   });
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    // Remove field error while user is typing
+    if (errors[name]) {
+      setErrors((prev) => {
+        const updated = { ...prev };
+        delete updated[name];
+        return updated;
+      });
+    }
+
+    setSuccessMessage("");
+    setErrorMessage("");
+  };
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    const name = formData.name.trim();
+    const phone = formData.phone.trim();
+    const email = formData.email.trim();
+    const message = formData.message.trim();
+
+    // Name
+    if (!name) {
+      newErrors.name = "Please enter your name.";
+    } else if (name.length < 2) {
+      newErrors.name = "Name must be at least 2 characters.";
+    } else if (name.length > 100) {
+      newErrors.name = "Name must not exceed 100 characters.";
+    }
+
+    // Phone
+    if (!phone) {
+      newErrors.phone = "Please enter your phone number.";
+    } else {
+      // Allows +91 9876543210, 9876543210, +1 5551234567, etc.
+      const phoneDigits = phone.replace(/\D/g, "");
+
+      if (phoneDigits.length < 7 || phoneDigits.length > 15) {
+        newErrors.phone = "Please enter a valid phone number.";
+      }
+    }
+
+    // Email
+    if (!email) {
+      newErrors.email = "Please enter your email address.";
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+      if (!emailRegex.test(email)) {
+        newErrors.email = "Please enter a valid email address.";
+      } else if (email.length > 150) {
+        newErrors.email = "Email must not exceed 150 characters.";
+      }
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    setLoading(true);
     setSuccessMessage("");
     setErrorMessage("");
 
+    // Validate before API request
+    if (!validateForm()) {
+      return;
+    }
+
+    setLoading(true);
+
     try {
+      const payload = {
+        name: formData.name.trim(),
+        phone: formData.phone.trim(),
+        email: formData.email.trim().toLowerCase(),
+        message: formData.message.trim(),
+      };
+
       const res = await fetch("/api/leads", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       const result = await res.json();
@@ -59,59 +134,102 @@ function EnquiryForm() {
           email: "",
           message: "",
         });
+
+        setErrors({});
       } else {
         const errorMsg = result.message || result.errors?.[0]?.message || "Failed to submit enquiry.";
+
         setErrorMessage(errorMsg);
       }
-    } catch (err) {
-      console.error(err);
-      setErrorMessage("Something went wrong");
+    } catch (error) {
+      console.error("Enquiry submission error:", error);
+      setErrorMessage("Unable to submit your enquiry. Please try again.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
-    <form onSubmit={handleSubmit} autoComplete="on" className="space-y-4">
-      <Input
-        id="name"
-        name="name"
-        type="text"
-        autoComplete="name"
-        placeholder="Your Name"
-        value={formData.name}
-        onChange={handleChange}
-        className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary text-base md:text-base"
-        required
-      />
+    <form onSubmit={handleSubmit} autoComplete="on" noValidate className="space-y-4">
+      {/* Name */}
+      <div>
+        <Input
+          id="name"
+          name="name"
+          type="text"
+          autoComplete="name"
+          placeholder="Your Name"
+          value={formData.name}
+          onChange={handleChange}
+          aria-describedby={errors.name ? "name-error" : undefined}
+          className={`bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 text-base md:text-base ${
+            errors.name ? "border-red-500" : "border-primary"
+          }`}
+        />
 
-      <Input
-        id="phone"
-        name="phone"
-        type="tel"
-        autoComplete="tel"
-        placeholder="Phone Number"
-        value={formData.phone}
-        onChange={handleChange}
-        className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary text-base md:text-base"
-      />
+        {errors.name && (
+          <p id="name-error" className="text-red-600 text-xs mt-1">
+            {errors.name}
+          </p>
+        )}
+      </div>
 
-      <Input
-        id="email"
-        name="email"
-        type="email"
-        autoComplete="email"
-        placeholder="Email Address"
-        value={formData.email}
-        onChange={handleChange}
-        className="bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 border-primary text-base md:text-base"
-        required
-      />
+      {/* Phone */}
+      <div>
+        <Input
+          id="phone"
+          name="phone"
+          type="tel"
+          inputMode="tel"
+          autoComplete="tel"
+          placeholder="Phone Number"
+          value={formData.phone}
+          onChange={handleChange}
+          aria-describedby={errors.phone ? "phone-error" : undefined}
+          className={`bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 text-base md:text-base ${
+            errors.phone ? "border-red-500" : "border-primary"
+          }`}
+        />
 
-      <Button className="w-full font-semibold text-base font-heading" disabled={loading}>
+        {errors.phone && (
+          <p id="phone-error" className="text-red-600 text-xs mt-1">
+            {errors.phone}
+          </p>
+        )}
+      </div>
+
+      {/* Email */}
+      <div>
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          autoComplete="email"
+          placeholder="Email Address"
+          value={formData.email}
+          onChange={handleChange}
+          aria-describedby={errors.email ? "email-error" : undefined}
+          className={`bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 text-base md:text-base ${
+            errors.email ? "border-red-500" : "border-primary"
+          }`}
+        />
+
+        {errors.email && (
+          <p id="email-error" className="text-red-600 text-xs mt-1">
+            {errors.email}
+          </p>
+        )}
+      </div>
+
+      {/* Submit */}
+      <Button type="submit" className="w-full font-semibold text-base font-heading" disabled={loading}>
         {loading ? "Submitting..." : "Submit Enquiry"}
       </Button>
 
+      {/* Success */}
       {successMessage && <p className="text-green-600 text-sm font-medium text-center mt-2">{successMessage}</p>}
+
+      {/* General Error */}
       {errorMessage && <p className="text-red-600 text-sm font-medium text-center mt-2">{errorMessage}</p>}
     </form>
   );
@@ -493,21 +611,36 @@ export default function HomeClient({ home }: any) {
                 <div className="absolute inset-0 bg-black/20" />
                 <h3 className="absolute bottom-4 w-full text-center text-sm md:text-xl px-2 text-shadow-lg uppercase font-heading text-white">{featured[4].title}</h3>
               </Link>
-              <Link href={`${featured[5]?.link}`} className="relative col-span-2 overflow-hidden h-[220px] md:h-[320px]">
-                <iframe
-                  className="absolute inset-0 h-full w-full"
-                  src={featured[5].videoUrl}
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  referrerPolicy="strict-origin-when-cross-origin"
-                />
+              <Link href={featured[5]?.link || "#"} className="relative col-span-2 overflow-hidden h-[220px] md:h-[320px]">
+                {featured[5]?.videoType === "youtube" ? (
+                  <iframe
+                    className="absolute inset-0 h-full w-full"
+                    src={featured[5]?.videoUrl}
+                    title={featured[5]?.title || "YouTube video"}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    referrerPolicy="strict-origin-when-cross-origin"
+                  />
+                ) : featured[5]?.videoType === "external" ? (
+                  <video className="absolute inset-0 h-full w-full object-cover" src={featured[5]?.videoUrl} autoPlay muted loop playsInline preload="metadata" />
+                ) : featured[5]?.videoType === "internal" ? (
+                  <video
+                    className="absolute inset-0 h-full w-full object-cover"
+                    src={typeof featured[5]?.video === "object" ? featured[5]?.video?.url || undefined : undefined}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                  />
+                ) : null}
 
-                <div className="absolute inset-0 bg-black/20" />
-                <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
-
-                <h3 className="absolute bottom-4 w-full text-center text-sm md:text-xl px-2 text-shadow-lg uppercase font-heading text-white">{featured[5].title}</h3>
+                <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+                <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32 pointer-events-none" />
+                <h3 className="absolute bottom-4 w-full text-center text-sm md:text-xl px-2 text-shadow-lg uppercase font-heading text-white pointer-events-none">
+                  {featured[5]?.title}
+                </h3>
               </Link>
             </div>
           </div>

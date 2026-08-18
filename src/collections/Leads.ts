@@ -106,7 +106,6 @@ export const Leads: CollectionConfig = {
     {
       name: "email",
       type: "email",
-      required: true,
     },
     {
       name: "phone",

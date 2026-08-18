@@ -154,6 +154,20 @@ export const Home: GlobalConfig = {
                       ],
                     },
                     {
+                      name: "videoType",
+                      type: "select",
+                      label: "Video Source",
+                      defaultValue: "youtube",
+                      options: [
+                        { label: "YouTube", value: "youtube" },
+                        { label: "External", value: "external" },
+                        { label: "Internal - Select from Media", value: "internal" },
+                      ],
+                      admin: {
+                        condition: (_, siblingData) => siblingData?.type === "video",
+                      },
+                    },
+                    {
                       name: "image",
                       type: "upload",
                       relationTo: "media",
@@ -166,7 +180,16 @@ export const Home: GlobalConfig = {
                       type: "text",
                       label: "Video URL / Embed URL",
                       admin: {
-                        condition: (_, siblingData) => siblingData?.type === "video",
+                        condition: (_, siblingData) => siblingData?.type === "video" && siblingData?.videoType !== "internal",
+                      },
+                    },
+                    {
+                      name: "video",
+                      type: "upload",
+                      relationTo: "media",
+                      label: "Select Video",
+                      admin: {
+                        condition: (_, siblingData) => siblingData?.type === "video" && siblingData?.videoType === "internal",
                       },
                     },
                     {

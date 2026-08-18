@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useEffect, useState } from "react";
 import { useSiteSettings } from "@/lib/site-settings-context";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const { settings, navigation } = useSiteSettings();
@@ -15,6 +16,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const logo = settings?.logo?.cloudinary.secure_url || "/logo.png";
+  const pathname = usePathname();
+  const phoneNumber = pathname === "/vacancies" ? "+91-7217017047" : settings.phone;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -82,7 +85,7 @@ export default function Navbar() {
             })}
 
             <Button size="lg" className="text-lg">
-              <Link href={`tel:${settings.phone}`}>Call Now</Link>
+              <Link href={`tel:${phoneNumber}`}>Call Now</Link>
             </Button>
           </nav>
         </div>
@@ -164,7 +167,7 @@ export default function Navbar() {
 
                 <div className="border-t p-5">
                   <Button className="w-full" size="lg" asChild>
-                    <a href={`tel:${settings.phone}`} onClick={() => setMobileOpen(false)}>
+                    <a href={`tel:${phoneNumber}`} onClick={() => setMobileOpen(false)}>
                       <Phone className="mr-2 h-4 w-4" />
                       Call Now
                     </a>
@@ -184,7 +187,7 @@ export default function Navbar() {
 
           {/* Phone Icon */}
 
-          <a href={`tel:${settings.phone}`} className="transition-all duration-300">
+          <a href={`tel:${phoneNumber}`} className="transition-all duration-300">
             <Phone className="size-6 text-white" />
           </a>
         </div>
