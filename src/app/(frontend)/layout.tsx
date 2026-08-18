@@ -123,6 +123,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       })(window,document,'script','dataLayer','GTM-5XGQBB5M');
     `}
         </Script>
+
+        <Script id="google-tag-manager-robin" strategy="afterInteractive">
+          {`
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5KNK3MPH');
+    `}
+        </Script>
       </head>
 
       <body className="min-h-full flex flex-col">
@@ -130,6 +140,20 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-5XGQBB5M"
+            height="0"
+            width="0"
+            style={{
+              display: "none",
+              visibility: "hidden",
+            }}
+          />
+        </noscript>
+
+        {/* Google Tag Manager noscript robin */}
+
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-5KNK3MPH"
             height="0"
             width="0"
             style={{
