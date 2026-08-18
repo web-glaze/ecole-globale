@@ -30,9 +30,24 @@ const inter = Inter({
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
 
-  return generateSEOMetadata({
+  const metadata = generateSEOMetadata({
     settings,
   });
+
+  // Payload favicon
+  const favicon = typeof settings.favicon === "object" && settings.favicon?.url ? settings.favicon.url : undefined;
+
+  return {
+    ...metadata,
+
+    icons: favicon
+      ? {
+          icon: favicon,
+          shortcut: favicon,
+          apple: favicon,
+        }
+      : undefined,
+  };
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
