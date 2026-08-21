@@ -586,9 +586,9 @@ export default function HomeClient({ home }: any) {
                 <h3 className="absolute bottom-4 w-full text-center text-sm md:text-xl px-2 text-shadow-lg uppercase font-heading text-white">{featured[0]?.title}</h3>
               </Link>
 
-              <Link href={`${featured[1]?.link}`} className="relative row-span-2 overflow-hidden">
+              <Link href={`${featured[1]?.link}`} className="relative overflow-hidden">
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
-                <img src={featured[1].image.cloudinary?.secure_url} alt="" className="h-full w-full object-cover object-[55%]" />
+                <img src={featured[1].image.cloudinary?.secure_url} alt="" className="h-[220px] md:h-[320px] w-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
                 <h3 className="absolute bottom-4 w-full text-center text-sm md:text-xl px-2 text-shadow-lg uppercase font-heading text-white">{featured[1].title}</h3>
               </Link>
@@ -611,23 +611,29 @@ export default function HomeClient({ home }: any) {
                 <div className="absolute inset-0 bg-black/20" />
                 <h3 className="absolute bottom-4 w-full text-center text-sm md:text-xl px-2 text-shadow-lg uppercase font-heading text-white">{featured[4].title}</h3>
               </Link>
-              <Link href={featured[5]?.link || "#"} className="relative col-span-2 overflow-hidden h-[220px] md:h-[320px]">
-                {featured[5]?.videoType === "youtube" ? (
+              <Link href={`${featured[5]?.link}`} className="relative overflow-hidden">
+                <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32" />
+                <img src={featured[5].image.cloudinary?.secure_url} alt="" className="h-[220px] md:h-[320px] w-full object-cover" />
+                <div className="absolute inset-0 bg-black/20" />
+                <h3 className="absolute bottom-4 w-full text-center text-sm md:text-xl px-2 text-shadow-lg uppercase font-heading text-white">{featured[5].title}</h3>
+              </Link>
+              <Link href={featured[6]?.link || "#"} className="relative col-span-2 overflow-hidden h-[220px] md:h-[320px]">
+                {featured[6]?.videoType === "youtube" ? (
                   <iframe
                     className="absolute inset-0 h-full w-full"
-                    src={featured[5]?.videoUrl}
-                    title={featured[5]?.title || "YouTube video"}
+                    src={featured[6]?.videoUrl}
+                    title={featured[6]?.title || "YouTube video"}
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowFullScreen
                     referrerPolicy="strict-origin-when-cross-origin"
                   />
-                ) : featured[5]?.videoType === "external" ? (
-                  <video className="absolute inset-0 h-full w-full object-cover" src={featured[5]?.videoUrl} autoPlay muted loop playsInline preload="metadata" />
-                ) : featured[5]?.videoType === "internal" ? (
+                ) : featured[6]?.videoType === "external" ? (
+                  <video className="absolute inset-0 h-full w-full object-cover" src={featured[6]?.videoUrl} autoPlay muted loop playsInline preload="metadata" />
+                ) : featured[6]?.videoType === "internal" ? (
                   <video
                     className="absolute inset-0 h-full w-full object-cover"
-                    src={typeof featured[5]?.video === "object" ? featured[5]?.video?.url || undefined : undefined}
+                    src={typeof featured[6]?.video === "object" ? featured[6]?.video?.url || undefined : undefined}
                     autoPlay
                     muted
                     loop
@@ -639,7 +645,7 @@ export default function HomeClient({ home }: any) {
                 <div className="absolute inset-0 bg-black/20 pointer-events-none" />
                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/40 to-transparent h-32 pointer-events-none" />
                 <h3 className="absolute bottom-4 w-full text-center text-sm md:text-xl px-2 text-shadow-lg uppercase font-heading text-white pointer-events-none">
-                  {featured[5]?.title}
+                  {featured[6]?.title}
                 </h3>
               </Link>
             </div>
