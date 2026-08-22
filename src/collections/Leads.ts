@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { sendLeadEmail } from "@/lib/sendLeadEmail";
+import { createOdooLead } from "@/lib/createOdooLead";
 
 export const Leads: CollectionConfig = {
   slug: "leads",
@@ -66,7 +67,7 @@ export const Leads: CollectionConfig = {
         return data;
       },
     ],
-    // Send email AFTER lead is successfully saved
+
     afterChange: [
       async ({ doc, operation }) => {
         // Only send email for new leads
@@ -88,8 +89,25 @@ export const Leads: CollectionConfig = {
 
           console.log("✅ Lead notification email sent");
         } catch (error) {
-          // Don't prevent the lead from being saved
           console.error("❌ Lead email notification failed:", error);
+        }
+
+        // Send lead to Odoo
+        try {
+          await createOdooLead({
+            name: doc.name,
+            email: doc.email,
+            phone: doc.phone,
+            message: doc.message,
+            pageUrl: doc.pageUrl,
+            ipAddress: doc.ipAddress,
+            userAgent: doc.userAgent,
+            submittedAt: doc.submittedAt,
+          });
+
+          console.log("✅ Lead successfully sent to Odoo");
+        } catch (error) {
+          console.error("❌ Odoo lead creation failed:", error);
         }
 
         return doc;
