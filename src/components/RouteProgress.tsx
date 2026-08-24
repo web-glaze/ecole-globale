@@ -1,38 +1,47 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 export default function RouteProgress() {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-
   const progressRef = useRef<HTMLDivElement>(null);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timersRef = useRef<NodeJS.Timeout[]>([]);
+
+  const clearTimers = () => {
+    timersRef.current.forEach(clearTimeout);
+    timersRef.current = [];
+  };
 
   const startProgress = () => {
     const bar = progressRef.current;
 
     if (!bar) return;
 
+    clearTimers();
+
     bar.classList.remove("route-progress-complete");
     bar.classList.add("route-progress-active");
 
-    // Start around 10%
     bar.style.width = "10%";
 
-    // Slowly move while the route is loading
-    timerRef.current = setTimeout(() => {
-      bar.style.width = "40%";
-    }, 150);
+    timersRef.current.push(
+      setTimeout(() => {
+        bar.style.width = "40%";
+      }, 150)
+    );
 
-    setTimeout(() => {
-      bar.style.width = "70%";
-    }, 500);
+    timersRef.current.push(
+      setTimeout(() => {
+        bar.style.width = "70%";
+      }, 500)
+    );
 
-    setTimeout(() => {
-      bar.style.width = "85%";
-    }, 1000);
+    timersRef.current.push(
+      setTimeout(() => {
+        bar.style.width = "85%";
+      }, 1000)
+    );
   };
 
   const completeProgress = () => {
@@ -40,31 +49,34 @@ export default function RouteProgress() {
 
     if (!bar) return;
 
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
+    clearTimers();
 
     bar.style.width = "100%";
 
-    setTimeout(() => {
-      bar.classList.remove("route-progress-active");
-      bar.classList.add("route-progress-complete");
+    timersRef.current.push(
+      setTimeout(() => {
+        bar.classList.remove("route-progress-active");
+        bar.classList.add("route-progress-complete");
+      }, 200)
+    );
 
+    timersRef.current.push(
       setTimeout(() => {
         bar.style.width = "0%";
         bar.classList.remove("route-progress-complete");
-      }, 300);
-    }, 200);
+      }, 500)
+    );
   };
 
+  // Route finished
   useEffect(() => {
     completeProgress();
-  }, [pathname, searchParams]);
+  }, [pathname]);
 
+  // Detect internal navigation clicks
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-
       const link = target.closest("a");
 
       if (!link) return;
@@ -83,14 +95,19 @@ export default function RouteProgress() {
         return;
       }
 
-      // Ignore new tab
+      // Ignore new tab / modified clicks
       if (link.target === "_blank" || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
         return;
       }
 
+      const clickedUrl = new URL(href, window.location.origin);
+
       const currentUrl = window.location.pathname + window.location.search;
 
-      if (href === currentUrl) return;
+      const newUrl = clickedUrl.pathname + clickedUrl.search;
+
+      // Same page
+      if (newUrl === currentUrl) return;
 
       startProgress();
     };
@@ -99,10 +116,7 @@ export default function RouteProgress() {
 
     return () => {
       document.removeEventListener("click", handleClick);
-
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-      }
+      clearTimers();
     };
   }, []);
 
