@@ -50,6 +50,8 @@ export default function EnquiryPopup() {
   const isOpenRef = useRef(open);
   const pathname = usePathname();
 
+  const [isDesktop, setIsDesktop] = useState(false);
+
   useEffect(() => {
     isOpenRef.current = open;
   }, [open]);
@@ -142,21 +144,21 @@ export default function EnquiryPopup() {
   }, [leadSubmitted]);
 
   useEffect(() => {
-    if (leadSubmitted) return;
-
-    // Prevent immediate back navigation
-    window.history.pushState({ popup: true }, "", window.location.href);
-
-    const handlePopState = () => {
-      if (!isOpenRef.current && !leadSubmitted && !hasShownExitPopup.current) {
-        hasShownExitPopup.current = true;
-        hasShownTimerPopup.current = true;
-
-        setOpen(true);
-
-        window.history.pushState({ popup: true }, "", window.location.href);
-      }
+    const checkDesktop = () => {
+      setIsDesktop(window.innerWidth >= 1024);
     };
+
+    checkDesktop();
+
+    window.addEventListener("resize", checkDesktop);
+
+    return () => {
+      window.removeEventListener("resize", checkDesktop);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (leadSubmitted || !isDesktop) return;
 
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 0 && e.relatedTarget === null && !isOpenRef.current && !leadSubmitted && !hasShownExitPopup.current) {
@@ -167,14 +169,12 @@ export default function EnquiryPopup() {
       }
     };
 
-    window.addEventListener("popstate", handlePopState);
     document.addEventListener("mouseout", handleMouseLeave);
 
     return () => {
-      window.removeEventListener("popstate", handlePopState);
       document.removeEventListener("mouseout", handleMouseLeave);
     };
-  }, [leadSubmitted]);
+  }, [leadSubmitted, isDesktop]);
 
   const runWelcomeSequence = async () => {
     setMessages([]);
@@ -243,7 +243,7 @@ export default function EnquiryPopup() {
   }, [open]);
 
   const submitLead = async (data: FormData, isPartial = false) => {
-    if (!data.name && !data.phone && !data.email) {
+    if (!data.name && !data.phone) {
       return false;
     }
     if (leadSubmittedRef.current) {
@@ -310,7 +310,7 @@ export default function EnquiryPopup() {
         }
       }
     }
-    if (dataToSubmit.name || dataToSubmit.phone || dataToSubmit.email) {
+    if (dataToSubmit.name && dataToSubmit.phone) {
       await submitLead(dataToSubmit, true);
     }
     setOpen(false);
