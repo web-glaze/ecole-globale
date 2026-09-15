@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Phone, CalendarPlus } from "lucide-react";
 import { motion } from "framer-motion";
-import { FaInstagram, FaPhone } from "react-icons/fa6";
+import { FaInstagram, FaPhone, FaWhatsapp } from "react-icons/fa6";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -11,6 +11,7 @@ export default function BottomNavigation() {
   const [compact, setCompact] = useState(false);
   const pathname = usePathname();
   const phoneNumber = pathname === "/vacancies" ? "tel:+91-7217017047" : "tel:+91-9557291888";
+  const whatsAppNumber = pathname === "/vacancies" ? "https://wa.me/917217017047" : "https://wa.me/919557291888";
   const formLink = pathname === "/vacancies" ? "mailto:hr@ecoleglobale.com" : "#enquire-now";
 
   return (
@@ -32,19 +33,16 @@ export default function BottomNavigation() {
             duration: 0.5,
           }}
         >
-          {/* Call Us Button */}
-          <Link href={phoneNumber} className="flex flex-1 items-center justify-center gap-2 px-3 py-1">
-            <Phone size={22} />
-            <motion.span className="overflow-hidden whitespace-nowrap text-sm font-heading font-medium">Call Us</motion.span>
-          </Link>
-
-          {/* Vertical Divider */}
-          <div className="h-6 w-px bg-gray-300" />
-
-          {/* Enquire Now Button */}
           <Link href={formLink} className="flex flex-1 items-center justify-center gap-2 px-3 py-1">
             <CalendarPlus size={22} />
-            <motion.span className="overflow-hidden whitespace-nowrap text-sm font-heading font-medium">Enquire Now</motion.span>
+            <motion.span className="overflow-hidden whitespace-nowrap text-sm font-heading font-medium">Get in Touch</motion.span>
+          </Link>
+
+          <div className="h-6 w-px bg-gray-300" />
+
+          <Link href={whatsAppNumber} className="flex flex-1 items-center justify-center gap-2 px-3 py-1">
+            <FaWhatsapp size={22} />
+            <motion.span className="overflow-hidden whitespace-nowrap text-sm font-heading font-medium">WhatsApp</motion.span>
           </Link>
         </motion.div>
       </motion.div>
