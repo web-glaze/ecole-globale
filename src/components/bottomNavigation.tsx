@@ -16,44 +16,35 @@ export default function BottomNavigation() {
   return (
     <>
       <motion.div
-        className="fixed bottom-0 z-50 w-full md:hidden bg-gray-700 text-white backdrop-blur-md"
+        className="fixed bottom-0 z-50 w-full md:hidden bg-white backdrop-blur-md border-t"
         animate={{
           y: 0,
         }}
       >
         <motion.div
-          className="mx-auto my-3 flex justify-around "
+          className="mx-auto my-3 flex items-center justify-center gap-0"
           animate={{
             maxWidth: compact ? "85%" : "100%",
-            paddingTop: compact ? 4 : 7,
-            paddingBottom: compact ? 4 : 7,
+            paddingTop: compact ? 4 : 6,
+            paddingBottom: compact ? 4 : 6,
           }}
           transition={{
             duration: 0.5,
           }}
         >
-          <Link href={phoneNumber} className="flex items-center justify-center gap-2 px-3">
-            <Phone size={18} />
-
-            {/* <AnimatePresence>{!compact && */}
+          {/* Call Us Button */}
+          <Link href={phoneNumber} className="flex flex-1 items-center justify-center gap-2 px-3 py-1">
+            <Phone size={22} />
             <motion.span className="overflow-hidden whitespace-nowrap text-sm font-heading font-medium">Call Us</motion.span>
-            {/* } </AnimatePresence> */}
           </Link>
 
-          <Link href="https://www.instagram.com/ecole_girls_school" className="flex items-center justify-center gap-2 px-3" target="_blank">
-            <FaInstagram size={18} />
+          {/* Vertical Divider */}
+          <div className="h-6 w-px bg-gray-300" />
 
-            {/* <AnimatePresence>{!compact && */}
-            <motion.span className="overflow-hidden whitespace-nowrap text-sm font-heading font-medium">Instagram</motion.span>
-            {/* } </AnimatePresence> */}
-          </Link>
-
-          <Link href={formLink} className="flex items-center justify-center gap-2 px-3">
-            <CalendarPlus size={18} />
-
-            {/* <AnimatePresence>{!compact &&  */}
+          {/* Enquire Now Button */}
+          <Link href={formLink} className="flex flex-1 items-center justify-center gap-2 px-3 py-1">
+            <CalendarPlus size={22} />
             <motion.span className="overflow-hidden whitespace-nowrap text-sm font-heading font-medium">Enquire Now</motion.span>
-            {/* } </AnimatePresence> */}
           </Link>
         </motion.div>
       </motion.div>
