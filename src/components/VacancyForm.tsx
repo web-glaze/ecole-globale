@@ -390,6 +390,10 @@ export default function VacancyForm() {
             <option value="PGT">PGT</option>
 
             <option value="TGT">TGT</option>
+
+            <option value="Admin">Admin</option>
+
+            <option value="Others">Others</option>
           </select>
 
           {errors.postAppliedFor && (
