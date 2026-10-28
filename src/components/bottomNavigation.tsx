@@ -6,13 +6,15 @@ import { motion } from "framer-motion";
 import { FaInstagram, FaPhone, FaWhatsapp } from "react-icons/fa6";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSiteSettings } from "@/lib/site-settings-context";
 
 export default function BottomNavigation() {
   const [compact, setCompact] = useState(false);
   const pathname = usePathname();
-  const phoneNumber = pathname === "/vacancies" ? "tel:+91-7217017047" : "tel:+91-9557291888";
+  const { settings } = useSiteSettings();
+
+  const phoneNumber = pathname === "/vacancies" ? "+91-7217017047" : settings.phone;
   const whatsAppNumber = pathname === "/vacancies" ? "https://wa.me/917217017047" : "https://wa.me/919557291888";
-  const formLink = pathname === "/vacancies" ? "mailto:hr@ecoleglobale.com" : "#enquire-now";
 
   return (
     <>
@@ -33,12 +35,12 @@ export default function BottomNavigation() {
             duration: 0.5,
           }}
         >
-          <Link href={formLink} className="flex flex-1 items-center justify-center gap-2 px-3 py-1">
+          <Link href={`tel:${phoneNumber}`} className="flex flex-1 items-center justify-center gap-2 px-3 py-1">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="none">
               <g clip-path="url(#clip0_10020_7419)">
                 <path
                   d="M14.7162 10.5022C13.7366 10.5022 12.7747 10.349 11.8633 10.0478C11.4167 9.89542 10.8676 10.0352 10.595 10.3151L8.796 11.6732C6.70963 10.5595 5.42446 9.27475 4.32596 7.20404L5.64408 5.45188C5.98654 5.10988 6.10938 4.61029 5.96221 4.14154C5.65971 3.22529 5.50604 2.26392 5.50604 1.28392C5.50608 0.575958 4.93013 0 4.22221 0H1.28387C0.575958 0 0 0.575958 0 1.28387C0 9.39846 6.60158 16 14.7162 16C15.4241 16 16 15.424 16 14.7161V11.786C16 11.0781 15.424 10.5022 14.7162 10.5022Z"
-                  fill="#051635"
+                  fill="#B8323A"
                 ></path>
               </g>
               <defs>

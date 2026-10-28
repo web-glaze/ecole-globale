@@ -91,7 +91,7 @@ export default function Navbar() {
         </div>
 
         {/* Mobile */}
-        <div className="flex h-full items-center justify-between xl:hidden text-white relative">
+        <div className="grid h-full grid-cols-[40px_minmax(0,1fr)_40px] items-center gap-2 xl:hidden text-white relative">
           {/* Hamburger */}
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
@@ -179,17 +179,17 @@ export default function Navbar() {
 
           {/* Logo Center */}
 
-          <Link href="/" className="flex flex-col justify-center items-center">
-            {/* <img src={logo} alt="Logo" width="200" /> */}
-            <div className="text-2xl text-white font-heading font-medium">Ecole Globale</div>
-            <span className="text-white text-sm">International Girls' School</span>
+          <Link href="/" className="col-start-2 flex min-w-0 flex-col items-center justify-center text-center">
+            <div className="whitespace-nowrap text-2xl text-white font-heading font-medium">Ecole Globale</div>
+            <span className="whitespace-nowrap text-white text-sm">International Girls&apos; School</span>
           </Link>
 
-          {/* Phone Icon */}
-
-          <a href={`tel:${phoneNumber}`} className="transition-all duration-300">
-            <Phone className="size-6 text-white" />
-          </a>
+          {/* Sticky Metallic Red Call Icon */}
+          <div className="fixed right-4 top-6 z-[60] xl:hidden">
+            <a href={`tel:${phoneNumber}`} aria-label="Call Now" className="flex size-8 items-center justify-center rounded-full bg-[#B8323A]">
+              <Phone className="size-4 fill-white text-white" strokeWidth={1} />
+            </a>
+          </div>
         </div>
       </div>
     </header>

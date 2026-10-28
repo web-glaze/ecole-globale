@@ -40,8 +40,8 @@ export default function EnquiryPopup() {
   const [loading, setLoading] = useState(false);
   const [leadSubmitted, setLeadSubmitted] = useState(false);
 
-  const hasShownExitPopup = useRef(false);
-  const hasShownTimerPopup = useRef(false);
+  const popupCount = useRef(0);
+  const secondPopupTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const hasInitialized = useRef(false);
 
   const leadSubmittedRef = useRef(false);
@@ -49,8 +49,6 @@ export default function EnquiryPopup() {
   const inputRef = useRef<HTMLInputElement>(null);
   const isOpenRef = useRef(open);
   const pathname = usePathname();
-
-  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
     isOpenRef.current = open;
@@ -134,47 +132,14 @@ export default function EnquiryPopup() {
     if (leadSubmitted) return;
 
     const timer = setTimeout(() => {
-      if (!leadSubmitted && !hasShownExitPopup.current && !hasShownTimerPopup.current) {
-        hasShownTimerPopup.current = true;
+      if (!leadSubmittedRef.current && popupCount.current === 0) {
+        popupCount.current = 1;
         setOpen(true);
       }
-    }, 15000);
+    }, 10000);
 
     return () => clearTimeout(timer);
   }, [leadSubmitted]);
-
-  useEffect(() => {
-    const checkDesktop = () => {
-      setIsDesktop(window.innerWidth >= 1024);
-    };
-
-    checkDesktop();
-
-    window.addEventListener("resize", checkDesktop);
-
-    return () => {
-      window.removeEventListener("resize", checkDesktop);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (leadSubmitted || !isDesktop) return;
-
-    const handleMouseLeave = (e: MouseEvent) => {
-      if (e.clientY <= 0 && e.relatedTarget === null && !isOpenRef.current && !leadSubmitted && !hasShownExitPopup.current) {
-        hasShownExitPopup.current = true;
-        hasShownTimerPopup.current = true;
-
-        setOpen(true);
-      }
-    };
-
-    document.addEventListener("mouseout", handleMouseLeave);
-
-    return () => {
-      document.removeEventListener("mouseout", handleMouseLeave);
-    };
-  }, [leadSubmitted, isDesktop]);
 
   const runWelcomeSequence = async () => {
     setMessages([]);
@@ -313,7 +278,18 @@ export default function EnquiryPopup() {
     if (dataToSubmit.name && dataToSubmit.phone) {
       await submitLead(dataToSubmit, true);
     }
+
     setOpen(false);
+
+    if (!leadSubmittedRef.current && popupCount.current === 1) {
+      secondPopupTimer.current = setTimeout(() => {
+        if (!leadSubmittedRef.current && popupCount.current === 1) {
+          popupCount.current = 2;
+          hasInitialized.current = false;
+          setOpen(true);
+        }
+      }, 15000);
+    }
   };
 
   const handleContinue = async () => {
@@ -507,9 +483,13 @@ export default function EnquiryPopup() {
       setIsTyping(false);
       setLoading(false);
       if (success) {
-        hasShownExitPopup.current = true;
-        hasShownTimerPopup.current = true;
         hasInitialized.current = false;
+
+        if (secondPopupTimer.current) {
+          clearTimeout(secondPopupTimer.current);
+          secondPopupTimer.current = null;
+        }
+
         setMessages((prev) => [
           ...prev,
           {
