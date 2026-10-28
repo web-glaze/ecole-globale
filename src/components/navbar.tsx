@@ -184,12 +184,15 @@ export default function Navbar() {
             <span className="whitespace-nowrap text-white text-sm">International Girls&apos; School</span>
           </Link>
 
-          {/* Sticky Metallic Red Call Icon */}
-          <div className="fixed right-4 top-6 z-[60] xl:hidden">
-            <a href={`tel:${phoneNumber}`} aria-label="Call Now" className="flex size-8 items-center justify-center rounded-full bg-[#B8323A]">
-              <Phone className="size-4 fill-white text-white" strokeWidth={1} />
-            </a>
-          </div>
+          {/* Sticky Call Icon */}
+<div className="fixed right-4 top-7 z-[60] xl:hidden">
+  <a href={`tel:${phoneNumber}`} aria-label="Call Now">
+    <Phone
+      className="size-6 text-[#B8323A] fill-[#B8323A]"
+      strokeWidth={1}
+    />
+  </a>
+</div>
         </div>
       </div>
     </header>
