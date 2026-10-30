@@ -150,7 +150,7 @@ function EnquiryForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} autoComplete="on" noValidate className="space-y-4">
+    <form onSubmit={handleSubmit} autoComplete="on" noValidate className="space-y-3.5">
       {/* Name */}
       <div>
         <Input
@@ -158,42 +158,16 @@ function EnquiryForm() {
           name="name"
           type="text"
           autoComplete="name"
-          placeholder="Your Name"
+          placeholder="Name"
           value={formData.name}
           onChange={handleChange}
           aria-describedby={errors.name ? "name-error" : undefined}
-          className={`bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 text-base md:text-base ${
-            errors.name ? "border-red-500" : "border-primary"
-          }`}
+          className={`h-10 w-full rounded-[4px] border border-gray-400 bg-white px-3 text-sm shadow-sm placeholder:text-gray-500 focus-visible:ring-1 focus-visible:ring-gray-400 ${errors.name ? "border-red-500" : ""
+            }`}
         />
-
         {errors.name && (
-          <p id="name-error" className="text-red-600 text-xs mt-1">
+          <p id="name-error" className="mt-1 text-xs text-red-600">
             {errors.name}
-          </p>
-        )}
-      </div>
-
-      {/* Phone */}
-      <div>
-        <Input
-          id="phone"
-          name="phone"
-          type="tel"
-          inputMode="tel"
-          autoComplete="tel"
-          placeholder="Phone Number"
-          value={formData.phone}
-          onChange={handleChange}
-          aria-describedby={errors.phone ? "phone-error" : undefined}
-          className={`bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 text-base md:text-base ${
-            errors.phone ? "border-red-500" : "border-primary"
-          }`}
-        />
-
-        {errors.phone && (
-          <p id="phone-error" className="text-red-600 text-xs mt-1">
-            {errors.phone}
           </p>
         )}
       </div>
@@ -205,32 +179,62 @@ function EnquiryForm() {
           name="email"
           type="email"
           autoComplete="email"
-          placeholder="Email Address"
+          placeholder="Email"
           value={formData.email}
           onChange={handleChange}
           aria-describedby={errors.email ? "email-error" : undefined}
-          className={`bg-white border-b-2 rounded-none border-l-0 border-r-0 border-t-0 p-0 focus-visible:ring-0 text-base md:text-base ${
-            errors.email ? "border-red-500" : "border-primary"
-          }`}
+          className={`h-10 w-full rounded-[4px] border border-gray-400 bg-white px-3 text-sm shadow-sm placeholder:text-gray-500 focus-visible:ring-1 focus-visible:ring-gray-400 ${errors.email ? "border-red-500" : ""
+            }`}
         />
-
         {errors.email && (
-          <p id="email-error" className="text-red-600 text-xs mt-1">
+          <p id="email-error" className="mt-1 text-xs text-red-600">
             {errors.email}
           </p>
         )}
       </div>
 
+      {/* Telephone */}
+      <div>
+        <Input
+          id="phone"
+          name="phone"
+          type="tel"
+          inputMode="tel"
+          autoComplete="tel"
+          placeholder="Telephone"
+          value={formData.phone}
+          onChange={handleChange}
+          aria-describedby={errors.phone ? "phone-error" : undefined}
+          className={`h-10 w-full rounded-[4px] border border-gray-400 bg-white px-3 text-sm shadow-sm placeholder:text-gray-500 focus-visible:ring-1 focus-visible:ring-gray-400 ${errors.phone ? "border-red-500" : ""
+            }`}
+        />
+        {errors.phone && (
+          <p id="phone-error" className="mt-1 text-xs text-red-600">
+            {errors.phone}
+          </p>
+        )}
+      </div>
+
       {/* Submit */}
-      <Button type="submit" className="w-full font-semibold text-base font-heading" disabled={loading}>
-        {loading ? "Submitting..." : "Submit Enquiry"}
+      <Button
+        type="submit"
+        disabled={loading}
+        className="h-11 w-full rounded-none bg-[#B8323A] text-sm font-bold text-white hover:bg-[#982A31]"
+      >
+        {loading ? "SUBMITTING..." : "SUBMIT"}
       </Button>
 
-      {/* Success */}
-      {successMessage && <p className="text-green-600 text-sm font-medium text-center mt-2">{successMessage}</p>}
+      {successMessage && (
+        <p className="mt-2 text-center text-sm font-medium text-green-600">
+          {successMessage}
+        </p>
+      )}
 
-      {/* General Error */}
-      {errorMessage && <p className="text-red-600 text-sm font-medium text-center mt-2">{errorMessage}</p>}
+      {errorMessage && (
+        <p className="mt-2 text-center text-sm font-medium text-red-600">
+          {errorMessage}
+        </p>
+      )}
     </form>
   );
 }
@@ -423,11 +427,11 @@ export default function HomeClient({ home }: any) {
               plugins={
                 hero?.autoPlay
                   ? [
-                      Autoplay({
-                        delay: hero.autoPlayDelay ?? 5000,
-                        stopOnInteraction: false,
-                      }),
-                    ]
+                    Autoplay({
+                      delay: hero.autoPlayDelay ?? 5000,
+                      stopOnInteraction: false,
+                    }),
+                  ]
                   : []
               }
               className="h-full"
@@ -452,12 +456,13 @@ export default function HomeClient({ home }: any) {
             </div>
 
             {hero?.showEnquiryForm && (
-              <div className="absolute inset-0 z-20 hidden lg:flex items-center pointer-events-none">
-                <div className="container mx-auto flex justify-end">
-                  <div className="pointer-events-auto w-full max-w-md bg-white p-8 shadow-2xl backdrop-blur">
-                    <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-[#171a20] via-[#e13e3e] to-[#171a20] bg-clip-text text-transparent">
+              <div className="absolute inset-0 z-20 hidden items-center pointer-events-none lg:flex">
+                <div className="container mx-auto flex justify-end px-4">
+                  <div className="pointer-events-auto w-full max-w-[386px] rounded-[3px] bg-white/90 p-5 shadow-xl backdrop-blur-sm">
+                    <h3 className="mb-4 text-2xl font-bold font-heading text-left text-[#333333]">
                       ENQUIRE NOW
                     </h3>
+
                     <EnquiryForm />
                   </div>
                 </div>
@@ -466,31 +471,15 @@ export default function HomeClient({ home }: any) {
           </div>
         </section>
 
-        {/* Only Mobile View Form */}
-        <div id="enquire-now" className="md:hidden w-full max-w-md container mx-auto px-4 bg-white py-8 md:py-16">
-          <div ref={ref} className="mb-10 hidden">
-            {lines.map((line, index) => {
-              const start = index * 0.3;
-              const end = start + 0.3;
+        {/* Mobile Enquiry Form */}
+        <div
+          id="enquire-now"
+          className="lg:hidden mx-auto w-full max-w-md bg-white px-4 py-4"
+        >
+          <h3 className="mb-3 text-xl font-bold font-heading text-left text-[#333333]">
+            ENQUIRE NOW
+          </h3>
 
-              const backgroundPositionX = useTransform(scrollYProgress, [start, end], ["100%", "0%"]);
-
-              return (
-                <motion.h2
-                  key={index}
-                  className="text-3xl font-semibold text-center text-transparent bg-clip-text"
-                  style={{
-                    backgroundImage: "linear-gradient(to right, #171a20 0%, #e13e3e 50%, #9CA3AF 50%, #9CA3AF 100%)",
-                    backgroundSize: "200% 100%",
-                    backgroundPositionX,
-                  }}
-                >
-                  {line}
-                </motion.h2>
-              );
-            })}
-          </div>
-          <h3 className="mb-4 text-3xl font-bold font-heading text-center bg-gradient-to-r from-[#171a20] via-[#e13e3e] to-[#171a20] bg-clip-text text-transparent">ENQUIRE NOW</h3>
           <EnquiryForm />
         </div>
 
@@ -797,9 +786,8 @@ export default function HomeClient({ home }: any) {
                           href={item.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className={`bg-white overflow-hidden shadow-lg transition-all duration-500 ${
-                            item.title || item.description ? "flex flex-col h-full" : "block mt-14"
-                          } ${currentVideo === index ? "scale-[1.2]" : "scale-[.8]"}`}
+                          className={`bg-white overflow-hidden shadow-lg transition-all duration-500 ${item.title || item.description ? "flex flex-col h-full" : "block mt-14"
+                            } ${currentVideo === index ? "scale-[1.2]" : "scale-[.8]"}`}
                         >
                           {item.image?.cloudinary?.secure_url &&
                             (item.title || item.description ? (
@@ -823,9 +811,8 @@ export default function HomeClient({ home }: any) {
                         </a>
                       ) : (
                         <div
-                          className={`bg-white overflow-hidden shadow-lg transition-all duration-500 ${
-                            item.title || item.description ? "flex flex-col h-full" : "block mt-14"
-                          } ${currentVideo === index ? "scale-[1.2]" : "scale-[.8]"}`}
+                          className={`bg-white overflow-hidden shadow-lg transition-all duration-500 ${item.title || item.description ? "flex flex-col h-full" : "block mt-14"
+                            } ${currentVideo === index ? "scale-[1.2]" : "scale-[.8]"}`}
                         >
                           {item.image?.cloudinary?.secure_url &&
                             (item.title || item.description ? (
