@@ -57,11 +57,35 @@ export const Home: GlobalConfig = {
                   },
                   fields: [
                     {
-                      name: "image",
-                      label: "Image",
-                      type: "upload",
-                      relationTo: "media",
-                      required: true,
+                      type: "row",
+                      fields: [
+                        {
+                          name: "desktopImage",
+                          label: "Desktop Image",
+                          type: "upload",
+                          relationTo: "media",
+                          admin: {
+                            width: "50%",
+                          },
+                        },
+                        {
+                          name: "mobileImage",
+                          label: "Mobile Image",
+                          type: "upload",
+                          relationTo: "media",
+                          admin: {
+                            width: "50%",
+                          },
+                        },
+                      ],
+                    },
+                    {
+                      name: "desktopOnly",
+                      label: "Desktop Image Only",
+                      type: "checkbox",
+                      defaultValue: false,
+                      admin: {
+                     },
                     },
                   ],
                 },

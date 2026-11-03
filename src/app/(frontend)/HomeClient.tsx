@@ -242,6 +242,34 @@ function EnquiryForm() {
 export default function HomeClient({ home }: any) {
   const hero = home.hero;
   const heroSlides = home.hero?.slides || ["/v1-hero-slider-5.jpg"];
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+
+    const handleChange = () => {
+      setIsMobile(mediaQuery.matches);
+    };
+
+    handleChange();
+
+    mediaQuery.addEventListener("change", handleChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange);
+    };
+  }, []);
+
+  const visibleHeroSlides = heroSlides.filter((slide: any) => {
+    if (isMobile) {
+      return (
+        !!slide.mobileImage ||
+        (!!slide.desktopImage && !slide.desktopOnly)
+      );
+    }
+
+    return !!slide.desktopImage;
+  });
   const welcome = home.welcome || [];
   const welcomeSlides = home.welcome?.cards || [];
   const featured = home.featured?.items || [];
@@ -437,16 +465,29 @@ export default function HomeClient({ home }: any) {
               className="h-full"
             >
               <CarouselContent className="h-full">
-                {heroSlides.map((slide: any, index: number) => (
-                  <CarouselItem key={index} className="h-full p-0">
-                    <img src={slide.image.cloudinary.secure_url} alt={`Slide ${index + 1}`} className="h-screen w-full object-cover" />
-                  </CarouselItem>
-                ))}
+                {visibleHeroSlides.map((slide: any, index: number) => {
+                  const image = isMobile
+                    ? slide.mobileImage || slide.desktopImage
+                    : slide.desktopImage;
+
+                  return (
+                    <CarouselItem
+                      key={slide.id || index}
+                      className="h-full p-0"
+                    >
+                      <img
+                        src={image?.cloudinary?.secure_url}
+                        alt={`Slide ${index + 1}`}
+                        className="h-screen w-full object-cover"
+                      />
+                    </CarouselItem>
+                  );
+                })}
               </CarouselContent>
             </Carousel>
 
             <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 gap-2">
-              {heroSlides.map((_: any, index: number) => (
+              {visibleHeroSlides.map((_: any, index: number) => (
                 <button
                   key={index}
                   onClick={() => heroApi?.scrollTo(index)}
